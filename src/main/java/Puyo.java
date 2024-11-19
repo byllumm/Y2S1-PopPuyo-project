@@ -1,7 +1,20 @@
 public class Puyo implements Drawable {
     private Position position;
-    private Color color;       // Lanterna uses hex codes for colors
+    private Color color;
 
-    public Puyo(Position pos, Color color) { }
+    public Position getPosition() {
+        return position;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Puyo(Position pos, Color color) {
+        this.position = pos;
+        this.color = color;
+    }
+
+    // TO BE IMPLEMENTED
     public void draw() {}
 }

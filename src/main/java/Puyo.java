@@ -16,5 +16,6 @@ public class Puyo implements Drawable {
     }
 
     // TO BE IMPLEMENTED
+    @Override
     public void draw() {}
 }

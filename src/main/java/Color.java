@@ -1,10 +1,13 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class Color {
     // Puyos come in 5 colors: green, yellow, red, blue, purple.
     // Lanterna reads colors as HEX codes, so for simplicity we only pass the color in string for and translate it to hex code.
     String colorHex;
-    private static HashMap<String, String> colorMap;
+    public static HashMap<String, String> colorMap;
 
     // Call only once
     static {
@@ -25,5 +28,12 @@ public class Color {
 
     public String getColor() {
         return colorHex;
+    }
+
+    public static Color getRandomColor(){
+        List<String> keys = new ArrayList<>(colorMap.keySet());
+        Random random = new Random();
+        String randomColorName = keys.get(random.nextInt(keys.size()));
+        return new Color(randomColorName);
     }
 }

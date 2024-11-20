@@ -1,6 +1,16 @@
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+
 public class Puyo implements Drawable {
     private Position position;
     private Color color;
+
+    public Puyo(Position position){
+        this.position = position;
+        this.color = Color.getRandomColor();
+    }
 
     public Position getPosition() {
         return position;
@@ -10,12 +20,12 @@ public class Puyo implements Drawable {
         return color;
     }
 
-    public Puyo(Position pos, Color color) {
-        this.position = pos;
-        this.color = color;
-    }
 
-    // TO BE IMPLEMENTED
     @Override
-    public void draw() {}
+    public void draw(TextGraphics graphics) {
+        Color puyoColor = getColor();
+        graphics.setForegroundColor(TextColor.Factory.fromString(puyoColor.colorHex));
+        graphics.enableModifiers(SGR.BOLD);
+        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "O");
+    }
 }

@@ -1,4 +1,7 @@
-public class PuyoPair {
+import com.googlecode.lanterna.graphics.TextGraphics;
+import org.w3c.dom.Text;
+
+public class PuyoPair implements Drawable{
     private Puyo firstPuyo;
     private Puyo secondPuyo;
     private RotationState rotationState;
@@ -32,8 +35,7 @@ public class PuyoPair {
     public Position rotateUp(PuyoPair puyoPair){
         int x = puyoPair.getFirstPos().getX();
         int y = puyoPair.getSecondPos().getY();
-        Position newSecondPosition = new Position(x, y - 1);
-        return newSecondPosition;
+        return new Position(x, y - 1);
     }
 
     public Position rotateDown(PuyoPair puyoPair){
@@ -51,5 +53,11 @@ public class PuyoPair {
         int x = puyoPair.getFirstPos().getX();
         int y = puyoPair.getSecondPos().getY();
         return new Position(x + 1, y);
+    }
+
+    @Override
+    public void draw(TextGraphics graphics){
+        firstPuyo.draw(graphics);
+        secondPuyo.draw(graphics);
     }
 }

@@ -1,4 +1,9 @@
-import java.util.List;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+
+import java.io.IOException;
 
 public class Arena implements Drawable {
 
@@ -10,8 +15,18 @@ public class Arena implements Drawable {
 
     public static int dropInterval = 60; //Puyo drop every 60 frames
 
-    public Arena(PuyoPair activePuyo, List<Puyo> staticPuyos){
-        this.activePuyo = activePuyo;
+    public Arena(){
+        activePuyo = spawnPuyoPair();
+    }
+
+    private PuyoPair spawnPuyoPair(){
+        Position firstPos = new Position(2, 0);
+        Position secondPos = new Position(3, 0);
+
+        Puyo firstPuyo = new Puyo(firstPos);;
+        Puyo secondPuyo = new Puyo(secondPos);
+
+        return new PuyoPair(firstPuyo, secondPuyo);
     }
 
     //Cleans the puyo off the cell
@@ -25,7 +40,7 @@ public class Arena implements Drawable {
     }
 
     //Checks if puyos can go down next row
-    public boolean canMoveDown(Puyo[][] grid, PuyoPair activePuyo){
+    public boolean canMoveDown(PuyoPair activePuyo){
         Position firstPos = activePuyo.getFirstPos();
         Position secondPos = activePuyo.getSecondPos();
         //do not know if I should put <= or <
@@ -34,35 +49,32 @@ public class Arena implements Drawable {
     }
 
     //Makes puyos fall down
-    public void moveDown(){
+    public void moveDown(PuyoPair activePuyo) {
         Position firstPos = activePuyo.getFirstPos();
         Position secondPos = activePuyo.getSecondPos();
         firstPos.setY(firstPos.getY() + 1);
-        secondPos.setY(firstPos.getY() + 1);
+        secondPos.setY(secondPos.getY() + 1);
     }
 
 
     //Update game every frame, making puyos fall and checking if they hit the static puyos
-    public void update(){
+    public void update(TextGraphics graphics){
 
         //Process input function (need to make a function)
         //Also a rotate function to help the input function
         autoDropCounter++;
         if(autoDropCounter == Arena.dropInterval){
-            if(canMoveDown(grid, activePuyo)) {
-                Position firstPos = activePuyo.getFirstPos();
-                Position secondPos = activePuyo.getSecondPos();
-
-                firstPos.setY(firstPos.getY() + 1);
-                secondPos.setY(secondPos.getY() + 1);
+            if(canMoveDown(activePuyo)) {
+                moveDown(activePuyo);
             }
             else{
-                integrateGrid();
-                boolean fell = applyGravity();
-                while(fell){
-                    fell = applyGravity();
+               integrateGrid();
+               boolean fell = applyGravity();
+               while(fell){
+                   fell = applyGravity();
                 }
-                //Spawn new puyo (need to make a function for this)
+
+                activePuyo = spawnPuyoPair();
             }
             autoDropCounter = 0;
         }
@@ -99,6 +111,10 @@ public class Arena implements Drawable {
     }
 
     @Override
-    // TO BE IMPLEMENTED
-    public void draw() { }
+    public void draw(TextGraphics graphics) throws IOException{
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
+        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(columns, rows), ' ');
+        activePuyo.draw(graphics);
+        //need to implement drawing for static puyos
+    }
 }

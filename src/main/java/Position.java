@@ -19,6 +19,10 @@ public class Position {
         return this.y;
     }
 
+    public int setX(int x){ return this.x = x;}
+
+    public int setY(int y){ return this.y = y;}
+
     // This override makes it easier to check position overlap
     @Override
     public boolean equals(Object o) {

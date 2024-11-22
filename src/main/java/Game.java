@@ -28,15 +28,13 @@ public class Game implements Runnable{
         graphics = screen.newTextGraphics();
     }
 
-    public void startGameThread(){
+    public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
     @Override
-    public void run(){
-
-
+    public void run() {
         startGameThread();
         double drawInterval = 1000000000.0 / FPS; //0.0166667 seconds
         double delta = 0;

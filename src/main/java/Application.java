@@ -7,9 +7,12 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import java.io.IOException;import com.googlecode.lanterna.terminal.swing.TerminalScrollController;
 
 public class Application{
-
     public static void main(String[] args) {
-
+        try {
+            Game game = new Game();
+            game.run();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 }

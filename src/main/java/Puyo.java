@@ -20,7 +20,6 @@ public class Puyo implements Drawable {
         return color;
     }
 
-
     @Override
     public void draw(TextGraphics graphics) {
         Color puyoColor = getColor();

@@ -13,25 +13,20 @@ public class Arena implements Drawable {
     private PuyoPair activePuyo;
     int autoDropCounter = 0;
 
-    public static int dropInterval = 60; //Puyo drop every 60 frames
+    public static int dropInterval = 500; //Puyo drop every 60 frames, temporarily changed for debugging
 
     public Arena(){
         activePuyo = spawnPuyoPair();
     }
 
-    private PuyoPair spawnPuyoPair(){
+    private PuyoPair spawnPuyoPair() {
         Position firstPos = new Position(2, 0);
         Position secondPos = new Position(3, 0);
 
-        Puyo firstPuyo = new Puyo(firstPos);;
+        Puyo firstPuyo = new Puyo(firstPos);
         Puyo secondPuyo = new Puyo(secondPos);
 
         return new PuyoPair(firstPuyo, secondPuyo);
-    }
-
-    //Cleans the puyo off the cell
-    public void clearCell(int row, int col){
-        grid[row][col] = null;
     }
 
     //Checks if there's any puyos on the cell
@@ -58,37 +53,40 @@ public class Arena implements Drawable {
 
 
     //Update game every frame, making puyos fall and checking if they hit the static puyos
-    public void update(TextGraphics graphics){
+    public void update(TextGraphics graphics) {
 
         //Process input function (need to make a function)
         //Also a rotate function to help the input function
         autoDropCounter++;
         if(autoDropCounter == Arena.dropInterval){
-            if(canMoveDown(activePuyo)) {
+            if (canMoveDown(activePuyo)) {
                 moveDown(activePuyo);
             }
-            else{
+            else {
                integrateGrid();
-               boolean fell = applyGravity();
-               while(fell){
-                   fell = applyGravity();
-                }
+               while (applyGravity()) { /* Do nothing...*/ }
 
-                activePuyo = spawnPuyoPair();
+                // Check if the Puyo pair can even spawn
+                if (isEmpty(2,0) && isEmpty(3,0)) {
+                    activePuyo = spawnPuyoPair();
+                } else { // In this case, the game would be over... Handle that logic later.
+                    /*Code for Game ending*/
+                }
             }
+
             autoDropCounter = 0;
         }
     }
 
     //Locks active puyo to the static puyos
-    public void integrateGrid(){
+    public void integrateGrid() {
         Position firstPos = activePuyo.getFirstPos();
         Position secondPos = activePuyo.getSecondPos();
 
         grid[firstPos.getY()][firstPos.getX()] = activePuyo.getFirstPuyo();
-        grid[secondPos.getY()][firstPos.getX()] = activePuyo.getSecondPuyo();
+        grid[secondPos.getY()][secondPos.getX()] = activePuyo.getSecondPuyo();
 
-        activePuyo = null;
+        // activePuyo = null; <- This is causing null-pointer exceptions
     }
 
     //Checks if any individual puyo can fall even more, after the pair has hit the static puyos
@@ -99,10 +97,9 @@ public class Arena implements Drawable {
             for(int row = rows - 2; row >= 0; row--){
                 if(!isEmpty(row, col) && isEmpty(row + 1, col)){
 
-                    Puyo puyo = grid[row][col];
-                    grid[row + 1][col] = puyo;
-                    clearCell(row, col);
-                    fell = true;
+                    grid[row + 1][col] = grid[row][col];
+                    grid[row][col] = null;
+                    fell = true; // While at least 1 puyo is affected by gravity, keep looping.
 
                 }
             }
@@ -111,10 +108,17 @@ public class Arena implements Drawable {
     }
 
     @Override
-    public void draw(TextGraphics graphics) throws IOException{
+    public void draw(TextGraphics graphics) throws IOException {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(columns, rows), ' ');
         activePuyo.draw(graphics);
-        //need to implement drawing for static puyos
+        // Static Puyo Drawing
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (grid[i][j] != null) {
+                    grid[i][j].draw(graphics);
+                }
+            }
+        }
     }
 }

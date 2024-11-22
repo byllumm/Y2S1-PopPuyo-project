@@ -34,9 +34,7 @@ public class Game implements Runnable{
     }
 
     @Override
-    public void run(){
-
-
+    public void run() {
         startGameThread();
         double drawInterval = 1000000000.0 / FPS; //0.0166667 seconds
         double delta = 0;
@@ -67,10 +65,5 @@ public class Game implements Runnable{
     public void draw() throws IOException{
         arena.draw(graphics);
         screen.refresh();
-    }
-
-    public static void main(String[] args) throws IOException{
-        Game game = new Game();
-        game.run();
     }
 }

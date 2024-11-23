@@ -1,10 +1,6 @@
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import java.io.IOException;import com.googlecode.lanterna.terminal.swing.TerminalScrollController;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Application{
 
@@ -12,7 +8,7 @@ public class Application{
         try {
             Game game = new Game();
             game.run();
-        } catch (IOException e) {
+        } catch (IOException | FontFormatException | URISyntaxException e) {
             System.out.println("Error: " + e);
         }
     }

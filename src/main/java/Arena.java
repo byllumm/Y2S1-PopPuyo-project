@@ -110,7 +110,7 @@ public class Arena implements Drawable {
     @Override
     public void draw(TextGraphics graphics) throws IOException {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
-        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(columns, rows), ' ');
+        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(columns * 4, rows * 2), ' ');
         activePuyo.draw(graphics);
         // Static Puyo Drawing
         for (int i = 0; i < rows; i++) {

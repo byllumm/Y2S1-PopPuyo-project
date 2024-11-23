@@ -20,12 +20,11 @@ public class Puyo implements Drawable {
         return color;
     }
 
-
     @Override
     public void draw(TextGraphics graphics) {
         Color puyoColor = getColor();
-        graphics.setForegroundColor(TextColor.Factory.fromString(puyoColor.colorHex));
+        graphics.setBackgroundColor(TextColor.Factory.fromString(puyoColor.colorHex));
         graphics.enableModifiers(SGR.BOLD);
-        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "O");
+        graphics.putString(new TerminalPosition(position.getX(), position.getY()), " ");
     }
 }

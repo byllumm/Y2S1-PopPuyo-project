@@ -1,10 +1,12 @@
 package elements;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
+import puyo_utils.Position;
 
 import java.io.IOException;
 
 // Interface for elements that can be drawn.
 public interface Drawable {
-    public void draw(TextGraphics graphics) throws IOException;
+    // If corner and/or dimensions are passed as null, they are not being used.
+    public void draw(TextGraphics graphics, Position corner) throws IOException;
 }

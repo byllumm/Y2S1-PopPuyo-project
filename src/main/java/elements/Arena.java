@@ -1,23 +1,24 @@
 package elements;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import puyoUtils.Position;
-import puyoUtils.PuyoPair;
+import puyo_utils.Position;
+import puyo_utils.PuyoPair;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Arena implements Drawable {
     private final GameGrid grid = new GameGrid();
+    private final SpriteLoader backgroundLoader;
     private PuyoPair activePuyo;
     int autoDropCounter = 0;
 
     public static int dropInterval = 500; //puyo.Puyo drop every 60 frames, temporarily changed for debugging
 
 
-    public Arena(){
+    public Arena() throws IOException {
+        URL resourceURL = SpriteLoader.pathToURL("/sprites/background/temporary_background.png");
+        backgroundLoader = new SpriteLoader(resourceURL);
         activePuyo = PuyoPair.spawnPuyoPair();
     }
 
@@ -68,10 +69,13 @@ public class Arena implements Drawable {
     }
 
     @Override
-    public void draw(TextGraphics graphics) throws IOException {
+    public void draw(TextGraphics graphics, Position corner) throws IOException {
+        /* Original Background code, halted for now
         graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(GameGrid.COLUMNS, GameGrid.ROWS), ' ');
-        activePuyo.draw(graphics);
-        grid.draw(graphics);
+         */
+        backgroundLoader.draw(graphics, new Position(0, 0));
+        activePuyo.draw(graphics, null);
+        grid.draw(graphics, null);
     }
 }

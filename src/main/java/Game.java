@@ -1,5 +1,5 @@
 import elements.Arena;
-import elements.GameScreen;
+import gui.GameScreen;
 
 import java.awt.*;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class Game implements Runnable {
     }
 
     public void draw() throws IOException{
-        arena.draw(gameScreen.getGraphics());
+        arena.draw(gameScreen.getGraphics(), null);
         gameScreen.getScreen().refresh();
     }
 }

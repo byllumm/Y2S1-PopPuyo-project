@@ -1,4 +1,4 @@
-package puyoUtils;
+package puyo_utils;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import elements.Drawable;
@@ -76,8 +76,8 @@ public class PuyoPair implements Drawable {
     }
 
     @Override
-    public void draw(TextGraphics graphics){
-        firstPuyo.draw(graphics);
-        secondPuyo.draw(graphics);
+    public void draw(TextGraphics graphics, Position corner){
+        firstPuyo.draw(graphics, null);
+        secondPuyo.draw(graphics, null);
     }
 }

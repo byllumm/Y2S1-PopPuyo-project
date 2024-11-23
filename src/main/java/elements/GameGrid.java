@@ -1,8 +1,8 @@
 package elements;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import puyoUtils.Position;
-import puyoUtils.PuyoPair;
+import puyo_utils.Position;
+import puyo_utils.PuyoPair;
 
 public class GameGrid implements Drawable {
     public static final int ROWS = 11;
@@ -55,11 +55,11 @@ public class GameGrid implements Drawable {
         setPuyo(secondPos.getY(), secondPos.getX(), activePuyo.getSecondPuyo());
     }
 
-    public void draw(TextGraphics graphics) {
+    public void draw(TextGraphics graphics, Position corner) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
                 if (grid[i][j] != null) {
-                    grid[i][j].draw(graphics);
+                    grid[i][j].draw(graphics, null);
                 }
             }
         }

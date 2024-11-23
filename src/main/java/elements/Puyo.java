@@ -4,8 +4,8 @@ import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import puyoUtils.Color;
-import puyoUtils.Position;
+import puyo_utils.Color;
+import puyo_utils.Position;
 
 public class Puyo implements Drawable {
     private Position position;
@@ -25,7 +25,7 @@ public class Puyo implements Drawable {
     }
 
     @Override
-    public void draw(TextGraphics graphics) {
+    public void draw(TextGraphics graphics, Position corner) {
         Color puyoColor = getColor();
         graphics.setBackgroundColor(TextColor.Factory.fromString(puyoColor.getColor()));
         graphics.enableModifiers(SGR.BOLD);

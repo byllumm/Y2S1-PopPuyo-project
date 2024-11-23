@@ -1,6 +1,6 @@
-package puyoUtils;
+package puyo_utils;
 
-import customExceptions.ColorException;
+import custom_exceptions.ColorException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

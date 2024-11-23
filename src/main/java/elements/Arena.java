@@ -1,7 +1,11 @@
+package elements;
+
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import puyoUtils.Position;
+import puyoUtils.PuyoPair;
 
 import java.io.IOException;
 
@@ -10,7 +14,7 @@ public class Arena implements Drawable {
     private PuyoPair activePuyo;
     int autoDropCounter = 0;
 
-    public static int dropInterval = 500; //Puyo drop every 60 frames, temporarily changed for debugging
+    public static int dropInterval = 500; //puyo.Puyo drop every 60 frames, temporarily changed for debugging
 
 
     public Arena(){
@@ -51,7 +55,7 @@ public class Arena implements Drawable {
                grid.integrateGrid(activePuyo);
                while (grid.applyGravity()) { /* Do nothing...*/ }
 
-                // Check if the Puyo pair can even spawn
+                // Check if the puyo.Puyo pair can even spawn
                 if (grid.isEmpty(2,0) && grid.isEmpty(3,0)) {
                     activePuyo = PuyoPair.spawnPuyoPair();
                 } else { // In this case, the game would be over... Handle that logic later.

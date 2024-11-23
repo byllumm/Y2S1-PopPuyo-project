@@ -1,3 +1,5 @@
+package puyoUtils;
+
 import customExceptions.ColorException;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class Color {
 
     public Color(String color) {
         if (!colorMap.containsKey(color)) {
-            throw new ColorException("Color " + color + " is not supported!");
+            throw new ColorException("puyo.Color " + color + " is not supported!");
         }
         colorHex = colorMap.get(color);
     }

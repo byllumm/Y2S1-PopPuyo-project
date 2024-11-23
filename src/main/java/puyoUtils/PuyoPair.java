@@ -1,6 +1,10 @@
-import com.googlecode.lanterna.graphics.TextGraphics;
+package puyoUtils;
 
-public class PuyoPair implements Drawable{
+import com.googlecode.lanterna.graphics.TextGraphics;
+import elements.Drawable;
+import elements.Puyo;
+
+public class PuyoPair implements Drawable {
     private Puyo firstPuyo;
     private Puyo secondPuyo;
     private RotationState rotationState;
@@ -63,7 +67,7 @@ public class PuyoPair implements Drawable{
         return new PuyoPair(firstPuyo, secondPuyo);
     }
 
-    //Makes a Puyo Pair fall down
+    //Makes a puyo.Puyo Pair fall down
     public void moveDown() {
         Position firstPos = this.getFirstPos();
         Position secondPos = this.getSecondPos();

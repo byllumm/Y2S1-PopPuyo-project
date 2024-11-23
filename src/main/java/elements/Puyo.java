@@ -1,7 +1,11 @@
+package elements;
+
 import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import puyoUtils.Color;
+import puyoUtils.Position;
 
 public class Puyo implements Drawable {
     private Position position;
@@ -23,7 +27,7 @@ public class Puyo implements Drawable {
     @Override
     public void draw(TextGraphics graphics) {
         Color puyoColor = getColor();
-        graphics.setBackgroundColor(TextColor.Factory.fromString(puyoColor.colorHex));
+        graphics.setBackgroundColor(TextColor.Factory.fromString(puyoColor.getColor()));
         graphics.enableModifiers(SGR.BOLD);
         graphics.putString(new TerminalPosition(position.getX(), position.getY()), " ");
     }

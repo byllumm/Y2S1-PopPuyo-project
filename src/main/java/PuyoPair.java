@@ -18,12 +18,10 @@ public class PuyoPair implements Drawable{
     public Puyo getFirstPuyo(){
         return firstPuyo;
     }
-
     public Puyo getSecondPuyo(){
         return secondPuyo;
     }
 
-    //Wrapper functions
     public Position getFirstPos(){
         return firstPuyo.getPosition();
     }
@@ -48,10 +46,29 @@ public class PuyoPair implements Drawable{
         int y = this.getSecondPos().getY();
         return new Position(x - 1, y);
     }
+
     public Position rotateRight(){
         int x = this.getFirstPos().getX();
         int y = this.getSecondPos().getY();
         return new Position(x + 1, y);
+    }
+
+    public static PuyoPair spawnPuyoPair() {
+        Position firstPos = new Position(2, 0);
+        Position secondPos = new Position(3, 0);
+
+        Puyo firstPuyo = new Puyo(firstPos);
+        Puyo secondPuyo = new Puyo(secondPos);
+
+        return new PuyoPair(firstPuyo, secondPuyo);
+    }
+
+    //Makes a Puyo Pair fall down
+    public void moveDown() {
+        Position firstPos = this.getFirstPos();
+        Position secondPos = this.getSecondPos();
+        firstPuyo.getPosition().setY(firstPos.getY() + 1);
+        secondPuyo.getPosition().setY(secondPos.getY() + 1);
     }
 
     @Override

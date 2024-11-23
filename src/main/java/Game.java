@@ -90,7 +90,6 @@ public class Game implements Runnable{
         }
     }
 
-
     public void draw() throws IOException{
         arena.draw(graphics);
         screen.refresh();

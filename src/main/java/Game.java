@@ -19,11 +19,13 @@ public class Game implements Runnable {
         arena = new Arena();
     }
 
+    // Starts game thread
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
         arena.processKey(key);
 
@@ -33,6 +35,7 @@ public class Game implements Runnable {
         }
     }
 
+    // Game loop, if the drawInterval has been passed, we update, process new input and redraw
     @Override
     public void run() {
         startGameThread();
@@ -64,9 +67,8 @@ public class Game implements Runnable {
         }
     }
 
-
     public void draw() throws IOException{
-        gameScreen.getScreen().clear();
+        gameScreen.getScreen().clear(); // This makes the screen flick some times, but at least the puyos themselves don't flick alone on random places
         arena.draw(gameScreen.getGraphics());
         gameScreen.getScreen().refresh();
     }

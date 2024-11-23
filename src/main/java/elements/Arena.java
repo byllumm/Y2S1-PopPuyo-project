@@ -4,6 +4,8 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import puyoUtils.Position;
 import puyoUtils.PuyoPair;
 
@@ -31,35 +33,62 @@ public class Arena implements Drawable {
                 secondPos.getY() + 1 < GameGrid.ROWS && grid.isEmpty(secondPos.getY() + 1,secondPos.getX()));
     }
 
-
-    //Makes puyos fall down
-    public void moveDown(PuyoPair activePuyo) {
+    public boolean canMoveLeft(PuyoPair activePuyo){
         Position firstPos = activePuyo.getFirstPos();
+
+        return(firstPos.getX() - 1 >= 0 && grid.isEmpty(firstPos.getY(), firstPos.getX() - 1));
+    }
+
+    public boolean canMoveRight(PuyoPair activePuyo){
         Position secondPos = activePuyo.getSecondPos();
-        firstPos.setY(firstPos.getY() + 1);
-        secondPos.setY(secondPos.getY() + 1);
+
+        return (secondPos.getX() + 1 < GameGrid.COLUMNS && grid.isEmpty(secondPos.getY(), secondPos.getX() + 1));
+    }
+
+
+    public boolean gameOver(){
+        return (!grid.isEmpty(0, 2) || !grid.isEmpty(0, 3));
+    }
+
+    public void processKey(KeyStroke key){
+        switch(key.getKeyType()){
+            case ArrowLeft:
+                if(canMoveLeft(activePuyo)){
+                    activePuyo.moveLeft();
+                }
+                break;
+            case ArrowRight:
+                if(canMoveRight(activePuyo)){
+                    activePuyo.moveRight();
+                }
+                break;
+
+            case ArrowDown:
+                if(canMoveDown(activePuyo)){
+                    activePuyo.moveDown();
+                }
+                break;
+        }
     }
 
 
     //Update game every frame, making puyos fall and checking if they hit the static puyos
-    public void update(TextGraphics graphics) {
+    public void update() {
 
         //Process input function (need to make a function)
         //Also a rotate function to help the input function
         autoDropCounter++;
         if(autoDropCounter == Arena.dropInterval){
             if (canMoveDown(activePuyo)) {
-                moveDown(activePuyo);
+                activePuyo.moveDown();
             }
             else {
                grid.integrateGrid(activePuyo);
                while (grid.applyGravity()) { /* Do nothing...*/ }
 
                 // Check if the puyo.Puyo pair can even spawn
-                if (grid.isEmpty(2,0) && grid.isEmpty(3,0)) {
+                if (grid.isEmpty(0,2) && grid.isEmpty(0,3)) {
                     activePuyo = PuyoPair.spawnPuyoPair();
-                } else { // In this case, the game would be over... Handle that logic later.
-                    /*Code for Game ending*/
                 }
             }
 

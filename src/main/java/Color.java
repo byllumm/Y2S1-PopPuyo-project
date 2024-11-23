@@ -11,12 +11,12 @@ public class Color {
 
     // Call only once
     static {
-        colorMap = new HashMap<String, String>();
-        colorMap.put("blue", "#0000FF");
-        colorMap.put("green", "#00FF00");
-        colorMap.put("yellow", "#FFFF00");
-        colorMap.put("red", "#FF0000");
-        colorMap.put("purple", "#8A00C2");
+        colorMap = new HashMap<>();
+        colorMap.put("blue", "#0080C0");
+        colorMap.put("green", "#60C060");
+        colorMap.put("yellow", "#E0E040");
+        colorMap.put("red", "#802000");
+        colorMap.put("purple", "#A040E0");
     }
 
     public Color(String color) {

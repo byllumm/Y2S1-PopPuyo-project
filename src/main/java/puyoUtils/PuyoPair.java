@@ -57,6 +57,28 @@ public class PuyoPair implements Drawable {
         return new Position(x + 1, y);
     }
 
+    //Makes a puyo.Puyo Pair fall down
+    public void moveDown() {
+        Position firstPos = this.getFirstPos();
+        Position secondPos = this.getSecondPos();
+        firstPuyo.getPosition().setY(firstPos.getY() + 1);
+        secondPuyo.getPosition().setY(secondPos.getY() + 1);
+    }
+
+    public void moveLeft(){
+        Position firstPos = this.getFirstPos();
+        Position secondPos = this.getSecondPos();
+        firstPuyo.getPosition().setX(firstPos.getX() - 1);
+        secondPuyo.getPosition().setX(secondPos.getX() - 1);
+    }
+
+    public void moveRight(){
+        Position firstPos = this.getFirstPos();
+        Position secondPos = this.getSecondPos();
+        firstPuyo.getPosition().setX(firstPos.getX() + 1);
+        secondPuyo.getPosition().setX(secondPos.getX() + 1);
+    }
+
     public static PuyoPair spawnPuyoPair() {
         Position firstPos = new Position(2, 0);
         Position secondPos = new Position(3, 0);
@@ -65,14 +87,6 @@ public class PuyoPair implements Drawable {
         Puyo secondPuyo = new Puyo(secondPos);
 
         return new PuyoPair(firstPuyo, secondPuyo);
-    }
-
-    //Makes a puyo.Puyo Pair fall down
-    public void moveDown() {
-        Position firstPos = this.getFirstPos();
-        Position secondPos = this.getSecondPos();
-        firstPuyo.getPosition().setY(firstPos.getY() + 1);
-        secondPuyo.getPosition().setY(secondPos.getY() + 1);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class GameScreen {
     private Screen screen;
     private TextGraphics graphics;
     private final static int width = 6;
-    private final static int height = 11;
+    private final static int height = 12;
 
     public TextGraphics getGraphics() {
         return graphics;

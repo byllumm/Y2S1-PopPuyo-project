@@ -13,14 +13,16 @@ import java.io.IOException;
 public class Arena implements Drawable {
     private final GameGrid grid = new GameGrid();
     private PuyoPair activePuyo;
+
     int autoDropCounter = 0;
+    public static int dropInterval = 500;// Puyo drop every 60 frames, temporarily changed for debugging
 
-    public static int dropInterval = 500; //puyo.Puyo drop every 60 frames, temporarily changed for debugging
+    public Arena() {activePuyo = PuyoPair.spawnPuyoPair(); }
 
+    public GameGrid getGrid(){ return grid; }
+    public PuyoPair getActivePuyo() { return activePuyo; }
 
-    public Arena(){
-        activePuyo = PuyoPair.spawnPuyoPair();
-    }
+    public PuyoPair setActivePuyo(PuyoPair activePuyo){ return this.activePuyo = activePuyo; }
 
     // Checks if active puyo pair can go down next row
     public boolean canMoveDown(PuyoPair activePuyo){
@@ -34,15 +36,19 @@ public class Arena implements Drawable {
     // Checks if active puyo pair can move to the left
     public boolean canMoveLeft(PuyoPair activePuyo){
         Position firstPos = activePuyo.getFirstPos();
+        Position secondPos = activePuyo.getSecondPos();
 
-        return(firstPos.getX() - 1 >= 0 && grid.isEmpty(firstPos.getY(), firstPos.getX() - 1));
+        return(firstPos.getX() - 1 >= 0 && grid.isEmpty(firstPos.getY(), firstPos.getX() - 1) &&
+                secondPos.getX() - 1 >= 0 && grid.isEmpty(secondPos.getY(), secondPos.getX() - 1));
     }
 
     // Checks if active puyo pair can move to the right
     public boolean canMoveRight(PuyoPair activePuyo){
+        Position firstPos = activePuyo.getFirstPos();
         Position secondPos = activePuyo.getSecondPos();
 
-        return (secondPos.getX() + 1 < GameGrid.COLUMNS && grid.isEmpty(secondPos.getY(), secondPos.getX() + 1));
+        return (secondPos.getX() + 1 < GameGrid.COLUMNS && grid.isEmpty(secondPos.getY(), secondPos.getX() + 1) &&
+                firstPos.getX() + 1 < GameGrid.COLUMNS && grid.isEmpty(firstPos.getY(), firstPos.getX() + 1));
     }
 
     // Checks if a position is available or not, by checking if cell is currently empty and positions are within the limits of the grid
@@ -58,7 +64,7 @@ public class Arena implements Drawable {
     }
 
     // If there's no space to spawn a new puyo pair game over (later should be changed)
-    public boolean gameOver(){
+    public boolean gameOver(GameGrid grid){
         return (!grid.isEmpty(0, 2) || !grid.isEmpty(0, 3));
     }
 

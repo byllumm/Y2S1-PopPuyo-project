@@ -29,7 +29,7 @@ public class Game implements Runnable {
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
         arena.processKey(key);
 
-        if(arena.gameOver()){
+        if(arena.gameOver(arena.getGrid())){
             gameScreen.getScreen().close();
             gameThread.join();
         }

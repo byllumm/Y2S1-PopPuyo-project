@@ -5,7 +5,7 @@ import elements.puyo_utils.Position;
 import elements.puyo_utils.PuyoPair;
 
 public class GameGrid implements Drawable {
-    public static final int ROWS = 11;
+    public static final int ROWS = 12;
     public static final int COLUMNS = 6;
     private Puyo[][] grid;
 

@@ -42,9 +42,9 @@ public class PuyoTest {
     @Test
     void testSetPosition(){
         Position newPos = new Position(1, 2);
-        Position updatePos = puyo.setPosition(newPos);
+        puyo.setPosition(newPos);
 
-        assertEquals(newPos, updatePos);
+        assertEquals(newPos, puyo.getPosition());
     }
 
     @Test

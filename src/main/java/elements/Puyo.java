@@ -19,11 +19,13 @@ public class Puyo implements Drawable {
     public Position getPosition() {
         return position;
     }
-
-    public Position setPosition(Position position) { return this.position = position; }
-
     public Color getColor() {
         return color;
+    }
+
+    public void setPosition(Position position) { this.position = position; }
+    public void setColor(Color ColorHex) {
+        this.color = color;
     }
 
     @Override

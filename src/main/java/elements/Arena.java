@@ -29,8 +29,8 @@ public class Arena implements Drawable {
     public GameGrid getGrid(){ return grid; }
     public PuyoPair getActivePuyo() { return activePuyo; }
 
-    public PuyoPair setActivePuyo(PuyoPair activePuyo){ return this.activePuyo = activePuyo; }
-    public GameGrid setGrid(GameGrid grid){ return this.grid = grid; }
+    public void setActivePuyo(PuyoPair activePuyo){ this.activePuyo = activePuyo; }
+    public void setGrid(GameGrid grid){ this.grid = grid; }
 
     // Checks if active puyo pair can go down next row
     public boolean canMoveDown(PuyoPair activePuyo){

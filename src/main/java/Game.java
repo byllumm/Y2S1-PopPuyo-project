@@ -1,12 +1,10 @@
 import elements.Arena;
-import elements.GameScreen;
+import gui.GameScreen;
 
-import javax.swing.*;
 import com.googlecode.lanterna.input.KeyStroke;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.security.Key;
 
 public class Game implements Runnable {
     private final static int FPS = 60;
@@ -69,7 +67,7 @@ public class Game implements Runnable {
 
     public void draw() throws IOException{
         gameScreen.getScreen().clear(); // This makes the screen flick some times, but at least the puyos themselves don't flick alone on random places
-        arena.draw(gameScreen.getGraphics());
+        arena.draw(gameScreen.getGraphics(), null);
         gameScreen.getScreen().refresh();
     }
 }

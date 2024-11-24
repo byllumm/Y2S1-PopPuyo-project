@@ -5,19 +5,23 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
-import puyoUtils.Position;
-import puyoUtils.PuyoPair;
+import elements.puyo_utils.Position;
+import elements.puyo_utils.PuyoPair;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Arena implements Drawable {
     private GameGrid grid;
+    private final SpriteLoader backgroundLoader;
     private PuyoPair activePuyo;
 
     int autoDropCounter = 0;
     public static int dropInterval = 500;// Puyo drop every 60 frames, temporarily changed for debugging
 
-    public Arena() {
+    public Arena() throws IOException {
+        URL resourceURL = SpriteLoader.pathToURL("/sprites/background/temporary_background.png");
+        backgroundLoader = new SpriteLoader(resourceURL);
         activePuyo = PuyoPair.spawnPuyoPair();
         grid = new GameGrid();
     }
@@ -128,6 +132,8 @@ public class Arena implements Drawable {
     //Update game every frame, making puyos fall and checking if they hit the static puyos
     public void update() {
 
+        //Process input function (need to make a function)
+        //Also a rotate function to help the input function
         autoDropCounter++;
         if(autoDropCounter == Arena.dropInterval){
             if (canMoveDown(activePuyo)) {
@@ -140,6 +146,8 @@ public class Arena implements Drawable {
                 // Check if the puyo.Puyo pair can even spawn
                 if (grid.isEmpty(0,2) && grid.isEmpty(0,3)) {
                     activePuyo = PuyoPair.spawnPuyoPair();
+                } else { // In this case, the game would be over... Handle that logic later.
+                    /*Code for Game ending*/
                 }
             }
 
@@ -148,10 +156,13 @@ public class Arena implements Drawable {
     }
 
     @Override
-    public void draw(TextGraphics graphics) throws IOException {
+    public void draw(TextGraphics graphics, Position corner) throws IOException {
+        /* Original Background code, halted for now
         graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(GameGrid.COLUMNS, GameGrid.ROWS), ' ');
-        activePuyo.draw(graphics);
-        grid.draw(graphics);
+         */
+        backgroundLoader.draw(graphics, new Position(0, 0));
+        activePuyo.draw(graphics, null);
+        grid.draw(graphics, null);
     }
 }

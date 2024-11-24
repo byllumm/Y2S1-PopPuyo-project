@@ -7,7 +7,7 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import custom_exceptions.ResourceException;
-import puyo_utils.Position;
+import elements.puyo_utils.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -18,11 +18,18 @@ public class SpriteLoader implements Drawable {
     private BufferedImage sprite;
     private int width;
     private int height;
-    private String[][] pixelMatrix; // Each element of the matrix will have the hex code of the pixel. null if transparent.
+    private int scalingFactor = 1;      // By default, scaling is set to 1
+    private String[][] pixelMatrix;     // Each element of the matrix will have the hex code of the pixel. null if transparent.
 
     public SpriteLoader(URL resourceURL) throws IOException {
         loadImage(resourceURL);
         spriteToPixels();
+    }
+
+    public SpriteLoader(URL resourceURL, int scalingFactor) throws IOException {
+        loadImage(resourceURL);
+        spriteToPixels();
+        this.scalingFactor = scalingFactor;
     }
 
     public void loadImage(URL resourceURL) throws IOException {
@@ -32,6 +39,7 @@ public class SpriteLoader implements Drawable {
         pixelMatrix = new String[width][height];
     }
 
+    // Converts a file path into a resourceURL so that ImageIO can take the resource image
     public static URL pathToURL(String resourcePath) throws ResourceException {
         URL resourceURL = SpriteLoader.class.getResource(resourcePath);
         if (resourceURL == null) {
@@ -57,13 +65,21 @@ public class SpriteLoader implements Drawable {
         }
     }
 
+    // SCALING FEATURE IS UNTESTED!
     public void draw(TextGraphics graphics, Position corner) {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (pixelMatrix[x][y] != null) {
                     graphics.setBackgroundColor(TextColor.Factory.fromString(pixelMatrix[x][y]));
                     graphics.enableModifiers(SGR.BOLD);
-                    graphics.putString(new TerminalPosition(corner.getX() + x, corner.getY() + y), " ");
+
+                    // Apply scaling factor
+                    for (int scaledX = 0; scaledX < scalingFactor; scaledX++) {
+                        for (int scaledY = 0; scaledY < scalingFactor; scaledY++) {
+                            graphics.putString(new TerminalPosition(corner.getX() + (x * scalingFactor) + scaledX,
+                                                                corner.getY() + (y * scalingFactor) + scaledY), " ");
+                        }
+                    }
                 }
             }
         }

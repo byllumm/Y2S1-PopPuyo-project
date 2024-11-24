@@ -1,7 +1,7 @@
 import custom_exceptions.ColorException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import puyo_utils.Color;
+import elements.puyo_utils.Color;
 
 public class ColorTest {
     @Test

@@ -1,8 +1,8 @@
 package elements;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import puyo_utils.Position;
-import puyo_utils.PuyoPair;
+import elements.puyo_utils.Position;
+import elements.puyo_utils.PuyoPair;
 
 import java.io.IOException;
 import java.net.URL;

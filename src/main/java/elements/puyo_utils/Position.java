@@ -1,4 +1,4 @@
-package puyo_utils;
+package elements.puyo_utils;
 
 public class Position {
     private int x, y;

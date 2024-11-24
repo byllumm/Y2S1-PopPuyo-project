@@ -4,8 +4,8 @@ import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import puyo_utils.Color;
-import puyo_utils.Position;
+import elements.puyo_utils.Color;
+import elements.puyo_utils.Position;
 
 public class Puyo implements Drawable {
     private Position position;

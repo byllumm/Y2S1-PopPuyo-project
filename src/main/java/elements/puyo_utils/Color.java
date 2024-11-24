@@ -1,4 +1,4 @@
-package puyo_utils;
+package elements.puyo_utils;
 
 import custom_exceptions.ColorException;
 

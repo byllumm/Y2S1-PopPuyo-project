@@ -11,18 +11,22 @@ import puyoUtils.PuyoPair;
 import java.io.IOException;
 
 public class Arena implements Drawable {
-    private final GameGrid grid = new GameGrid();
+    private GameGrid grid;
     private PuyoPair activePuyo;
 
     int autoDropCounter = 0;
     public static int dropInterval = 500;// Puyo drop every 60 frames, temporarily changed for debugging
 
-    public Arena() {activePuyo = PuyoPair.spawnPuyoPair(); }
+    public Arena() {
+        activePuyo = PuyoPair.spawnPuyoPair();
+        grid = new GameGrid();
+    }
 
     public GameGrid getGrid(){ return grid; }
     public PuyoPair getActivePuyo() { return activePuyo; }
 
     public PuyoPair setActivePuyo(PuyoPair activePuyo){ return this.activePuyo = activePuyo; }
+    public GameGrid setGrid(GameGrid grid){ return this.grid = grid; }
 
     // Checks if active puyo pair can go down next row
     public boolean canMoveDown(PuyoPair activePuyo){

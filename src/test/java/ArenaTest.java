@@ -1,5 +1,3 @@
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 import elements.GameGrid;
 import elements.Puyo;
 import puyoUtils.Position;
@@ -11,11 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 
-import javax.swing.*;
-
-import java.lang.reflect.Field;
-import java.security.Key;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -35,9 +34,9 @@ public class ArenaTest {
     @Test
     void testCanMoveDown(){
         when(puyoPairMock.getFirstPos()).thenReturn(new Position(1, 2));
-        when(puyoPairMock.getSecondPos()).thenReturn(new Position(1, 3));
-        when(gridMock.isEmpty(2, 2)).thenReturn(true);
-        when(gridMock.isEmpty(2, 3)).thenReturn(true);
+        when(puyoPairMock.getSecondPos()).thenReturn(new Position(2, 2));
+        when(gridMock.isEmpty(3, 1)).thenReturn(true);
+        when(gridMock.isEmpty(3, 2)).thenReturn(true);
 
         boolean canMove = arena.canMoveDown(puyoPairMock);
         assertTrue(canMove);
@@ -46,9 +45,9 @@ public class ArenaTest {
     @Test
     void testCanMoveLeft(){
         when(puyoPairMock.getFirstPos()).thenReturn(new Position(1, 2));
-        when(puyoPairMock.getSecondPos()).thenReturn(new Position(1, 3));
-        when(gridMock.isEmpty(1, 1)).thenReturn(true);
-        when(gridMock.isEmpty(1, 2)).thenReturn(true);
+        when(puyoPairMock.getSecondPos()).thenReturn(new Position(2, 2));
+        when(gridMock.isEmpty(2, 0)).thenReturn(true);
+        when(gridMock.isEmpty(2, 1)).thenReturn(true);
 
         boolean canMove = arena.canMoveLeft(puyoPairMock);
         assertTrue(canMove);
@@ -57,9 +56,9 @@ public class ArenaTest {
     @Test
     void testCanMoveRight(){
         when(puyoPairMock.getFirstPos()).thenReturn(new Position(1, 2));
-        when(puyoPairMock.getSecondPos()).thenReturn(new Position(1, 3));
-        when(gridMock.isEmpty(1, 3)).thenReturn(true);
-        when(gridMock.isEmpty(1, 4)).thenReturn(true);
+        when(puyoPairMock.getSecondPos()).thenReturn(new Position(2, 2));
+        when(gridMock.isEmpty(2, 2)).thenReturn(true);
+        when(gridMock.isEmpty(2, 3)).thenReturn(true);
 
         boolean canMove = arena.canMoveRight(puyoPairMock);
         assertTrue(canMove);
@@ -90,14 +89,14 @@ public class ArenaTest {
 
         when(firstPosMock.getX()).thenReturn(1);
         when(firstPosMock.getY()).thenReturn(2);
-        when(secondPosMock.getX()).thenReturn(1);
-        when(secondPosMock.getY()).thenReturn(3);
+        when(secondPosMock.getX()).thenReturn(2);
+        when(secondPosMock.getY()).thenReturn(2);
 
         when(puyoPairMock.getFirstPos()).thenReturn(firstPosMock);
         when(puyoPairMock.getSecondPos()).thenReturn(secondPosMock);
 
         Arena arenaMock = mock(Arena.class);
-        when(arenaMock.canMoveDown(any(PuyoPair.class))).thenReturn(true);
+        when(arenaMock.canMoveLeft(any(PuyoPair.class))).thenReturn(true);
 
         doAnswer(invocation -> {
             when(firstPosMock.getX()).thenReturn(0);
@@ -111,9 +110,116 @@ public class ArenaTest {
 
         arena.processKey(key);
 
-        // Verify that the first Puyo's X position is now 0 after moving left
         assertEquals(0, arena.getActivePuyo().getFirstPos().getX());
-
     }
-    
+
+    @Test
+    void testProcessKeyRight() {
+        Position firstPosMock = mock(Position.class);
+        Position secondPosMock = mock(Position.class);
+
+        when(firstPosMock.getX()).thenReturn(1);
+        when(firstPosMock.getY()).thenReturn(2);
+        when(secondPosMock.getX()).thenReturn(2);
+        when(secondPosMock.getY()).thenReturn(2);
+
+        when(puyoPairMock.getFirstPos()).thenReturn(firstPosMock);
+        when(puyoPairMock.getSecondPos()).thenReturn(secondPosMock);
+
+        Arena arenaMock = mock(Arena.class);
+        when(arenaMock.canMoveRight(any(PuyoPair.class))).thenReturn(true);
+
+        doAnswer(invocation -> {
+            when(firstPosMock.getX()).thenReturn(2);
+            return null;
+        }).when(puyoPairMock).moveRight();
+
+        arena.setActivePuyo(puyoPairMock);
+
+        KeyStroke key = mock(KeyStroke.class);
+        when(key.getKeyType()).thenReturn(KeyType.ArrowRight);
+
+        arena.processKey(key);
+
+        assertEquals(2, arena.getActivePuyo().getFirstPos().getX());
+    }
+
+    @Test
+    void testProcessKeyDown() {
+        Position firstPosMock = mock(Position.class);
+        Position secondPosMock = mock(Position.class);
+
+        when(firstPosMock.getX()).thenReturn(1);
+        when(firstPosMock.getY()).thenReturn(2);
+        when(secondPosMock.getX()).thenReturn(2);
+        when(secondPosMock.getY()).thenReturn(2);
+
+        when(puyoPairMock.getFirstPos()).thenReturn(firstPosMock);
+        when(puyoPairMock.getSecondPos()).thenReturn(secondPosMock);
+
+        Arena arenaMock = mock(Arena.class);
+        when(arenaMock.canMoveDown(any(PuyoPair.class))).thenReturn(true);
+
+        doAnswer(invocation -> {
+            when(firstPosMock.getY()).thenReturn(3);
+            return null;
+        }).when(puyoPairMock).moveDown();
+
+        arena.setActivePuyo(puyoPairMock);
+
+        KeyStroke key = mock(KeyStroke.class);
+        when(key.getKeyType()).thenReturn(KeyType.ArrowDown);
+
+        arena.processKey(key);
+
+        assertEquals(3, arena.getActivePuyo().getFirstPos().getY());
+    }
+
+/*    @Test
+    void testProcessKeyRotateClockwise() throws IllegalAccessException, NoSuchFieldException {
+        Position firstPosMock = mock(Position.class);
+        Position secondPosMock = mock(Position.class);
+        Puyo[][] mockGrid = new Puyo[GameGrid.ROWS][GameGrid.COLUMNS];
+
+        when(firstPosMock.getX()).thenReturn(1);
+        when(firstPosMock.getY()).thenReturn(2);
+        when(secondPosMock.getX()).thenReturn(2);
+        when(secondPosMock.getY()).thenReturn(2);
+
+        when(puyoPairMock.getFirstPos()).thenReturn(firstPosMock);
+        when(puyoPairMock.getSecondPos()).thenReturn(secondPosMock);
+        when(gridMock.getGrid()).thenReturn(mockGrid);
+
+        when(arena.isValidPosition(any(Position.class), any(GameGrid.class))).thenReturn(true);
+
+        doAnswer(invocation -> {
+            when(secondPosMock.getX()).thenReturn(1);
+            return null;
+        }).when(puyoPairMock).rotate(true);
+
+        arena.setActivePuyo(puyoPairMock);
+        arena.setGrid(gridMock);
+
+        KeyStroke key = mock(KeyStroke.class);
+        when(key.getKeyType()).thenReturn(KeyType.Character);
+        when(key.getCharacter()).thenReturn('x');
+
+        arena.processKey(key);
+        assertEquals(1, arena.getActivePuyo().getSecondPos().getX());
+    }
+
+    @Test
+    void testUpdateIntegratesGrid() {
+    }*/
+
+    @Test
+    void testDraw() throws IOException {
+        TextGraphics graphics = mock(TextGraphics.class);
+
+        arena.draw(graphics);
+
+        verify(graphics).setBackgroundColor(TextColor.Factory.fromString("#001326"));
+        verify(graphics).fillRectangle(new TerminalPosition(0, 0), new TerminalSize(GameGrid.COLUMNS, GameGrid.ROWS), ' ');
+        verify(graphics, times(1)).fillRectangle(any(), any(), eq(' '));
+    }
 }

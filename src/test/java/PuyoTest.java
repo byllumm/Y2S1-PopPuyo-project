@@ -1,6 +1,6 @@
 import elements.Puyo;
-import puyoUtils.Position;
-import puyoUtils.Color;
+import elements.puyo_utils.Position;
+import elements.puyo_utils.Color;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +75,7 @@ public class PuyoTest {
         Color puyoColor = puyo.getColor();
         Position puyoPos = puyo.getPosition();
 
-        puyo.draw(graphics);
+        puyo.draw(graphics, null);
 
         verify(graphics).setBackgroundColor(TextColor.Factory.fromString(puyoColor.getColor()));
         verify(graphics).enableModifiers(SGR.BOLD);

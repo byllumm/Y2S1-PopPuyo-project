@@ -1,7 +1,7 @@
 import elements.GameGrid;
 import elements.Puyo;
-import puyoUtils.Position;
-import puyoUtils.PuyoPair;
+import elements.puyo_utils.Position;
+import elements.puyo_utils.PuyoPair;
 import elements.Arena;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ public class ArenaTest {
     private PuyoPair puyoPairMock;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws IOException {
         arena = new Arena();
         gridMock = mock(GameGrid.class);
         puyoPairMock = mock(PuyoPair.class);
@@ -216,7 +216,7 @@ public class ArenaTest {
     void testDraw() throws IOException {
         TextGraphics graphics = mock(TextGraphics.class);
 
-        arena.draw(graphics);
+        arena.draw(graphics, null);
 
         verify(graphics).setBackgroundColor(TextColor.Factory.fromString("#001326"));
         verify(graphics).fillRectangle(new TerminalPosition(0, 0), new TerminalSize(GameGrid.COLUMNS, GameGrid.ROWS), ' ');

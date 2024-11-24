@@ -157,11 +157,10 @@ public class Arena implements Drawable {
 
     @Override
     public void draw(TextGraphics graphics, Position corner) throws IOException {
-        /* Original Background code, halted for now
+        // Original Background code
         graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(GameGrid.COLUMNS, GameGrid.ROWS), ' ');
-         */
-        backgroundLoader.draw(graphics, new Position(0, 0));
+        // Still in test phase -> backgroundLoader.draw(graphics, new Position(0, 0));
         activePuyo.draw(graphics, null);
         grid.draw(graphics, null);
     }

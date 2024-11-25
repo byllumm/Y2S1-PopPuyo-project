@@ -17,7 +17,7 @@ public class Arena implements Drawable {
     private PuyoPair activePuyo;
 
     int autoDropCounter = 0;
-    public static int dropInterval = 500;// Puyo drop every 60 frames, temporarily changed for debugging
+    public static int dropInterval = 20;// Puyo drop every 60 frames, temporarily changed for debugging
 
     public Arena() throws IOException {
         URL resourceURL = SpriteLoader.pathToURL("/sprites/background/temporary_background.png");
@@ -135,13 +135,14 @@ public class Arena implements Drawable {
         //Process input function (need to make a function)
         //Also a rotate function to help the input function
         autoDropCounter++;
-        if(autoDropCounter == Arena.dropInterval){
+        System.out.println(autoDropCounter + " " + Arena.dropInterval);
+        if(autoDropCounter >= Arena.dropInterval){
             if (canMoveDown(activePuyo)) {
                 activePuyo.moveDown();
             }
             else {
                grid.integrateGrid(activePuyo);
-               while (grid.applyGravity()) { }
+               while (grid.applyGravity()) {/* do nothing */ }
 
                 // Check if the puyo.Puyo pair can even spawn
                 if (grid.isEmpty(0,2) && grid.isEmpty(0,3)) {

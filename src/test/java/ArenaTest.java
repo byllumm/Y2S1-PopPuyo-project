@@ -175,40 +175,24 @@ public class ArenaTest {
         assertEquals(3, arena.getActivePuyo().getFirstPos().getY());
     }
 
-/*    @Test
-    void testProcessKeyRotateClockwise() throws IllegalAccessException, NoSuchFieldException {
-        Position firstPosMock = mock(Position.class);
-        Position secondPosMock = mock(Position.class);
-        Puyo[][] mockGrid = new Puyo[GameGrid.ROWS][GameGrid.COLUMNS];
-
-        when(firstPosMock.getX()).thenReturn(1);
-        when(firstPosMock.getY()).thenReturn(2);
-        when(secondPosMock.getX()).thenReturn(2);
-        when(secondPosMock.getY()).thenReturn(2);
-
-        when(puyoPairMock.getFirstPos()).thenReturn(firstPosMock);
-        when(puyoPairMock.getSecondPos()).thenReturn(secondPosMock);
-        when(gridMock.getGrid()).thenReturn(mockGrid);
-
-        when(arena.isValidPosition(any(Position.class), any(GameGrid.class))).thenReturn(true);
-
-        doAnswer(invocation -> {
-            when(secondPosMock.getX()).thenReturn(1);
-            return null;
-        }).when(puyoPairMock).rotate(true);
-
-        arena.setActivePuyo(puyoPairMock);
-        arena.setGrid(gridMock);
-
+    @Test
+    void testProcessKeyRotateClockwise() {
         KeyStroke key = mock(KeyStroke.class);
         when(key.getKeyType()).thenReturn(KeyType.Character);
         when(key.getCharacter()).thenReturn('x');
 
+        Position position = new Position(1, 2);
+        when(gridMock.getGrid()).thenReturn(new Puyo[GameGrid.ROWS][GameGrid.COLUMNS]);
+
+        when(arena.isValidPosition(position, gridMock)).thenReturn(true);
+
+        arena.setActivePuyo(puyoPairMock);
         arena.processKey(key);
-        assertEquals(1, arena.getActivePuyo().getSecondPos().getX());
+
+        verify(arena.getActivePuyo()).rotate(true);
     }
 
-    @Test
+/*    @Test
     void testUpdateIntegratesGrid() {
     }*/
 

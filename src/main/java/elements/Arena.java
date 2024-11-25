@@ -135,7 +135,7 @@ public class Arena implements Drawable {
         //Process input function (need to make a function)
         //Also a rotate function to help the input function
         autoDropCounter++;
-        System.out.println(autoDropCounter + " " + Arena.dropInterval);
+
         if(autoDropCounter >= Arena.dropInterval){
             if (canMoveDown(activePuyo)) {
                 activePuyo.moveDown();

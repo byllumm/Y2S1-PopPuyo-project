@@ -24,11 +24,6 @@ public class Game implements Runnable {
     public void setArena(Arena arena){ this.arena = arena; }
     public void setGameScreen(GameScreen gameScreen){ this.gameScreen = gameScreen; }
 
-    // Starts game thread
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
 
     // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {

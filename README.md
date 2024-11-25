@@ -19,6 +19,7 @@ Puyos can connect **horizontally** or **vertically** but never diagonally. Once 
 
 ## Mockup
 ![Mockup](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/mockup_final_upscaled.png)
+Special thanks to Matilde Martins (up202306445) for providing the drawing of the Golden Witch!
 
 ## UML Diagram
 ![UML](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/PopPuyoUML.png)

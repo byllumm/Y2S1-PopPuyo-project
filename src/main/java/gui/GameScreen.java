@@ -41,6 +41,7 @@ public class GameScreen {
         ////////////////////////////////////////////////////////////////////////////////////////
         //This block is used to load the square font
         URL resource = getClass().getClassLoader().getResource("fonts/square.ttf");
+        assert resource != null;
         File fontFile = new File(resource.toURI());
         Font font =  Font.createFont(Font.TRUETYPE_FONT, fontFile);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

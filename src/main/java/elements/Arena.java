@@ -141,13 +141,11 @@ public class Arena implements Drawable {
             }
             else {
                grid.integrateGrid(activePuyo);
-               while (grid.applyGravity()) { /* Do nothing...*/ }
+               while (grid.applyGravity()) { }
 
                 // Check if the puyo.Puyo pair can even spawn
                 if (grid.isEmpty(0,2) && grid.isEmpty(0,3)) {
                     activePuyo = PuyoPair.spawnPuyoPair();
-                } else { // In this case, the game would be over... Handle that logic later.
-                    /*Code for Game ending*/
                 }
             }
 

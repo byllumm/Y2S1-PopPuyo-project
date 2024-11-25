@@ -33,6 +33,7 @@ public class Color {
     public String getColor() {
         return colorHex;
     }
+    public void setColor(String colorHex){ this.colorHex = colorHex; }
 
     public static Color getRandomColor(){
         List<String> keys = new ArrayList<>(colorMap.keySet());

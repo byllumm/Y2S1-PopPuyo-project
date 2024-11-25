@@ -17,6 +17,12 @@ public class Game implements Runnable {
         arena = new Arena();
     }
 
+    public Arena getArena(){ return arena; }
+    public GameScreen getGameScreen(){ return gameScreen; }
+
+    public void setArena(Arena arena){ this.arena = arena; }
+    public void setGameScreen(GameScreen gameScreen){ this.gameScreen = gameScreen; }
+
     // Starts game thread
     public void startGameThread() {
         gameThread = new Thread(this);

@@ -1,11 +1,14 @@
 package elements;
 
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import elements.puyo_utils.Position;
 import elements.puyo_utils.PuyoPair;
 
 public class GameGrid implements Drawable {
-    public static final int ROWS = 11;
+    public static final int ROWS = 12;
     public static final int COLUMNS = 6;
     private Puyo[][] grid;
 
@@ -34,7 +37,7 @@ public class GameGrid implements Drawable {
         boolean fell = false;
 
         for (int col = 0; col < COLUMNS; col++) {
-            for (int row = ROWS - 2; row >= 0; row--) {
+            for (int row = ROWS - 2; row >= 0; row--) { // No need to check bottom row, can't fall any further from that
                 if (!isEmpty(row, col) && isEmpty(row + 1, col)) {
                     grid[row + 1][col] = grid[row][col];
                     grid[row][col] = null;
@@ -56,10 +59,15 @@ public class GameGrid implements Drawable {
     }
 
     public void draw(TextGraphics graphics, Position corner) {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
-                if (grid[i][j] != null) {
-                    grid[i][j].draw(graphics, null);
+        for (int col = 0; col < COLUMNS; col++) {
+            for (int row = ROWS - 1; row >= 0; row--) {
+                if (grid[row][col] == null) {
+                    graphics.setBackgroundColor(TextColor.Factory.fromString("#001326")); // Black background
+                }
+                else {
+                    graphics.setBackgroundColor(TextColor.Factory.fromString(grid[row][col].getColor().getColor()));
+                    graphics.enableModifiers(SGR.BOLD);
+                    graphics.putString(new TerminalPosition(col, row), " ");
                 }
             }
         }

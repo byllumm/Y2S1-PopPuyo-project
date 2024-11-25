@@ -26,6 +26,8 @@ public class PuyoPair implements Drawable {
         return secondPuyo;
     }
 
+    public void setFirstPuyo(Puyo firstPuyo){ this.firstPuyo = firstPuyo; }
+    public void setSecondPuyo(Puyo secondPuyo){ this.secondPuyo = secondPuyo; }
 
     public Position getFirstPos(){
         return firstPuyo.getPosition();

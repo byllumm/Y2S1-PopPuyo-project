@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public class SpriteLoader implements Drawable {
+public class SpriteLoader {
     private BufferedImage sprite;
     private int width;
     private int height;

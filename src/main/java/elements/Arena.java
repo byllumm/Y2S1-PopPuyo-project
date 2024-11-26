@@ -1,44 +1,62 @@
 package elements;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
-import elements.puyo_utils.Position;
-import elements.puyo_utils.PuyoPair;
+import graphics.ArenaGraphics;
+import utils.puyoutils.Position;
+import utils.puyoutils.PuyoPair;
 
 import java.io.IOException;
-import java.net.URL;
 
-public class Arena implements Drawable {
+import static elements.GameGrid.*;
+
+public class Arena {
+    // Attributes
     private GameGrid grid;
-    private final SpriteLoader backgroundLoader;
+    private final ArenaGraphics arenaGraphics;
     private PuyoPair activePuyo;
-
     int autoDropCounter = 0;
-    public static int dropInterval = 20;// Puyo drop every 60 frames, temporarily changed for debugging
+    public static int dropInterval = 10;
 
+
+    // Constructor
     public Arena() throws IOException {
-        URL resourceURL = SpriteLoader.pathToURL("/sprites/background/temporary_background.png");
-        backgroundLoader = new SpriteLoader(resourceURL);
+        arenaGraphics = new ArenaGraphics();
         activePuyo = PuyoPair.spawnPuyoPair();
         grid = new GameGrid();
     }
 
-    public GameGrid getGrid(){ return grid; }
-    public PuyoPair getActivePuyo() { return activePuyo; }
 
-    public void setActivePuyo(PuyoPair activePuyo){ this.activePuyo = activePuyo; }
-    public void setGrid(GameGrid grid){ this.grid = grid; }
+    // Getters
+    public GameGrid getGrid() {
+        return grid;
+    }
+
+    public PuyoPair getActivePuyo() {
+        return activePuyo;
+    }
+
+    public ArenaGraphics getArenaGraphics() {
+        return arenaGraphics;
+    }
+
+
+    // Setters
+    public void setActivePuyo(PuyoPair activePuyo) {
+        this.activePuyo = activePuyo;
+    }
+
+    public void setGrid(GameGrid grid) {
+        this.grid = grid;
+    }
+
 
     // Checks if active puyo pair can go down next row
     public boolean canMoveDown(PuyoPair activePuyo){
         Position firstPos = activePuyo.getFirstPos();
         Position secondPos = activePuyo.getSecondPos();
         //do not know if I should put <= or <
-        return(firstPos.getY() + 1 < GameGrid.ROWS && grid.isEmpty(firstPos.getY() + 1, firstPos.getX()) &&
-                secondPos.getY() + 1 < GameGrid.ROWS && grid.isEmpty(secondPos.getY() + 1,secondPos.getX()));
+        return(firstPos.getY() + 1 < ROWS && grid.isEmpty(firstPos.getY() + 1, firstPos.getX()) &&
+                secondPos.getY() + 1 < ROWS && grid.isEmpty(secondPos.getY() + 1,secondPos.getX()));
     }
 
     // Checks if active puyo pair can move to the left
@@ -55,8 +73,8 @@ public class Arena implements Drawable {
         Position firstPos = activePuyo.getFirstPos();
         Position secondPos = activePuyo.getSecondPos();
 
-        return (secondPos.getX() + 1 < GameGrid.COLUMNS && grid.isEmpty(secondPos.getY(), secondPos.getX() + 1) &&
-                firstPos.getX() + 1 < GameGrid.COLUMNS && grid.isEmpty(firstPos.getY(), firstPos.getX() + 1));
+        return (secondPos.getX() + 1 < COLUMNS && grid.isEmpty(secondPos.getY(), secondPos.getX() + 1) &&
+                firstPos.getX() + 1 < COLUMNS && grid.isEmpty(firstPos.getY(), firstPos.getX() + 1));
     }
 
     // Checks if a position is available or not, by checking if cell is currently empty and positions are within the limits of the grid
@@ -64,7 +82,7 @@ public class Arena implements Drawable {
         int x = position.getX();
         int y = position.getY();
 
-        if(x < 0 || x >= GameGrid.COLUMNS || y < 0 || y >= GameGrid.ROWS){
+        if(x < 0 || x >= COLUMNS || y < 0 || y >= ROWS){
             return false;
         }
 
@@ -76,7 +94,7 @@ public class Arena implements Drawable {
         return (!grid.isEmpty(0, 2) || !grid.isEmpty(0, 3));
     }
 
-    // Processes input
+    // Processes input (must be delegated to ArenaController)
     public void processKey(KeyStroke key){
         switch(key.getKeyType()){
             case ArrowLeft: // Active puyo pair should move to the left
@@ -130,7 +148,7 @@ public class Arena implements Drawable {
 
 
     //Update game every frame, making puyos fall and checking if they hit the static puyos
-    public void update() {
+    public void update() throws IOException {
 
         //Process input function (need to make a function)
         //Also a rotate function to help the input function
@@ -152,15 +170,5 @@ public class Arena implements Drawable {
 
             autoDropCounter = 0;
         }
-    }
-
-    @Override
-    public void draw(TextGraphics graphics, Position corner) throws IOException {
-        // Original Background code
-        graphics.setBackgroundColor(TextColor.Factory.fromString("#001326"));
-        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(GameGrid.COLUMNS, GameGrid.ROWS), ' ');
-        // Still in test phase -> backgroundLoader.draw(graphics, new Position(0, 0));
-        activePuyo.draw(graphics, null);
-        grid.draw(graphics, null);
     }
 }

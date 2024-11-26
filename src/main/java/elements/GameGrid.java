@@ -1,36 +1,53 @@
 package elements;
 
-import com.googlecode.lanterna.SGR;
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import elements.puyo_utils.Position;
-import elements.puyo_utils.PuyoPair;
+import graphics.GridGraphics;
+import utils.puyoutils.Position;
+import utils.puyoutils.PuyoPair;
 
-public class GameGrid implements Drawable {
+import java.io.IOException;
+
+public class GameGrid {
+    // Attributes
     public static final int ROWS = 12;
     public static final int COLUMNS = 6;
     private Puyo[][] grid;
+    private GridGraphics gridGraphics;
+    private final Position gridCorner = new Position(8, 8);
 
-    public GameGrid() {
+
+    // Constructor
+    public GameGrid() throws IOException {
         this.grid = new Puyo[ROWS][COLUMNS];
+        gridGraphics = new GridGraphics();
     }
 
+    // Getters
     public Puyo[][] getGrid() {
         return grid;
     }
 
+    public GridGraphics getGridGraphics() {
+        return gridGraphics;
+    }
+
+
+    // Setters
     public void setGrid(Puyo[][] grid) {
         this.grid = grid;
     }
 
-    // Checks if there's any puyos on the cell
-    public boolean isEmpty(int row, int col) {
-        return grid[row][col] == null;
+    public void setGridGraphics(GridGraphics gridGraphics) {
+        this.gridGraphics = gridGraphics;
     }
 
     public void setPuyo(int row, int col, Puyo p) {
         grid[row][col] = p;
+    }
+
+
+    // Checks if there's any puyos on the cell
+    public boolean isEmpty(int row, int col) {
+        return grid[row][col] == null;
     }
 
     public boolean applyGravity() {
@@ -58,18 +75,8 @@ public class GameGrid implements Drawable {
         setPuyo(secondPos.getY(), secondPos.getX(), activePuyo.getSecondPuyo());
     }
 
-    public void draw(TextGraphics graphics, Position corner) {
-        for (int col = 0; col < COLUMNS; col++) {
-            for (int row = ROWS - 1; row >= 0; row--) {
-                if (grid[row][col] == null) {
-                    graphics.setBackgroundColor(TextColor.Factory.fromString("#001326")); // Black background
-                }
-                else {
-                    graphics.setBackgroundColor(TextColor.Factory.fromString(grid[row][col].getColor().getColor()));
-                    graphics.enableModifiers(SGR.BOLD);
-                    graphics.putString(new TerminalPosition(col, row), " ");
-                }
-            }
-        }
+    // Takes a position in the game grid array and turns it into a position in the UI
+    public static Position translatePosition(Position pos) {
+        return new Position(8 + pos.getX() * 32, 8 + pos.getY() * 32);
     }
 }

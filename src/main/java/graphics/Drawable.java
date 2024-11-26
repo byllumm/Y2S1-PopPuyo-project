@@ -1,7 +1,7 @@
-package elements;
+package graphics;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import elements.puyo_utils.Position;
+import utils.puyoutils.Position;
 
 import java.io.IOException;
 

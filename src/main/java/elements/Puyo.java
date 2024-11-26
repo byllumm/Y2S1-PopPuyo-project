@@ -1,38 +1,54 @@
 package elements;
 
-import com.googlecode.lanterna.SGR;
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import elements.puyo_utils.Color;
-import elements.puyo_utils.Position;
+import graphics.PuyoGraphics;
+import utils.puyoutils.Color;
+import utils.puyoutils.Position;
 
-public class Puyo implements Drawable {
+import java.io.IOException;
+
+public class Puyo {
+    // Attributes
     private Position position;
-    private Color color;
+    private PuyoGraphics puyoGraphics;
+    private String color;
 
-    public Puyo(Position position){
+
+    // Constructor
+    public Puyo(Position position) throws IOException {
         this.position = position;
         this.color = Color.getRandomColor();
+        this.puyoGraphics = new PuyoGraphics(color);
+    }
+
+
+    // Getters
+    public PuyoGraphics getPuyoGraphics() {
+        return puyoGraphics;
     }
 
     public Position getPosition() {
         return position;
     }
-    public Color getColor() {
+
+    public String getColor() {
         return color;
     }
 
-    public void setPosition(Position position) { this.position = position; }
-    public void setColor(Color ColorHex) {
+
+    // Setters
+    public void setPuyoGraphics(PuyoGraphics puyoGraphics) {
+        this.puyoGraphics = puyoGraphics;
+    }
+
+    public void setColor(String color) {
         this.color = color;
     }
 
-    @Override
-    public void draw(TextGraphics graphics, Position corner) {
-        Color puyoColor = getColor();
-        graphics.setBackgroundColor(TextColor.Factory.fromString(puyoColor.getColor()));
-        graphics.enableModifiers(SGR.BOLD);
-        graphics.putString(new TerminalPosition(position.getX(), position.getY()), " ");
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setColor(Color ColorHex) {
+        this.color = color;
     }
 }

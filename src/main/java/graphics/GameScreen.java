@@ -1,4 +1,4 @@
-package gui;
+package graphics;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -15,27 +15,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class GameScreen {
+    // Attributes
     private Screen screen;
     private TextGraphics graphics;
-    private final static int width = 6;
-    private final static int height = 12;
+    private final static int width = 390;
+    private final static int height = 400;
 
-    public TextGraphics getGraphics() {
-        return graphics;
-    }
 
-    public void setGraphics(TextGraphics graphics) {
-        this.graphics = graphics;
-    }
-
-    public Screen getScreen() {
-        return screen;
-    }
-
-    public void setScreen(Screen screen) {
-        this.screen = screen;
-    }
-
+    // Constructor
     public GameScreen() throws IOException, FontFormatException, URISyntaxException {
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +33,7 @@ public class GameScreen {
         Font font =  Font.createFont(Font.TRUETYPE_FONT, fontFile);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
-        Font newfont = font.deriveFont(Font.BOLD, 48); // To make things bigger, just increase font size...
+        Font newfont = font.deriveFont(Font.BOLD, 2); // To make things bigger, just increase font size...
         // Not sure if this method would work with sprites though.
         ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,5 +52,25 @@ public class GameScreen {
         screen.doResizeIfNecessary();
 
         graphics = screen.newTextGraphics();
+    }
+
+
+    // Getters
+    public TextGraphics getGraphics() {
+        return graphics;
+    }
+
+    public Screen getScreen() {
+        return screen;
+    }
+
+
+    // Setters
+    public void setGraphics(TextGraphics graphics) {
+        this.graphics = graphics;
+    }
+
+    public void setScreen(Screen screen) {
+        this.screen = screen;
     }
 }

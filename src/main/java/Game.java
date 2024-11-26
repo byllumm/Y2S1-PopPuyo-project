@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import static elements.Arena.isRunning;
 import static elements.GameGrid.*;
 
 public class Game implements Runnable {
@@ -49,7 +50,7 @@ public class Game implements Runnable {
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
         arena.processKey(key);
 
-        if(arena.gameOver(arena.getGrid())){
+        if (arena.gameOver(arena.getGrid()) || !isRunning) {
             gameScreen.getScreen().close();
             gameThread.join();
         }
@@ -106,6 +107,8 @@ public class Game implements Runnable {
 
         arena.getActivePuyo().getFirstPuyo().getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
         arena.getActivePuyo().getSecondPuyo().getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
+
+        arena.getNextPuyoGraphics().draw(gameScreen.getGraphics(), new Position(212, 8));
 
         gameScreen.getScreen().refresh();
     }

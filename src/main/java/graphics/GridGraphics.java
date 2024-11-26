@@ -8,6 +8,7 @@ import java.io.IOException;
 public class GridGraphics implements Drawable {
     // Attributes
     private SpriteLoader gridLoader;
+    //private SpriteLoader
 
 
     // Constructor

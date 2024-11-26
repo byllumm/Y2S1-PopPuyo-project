@@ -1,4 +1,4 @@
-// ! HIGHLY EXPERIMENTAL CLASS
+
 
 package graphics;
 

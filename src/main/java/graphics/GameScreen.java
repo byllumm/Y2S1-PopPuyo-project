@@ -33,7 +33,7 @@ public class GameScreen {
         Font font =  Font.createFont(Font.TRUETYPE_FONT, fontFile);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
-        Font newfont = font.deriveFont(Font.BOLD, 1); // To make things bigger, just increase font size...
+        Font newfont = font.deriveFont(Font.BOLD, 2); // To make things bigger, just increase font size...
         // Not sure if this method would work with sprites though.
         ////////////////////////////////////////////////////////////////////////////////////////
 

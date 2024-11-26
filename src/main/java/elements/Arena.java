@@ -14,6 +14,7 @@ public class Arena {
     private GameGrid grid;
     private final ArenaGraphics arenaGraphics;
     private PuyoPair activePuyo;
+    private PuyoPair nextPuyo;
     int autoDropCounter = 0;
     public static int dropInterval = 10;
 
@@ -22,6 +23,7 @@ public class Arena {
     public Arena() throws IOException {
         arenaGraphics = new ArenaGraphics();
         activePuyo = PuyoPair.spawnPuyoPair();
+        nextPuyo = PuyoPair.spawnPuyoPair();
         grid = new GameGrid();
     }
 
@@ -99,18 +101,18 @@ public class Arena {
         switch(key.getKeyType()){
             case ArrowLeft: // Active puyo pair should move to the left
                 if(canMoveLeft(activePuyo)){
-                    activePuyo.moveLeft();
+                    activePuyo.getController().moveLeft();
                 }
                 break;
             case ArrowRight: // Active puyo pair should move to the right
                 if(canMoveRight(activePuyo)){
-                    activePuyo.moveRight();
+                    activePuyo.getController().moveRight();
                 }
                 break;
 
             case ArrowDown: // Active puyo pair should move down
                 if(canMoveDown(activePuyo)){
-                    activePuyo.moveDown();
+                    activePuyo.getController().moveDown();
                 }
                 break;
 
@@ -118,13 +120,13 @@ public class Arena {
                 // Active puyo pair should rotate clockwise
                 if(key.getCharacter() != null && key.getCharacter() == 'x') {
                     // New position of the second puyo after turning
-                    Position newPos = activePuyo.rotate(true);
+                    Position newPos = activePuyo.getController().rotate(true);
                     // If position is valid can rotate, else it should not and the rotation state goes back to what it was before
                     if (isValidPosition(newPos, grid)) {
                         activePuyo.getSecondPuyo().setPosition(newPos);
                     }
                     else {
-                        activePuyo.revertRotationState(true);
+                        activePuyo.getController().revertRotationState(true);
                     }
 
                 }
@@ -133,14 +135,14 @@ public class Arena {
                 if (key.getCharacter() != null && key.getCharacter() == 'z') {
 
                     // New position of the second puyo after turning
-                    Position newPos = activePuyo.rotate(false);
+                    Position newPos = activePuyo.getController().rotate(false);
 
                     // If position is valid can rotate, else it should not and rotation state goes back to what it was before
                     if(isValidPosition(newPos, grid)){
                         activePuyo.getSecondPuyo().setPosition(newPos);
                     }
                     else{
-                        activePuyo.revertRotationState(false);
+                        activePuyo.getController().revertRotationState(false);
                     }
                 }
         }
@@ -156,7 +158,7 @@ public class Arena {
 
         if(autoDropCounter >= Arena.dropInterval){
             if (canMoveDown(activePuyo)) {
-                activePuyo.moveDown();
+                activePuyo.getController().moveDown();
             }
             else {
                grid.integrateGrid(activePuyo);

@@ -12,7 +12,7 @@ import static elements.GameGrid.*;
 
 public class Game implements Runnable {
     // Attributes
-    private final static int FPS = 30;
+    private final static int FPS = 60; // Higher framerate decreases input latency, somehow
     private Thread gameThread;
     private Arena arena;
     private GameScreen gameScreen;
@@ -64,6 +64,9 @@ public class Game implements Runnable {
         long currentTime;
         KeyStroke key = null;
 
+        // Rendering the background only once significantly improves performance!
+        arena.getArenaGraphics().draw(gameScreen.getGraphics(), null);
+
         while (true) {
             currentTime = System.nanoTime();
 
@@ -91,11 +94,6 @@ public class Game implements Runnable {
     }
 
     public void draw() throws IOException{
-        // Note to Self: to try and improve performance, never clear the screen and only draw on top.
-        //               Would also be wise to only draw the arena once. It's a big file, and it is never drawn on top of.
-        gameScreen.getScreen().clear();
-
-        arena.getArenaGraphics().draw(gameScreen.getGraphics(), null);
         arena.getGrid().getGridGraphics().draw(gameScreen.getGraphics(), new Position(8,8));
 
         for (int col = 0; col < COLUMNS; col++) {

@@ -17,7 +17,6 @@ public class Arena {
     private NextPuyoGraphics nextPuyoGraphics;
     private PuyoPair activePuyo;
     private PuyoPair nextPuyo;
-    public static boolean isRunning = true;
 
 
     // Constructor

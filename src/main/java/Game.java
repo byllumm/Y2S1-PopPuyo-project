@@ -1,31 +1,30 @@
 import elements.Arena;
-import gameStates.GameState;
+import gamestates.GameState;
 import graphics.GameScreen;
-import gameStates.Playing;
+import gamestates.Playing;
 
 import com.googlecode.lanterna.input.KeyStroke;
-import utils.puyoutils.Position;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static elements.Arena.isRunning;
-import static elements.GameGrid.*;
+import static gamestates.Playing.isRunning;
 
 public class Game implements Runnable {
     // Attributes
     private final static int FPS = 60; // Higher framerate decreases input latency, somehow
-    private Thread gameThread;
     private Arena arena;
     private GameScreen gameScreen;
     private Playing playing;
+    private Menu menu;
 
 
     // Constructor
     public Game() throws IOException, FontFormatException, URISyntaxException {
         gameScreen = new GameScreen();
         arena = new Arena();
+        playing = new Playing(arena, gameScreen);
     }
 
 
@@ -37,7 +36,6 @@ public class Game implements Runnable {
     public GameScreen getGameScreen() {
         return gameScreen;
     }
-
 
     // Setters
     public void setArena(Arena arena) {
@@ -72,7 +70,6 @@ public class Game implements Runnable {
 
                 if (arena.gameOver(arena.getGrid()) || !isRunning) {
                     gameScreen.getScreen().close();
-                    gameThread.join();
                 }
                 break;
 

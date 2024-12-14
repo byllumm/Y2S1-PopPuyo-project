@@ -1,4 +1,4 @@
-package gameStates;
+package gamestates;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import elements.Arena;
@@ -25,7 +25,6 @@ public class Playing implements StateMethods{
     }
 
     //Update game every frame, making puyos fall and checking if they hit the static
-    @Override
     public void update() throws IOException{
         autoDropCounter++;
 

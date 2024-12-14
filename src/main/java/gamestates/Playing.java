@@ -54,7 +54,7 @@ public class Playing implements StateMethods{
         arena.getGrid().getGridGraphics().draw(gameScreen.getGraphics(), new Position(8, 8));
 
         for(int col = 0; col < COLUMNS; col++){
-            for(int row = ROWS - 1; row <= 0; row--){
+            for(int row = ROWS - 1; row >= 0; row--){
                 if(!arena.getGrid().isEmpty(row, col)){
                     arena.getGrid().getGrid()[row][col].getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
                 }

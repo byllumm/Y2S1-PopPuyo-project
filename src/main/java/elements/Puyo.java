@@ -6,12 +6,11 @@ import utils.puyoutils.Position;
 
 import java.io.IOException;
 
-public class Puyo {
+public class    Puyo {
     // Attributes
     private Position position;
     private PuyoGraphics puyoGraphics;
     private String color;
-
 
     // Constructor
     public Puyo(Position position) throws IOException {

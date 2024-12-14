@@ -7,12 +7,13 @@ import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 
 import java.io.IOException;
+import java.util.List;
 
 import static elements.GameGrid.*;
 
 public class Arena {
     // Attributes
-    private GameGrid grid;
+    private static GameGrid grid;
     private final ArenaGraphics arenaGraphics;
     private NextPuyoGraphics nextPuyoGraphics;
     private PuyoPair activePuyo;
@@ -33,7 +34,7 @@ public class Arena {
 
 
     // Getters
-    public GameGrid getGrid() {
+    public static GameGrid getGrid() {
         return grid;
     }
 
@@ -88,7 +89,7 @@ public class Arena {
     }
 
     // Checks if a position is available or not, by checking if cell is currently empty and positions are within the limits of the grid
-    public boolean isValidPosition(Position position, GameGrid grid){
+    public static boolean isValidPosition(Position position, GameGrid grid){
         int x = position.getX();
         int y = position.getY();
 
@@ -171,8 +172,28 @@ public class Arena {
                 activePuyo.getController().moveDown();
             }
             else {
-               grid.integrateGrid(activePuyo);
-               while (grid.applyGravity()) {/* do nothing */ }
+                grid.integrateGrid(activePuyo);
+
+                while (grid.applyGravity()) {/* do nothing */ }
+
+                // Handle chain/score logic here
+                List<List<Position>> chains = grid.detectChain();
+
+                // Score isn't being handled yet...
+                while (!chains.isEmpty()) {
+                    for (List<Position> chain : chains) {
+                        for (Position position : chain) {
+                            grid.setPuyo(position.getX(), position.getY(), null); // Remove Puyos in the chain
+                        }
+                    }
+
+                    // Apply gravity after removing chains
+                    while (grid.applyGravity()) { /* do nothing */ }
+
+                    // Detect new chains after gravity settles
+                    chains = grid.detectChain();
+                }
+
 
                 // Check if the puyo.Puyo pair can even spawn
                 if (grid.isEmpty(0,2) && grid.isEmpty(0,3)) {

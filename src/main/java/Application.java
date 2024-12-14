@@ -9,7 +9,7 @@ public class Application{
             Game game = new Game();
             game.run();
         } catch (IOException | FontFormatException | URISyntaxException e) {
-            System.out.println("Error: " + e);
+            System.out.println("Error: " + e.getMessage());
         }
     }
 

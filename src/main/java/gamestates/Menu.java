@@ -3,8 +3,6 @@ package gamestates;
 import com.googlecode.lanterna.input.KeyStroke;
 import elements.MenuButton;
 
-import javax.swing.*;
-
 
 public class Menu implements StateMethods {
 

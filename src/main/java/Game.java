@@ -15,6 +15,7 @@ public class Game implements Runnable {
     // Attributes
     private final static int FPS = 60; // Higher framerate decreases input latency, somehow
     private Arena arena;
+    private Thread gameThread;
     private GameScreen gameScreen;
     private Playing playing;
     private Menu menu;
@@ -70,6 +71,7 @@ public class Game implements Runnable {
 
                 if (arena.gameOver(arena.getGrid()) || !isRunning) {
                     gameScreen.getScreen().close();
+                    gameThread.join();
                 }
                 break;
 

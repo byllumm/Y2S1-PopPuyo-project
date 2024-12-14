@@ -1,5 +1,7 @@
 import elements.Arena;
+import gameStates.GameState;
 import graphics.GameScreen;
+import gameStates.Playing;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import utils.puyoutils.Position;
@@ -17,6 +19,7 @@ public class Game implements Runnable {
     private Thread gameThread;
     private Arena arena;
     private GameScreen gameScreen;
+    private Playing playing;
 
 
     // Constructor
@@ -45,14 +48,51 @@ public class Game implements Runnable {
         this.gameScreen = gameScreen;
     }
 
+    public void update() throws IOException {
+        switch (GameState.state){
+            case MENU:
+                break;
+            case PLAYING:
+                playing.update();
+                break;
+            default:
+                break;
+        }
+    }
+
 
     // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
-        arena.processKey(key);
+        switch(GameState.state){
+            case MENU:
+                break;
 
-        if (arena.gameOver(arena.getGrid()) || !isRunning) {
-            gameScreen.getScreen().close();
-            gameThread.join();
+            case PLAYING:
+                playing.processKey(key);
+
+                if (arena.gameOver(arena.getGrid()) || !isRunning) {
+                    gameScreen.getScreen().close();
+                    gameThread.join();
+                }
+                break;
+
+            default:
+                break;
+
+        }
+    }
+
+    public void draw() throws IOException{
+
+        switch (GameState.state){
+            case MENU:
+                break;
+            case PLAYING:
+                playing.draw();
+                break;
+            default:
+                break;
+
         }
     }
 
@@ -76,7 +116,7 @@ public class Game implements Runnable {
 
             if (delta >= 1) {
                 try {
-                    arena.update();
+                    update();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -92,24 +132,5 @@ public class Game implements Runnable {
                 delta--;
             }
         }
-    }
-
-    public void draw() throws IOException{
-        arena.getGrid().getGridGraphics().draw(gameScreen.getGraphics(), new Position(8,8));
-
-        for (int col = 0; col < COLUMNS; col++) {
-            for (int row = ROWS - 1; row >= 0; row--) {
-                if(!arena.getGrid().isEmpty(row,col)) {
-                    arena.getGrid().getGrid()[row][col].getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
-                }
-            }
-        }
-
-        arena.getActivePuyo().getFirstPuyo().getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
-        arena.getActivePuyo().getSecondPuyo().getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
-
-        arena.getNextPuyoGraphics().draw(gameScreen.getGraphics(), new Position(212, 8));
-
-        gameScreen.getScreen().refresh();
     }
 }

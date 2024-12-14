@@ -142,6 +142,22 @@ public class ArenaTest {
     }
 
     @Test
+    void testProcessKey_RotateClockwise() {
+        KeyStroke key = mock(KeyStroke.class);
+        when(key.getKeyType()).thenReturn(KeyType.Character);
+        when(key.getCharacter()).thenReturn('x');
+
+
+        PuyoPair puyoPair = new PuyoPair(new Puyo(new Position(1, 2)), new Puyo(new Position(2, 2)));
+        Position newSecondPos = new Position(1, 3);
+
+        arena.setActivePuyo(puyoPair);
+        arena.processKey(key);
+
+        assertEquals(puyoPair.getSecondPos(), newSecondPos);
+    }
+
+    @Test
     void testProcessKeyDown() {
         Position firstPosMock = mock(Position.class);
         Position secondPosMock = mock(Position.class);
@@ -177,17 +193,16 @@ public class ArenaTest {
     void testProcessKeyRotateClockwise() {
         KeyStroke key = mock(KeyStroke.class);
         when(key.getKeyType()).thenReturn(KeyType.Character);
-        when(key.getCharacter()).thenReturn('x');
+        when(key.getCharacter()).thenReturn('z');
 
-        Position position = new Position(1, 2);
-        when(gridMock.getGrid()).thenReturn(new Puyo[GameGrid.ROWS][GameGrid.COLUMNS]);
 
-        when(arena.isValidPosition(position, gridMock)).thenReturn(true);
+        PuyoPair puyoPair = new PuyoPair(new Puyo(new Position(1, 2)), new Puyo(new Position(2, 2)));
+        Position newSecondPos = new Position(1, 1);
 
-        arena.setActivePuyo(puyoPairMock);
+        arena.setActivePuyo(puyoPair);
         arena.processKey(key);
 
-        verify(arena.getActivePuyo()).rotate(true);
+        assertEquals(puyoPair.getSecondPos(), newSecondPos);
     }
      */
 

@@ -17,8 +17,6 @@ public class Arena {
     private NextPuyoGraphics nextPuyoGraphics;
     private PuyoPair activePuyo;
     private PuyoPair nextPuyo;
-    int autoDropCounter = 0;
-    public static int dropInterval = 10;
     public static boolean isRunning = true;
 
 
@@ -41,6 +39,10 @@ public class Arena {
         return activePuyo;
     }
 
+    public PuyoPair getNextPuyo(){
+        return nextPuyo;
+    }
+
     public ArenaGraphics getArenaGraphics() {
         return arenaGraphics;
     }
@@ -55,8 +57,16 @@ public class Arena {
         this.activePuyo = activePuyo;
     }
 
+    public void setNextPuyo(PuyoPair nextPuyo){
+        this.nextPuyo = nextPuyo;
+    }
+
     public void setGrid(GameGrid grid) {
         this.grid = grid;
+    }
+
+    public void setNextPuyoGraphics(NextPuyoGraphics nextPuyoGraphics){
+        this.nextPuyoGraphics = nextPuyoGraphics;
     }
 
 
@@ -104,85 +114,5 @@ public class Arena {
         return (!grid.isEmpty(0, 2) || !grid.isEmpty(0, 3));
     }
 
-    // Processes input (must be delegated to ArenaController)
-    public void processKey(KeyStroke key) {
-        switch (key.getKeyType()) {
-            case ArrowLeft: // Active puyo pair should move to the left
-                if (canMoveLeft(activePuyo)) {
-                    activePuyo.getController().moveLeft();
-                }
-                break;
-            case ArrowRight: // Active puyo pair should move to the right
-                if (canMoveRight(activePuyo)) {
-                    activePuyo.getController().moveRight();
-                }
-                break;
 
-            case ArrowDown: // Active puyo pair should move down
-                if (canMoveDown(activePuyo)) {
-                    activePuyo.getController().moveDown();
-                }
-                break;
-
-            case Character:
-                // Active puyo pair should rotate clockwise
-                if (key.getCharacter() != null && key.getCharacter() == 'x') {
-                    // New position of the second puyo after turning
-                    Position newPos = activePuyo.getController().rotate(true);
-                    // If position is valid can rotate, else it should not and the rotation state goes back to what it was before
-                    if (isValidPosition(newPos, grid)) {
-                        activePuyo.getSecondPuyo().setPosition(newPos);
-                    } else {
-                        activePuyo.getController().revertRotationState(true);
-                    }
-                }
-
-                // Active puyo pair should rotate counter-clockwise
-                if (key.getCharacter() != null && key.getCharacter() == 'z') {
-
-                    // New position of the second puyo after turning
-                    Position newPos = activePuyo.getController().rotate(false);
-
-                    // If position is valid can rotate, else it should not and rotation state goes back to what it was before
-                    if(isValidPosition(newPos, grid)){
-                        activePuyo.getSecondPuyo().setPosition(newPos);
-                    } else {
-                        activePuyo.getController().revertRotationState(false);
-                    }
-                }
-
-                // Exit game
-                if (key.getCharacter() != null && key.getCharacter() == 'q') {
-                    isRunning = false;
-                }
-        }
-    }
-
-
-    //Update game every frame, making puyos fall and checking if they hit the static puyos
-    public void update() throws IOException {
-
-        //Process input function (need to make a function)
-        //Also a rotate function to help the input function
-        autoDropCounter++;
-
-        if(autoDropCounter >= Arena.dropInterval){
-            if (canMoveDown(activePuyo)) {
-                activePuyo.getController().moveDown();
-            }
-            else {
-               grid.integrateGrid(activePuyo);
-               while (grid.applyGravity()) {/* do nothing */ }
-
-                // Check if the puyo.Puyo pair can even spawn
-                if (grid.isEmpty(0,2) && grid.isEmpty(0,3)) {
-                    activePuyo = nextPuyo;
-                    nextPuyo = PuyoPair.spawnPuyoPair();
-                    nextPuyoGraphics = new NextPuyoGraphics(nextPuyo.getFirstPuyo().getPuyoGraphics(), nextPuyo.getSecondPuyo().getPuyoGraphics());
-                }
-            }
-
-            autoDropCounter = 0;
-        }
-    }
 }

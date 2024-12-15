@@ -21,6 +21,15 @@ public class ArenaController {
     private NextPuyoViewer nextPuyoViewer;
     private GridController gridController;
     private ScoreController scoreController;
+
+    public StageController getStageController() {
+        return stageController;
+    }
+
+    public void setStageController(StageController stageController) {
+        this.stageController = stageController;
+    }
+
     private StageController stageController;
     private int autoDropCounter = 0;
 

@@ -5,6 +5,8 @@ import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameGrid {
     // Attributes
@@ -73,6 +75,64 @@ public class GameGrid {
 
         setPuyo(firstPos.getY(), firstPos.getX(), activePuyo.getFirstPuyo());
         setPuyo(secondPos.getY(), secondPos.getX(), activePuyo.getSecondPuyo());
+    }
+
+    private static final int[][] adjacent_positions = {
+            {0, 1},  // Right
+            {1, 0},  // Below
+            {0, -1}, // Left
+            {-1, 0}, // Above
+    };
+
+    // Mostly a hack, its a version of isValidPosition that doesn't exclude nulls.
+    // Ideally this would work more elegantly...
+    public static boolean isValidPositionWithNulls(Position pos) {
+        int row = pos.getX();
+        int col = pos.getY();
+        return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS;
+    }
+
+    // Uses a depth-first search to find chains of puyos
+    public List<List<Position>> detectChain() {
+        // might be better to make "visited" an attribute for each puyo
+        boolean[][] visited = new boolean[ROWS][COLUMNS];
+        List<List<Position>> chains = new ArrayList<>();
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                Position pos = new Position(row, col);
+                if (!visited[row][col] && grid[row][col] != null) {
+                    List<Position> chain = new ArrayList<>();
+                    dfs(pos, grid[row][col], visited, chain);
+
+                    // If a chain has 4 or more puyos, it is valid
+                    if (chain.size() >= 4) {
+                        chains.add(chain);
+                    }
+                }
+            }
+        }
+
+        return chains;
+    }
+
+    private void dfs(Position pos, Puyo p, boolean[][] visited, List<Position> chain) {
+        int row = pos.getX();
+        int col = pos.getY();
+
+        // Mark this grid position as visited
+        visited[row][col] = true;
+        chain.add(pos);
+
+        // Explore all neighbours of current puyo
+        for (int[] direction : adjacent_positions) {
+            Position neighbor = new Position(row + direction[0], col + direction[1]);
+
+            if (isValidPositionWithNulls(neighbor) && !visited[neighbor.getX()][neighbor.getY()] &&
+                grid[neighbor.getX()][neighbor.getY()] != null && grid[neighbor.getX()][neighbor.getY()].getColor().equals(p.getColor())) {
+                dfs(neighbor, p, visited, chain);
+            }
+        }
     }
 
     // Takes a position in the game grid array and turns it into a position in the UI

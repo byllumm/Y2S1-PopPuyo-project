@@ -1,5 +1,3 @@
-
-
 package graphics;
 
 import com.googlecode.lanterna.SGR;

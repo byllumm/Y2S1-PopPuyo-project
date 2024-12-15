@@ -15,6 +15,7 @@ public class Arena {
     private PuyoPair activePuyo;
     private PuyoPair nextPuyo;
     private Score score;
+    private Stage stage;
     public static int dropInterval = 10;
     public static boolean isRunning = true;
     public static boolean scored = false;
@@ -26,6 +27,7 @@ public class Arena {
         nextPuyo = PuyoPair.spawnPuyoPair();
         grid = new Grid();
         score = new Score();
+        stage = new Stage();
     }
 
 
@@ -45,6 +47,8 @@ public class Arena {
     public Score getScore() {
         return score;
     }
+
+    public Stage getStage(){ return stage; }
 
 
     // Setters

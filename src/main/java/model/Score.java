@@ -1,7 +1,5 @@
 package model;
 
-import viewer.ScoreViewer;
-
 public class Score {
     // Attributes
     int score = 0;

@@ -15,6 +15,24 @@ public class ScoreController {
         this.scoreViewer = scoreViewer;
     }
 
+    // Setters
+    public Score getScoreModel() {
+        return scoreModel;
+    }
+
+    public ScoreViewer getScoreViewer() {
+        return scoreViewer;
+    }
+
+    // Getters
+    public void setScoreModel(Score scoreModel) {
+        this.scoreModel = scoreModel;
+    }
+
+    public void setScoreViewer(ScoreViewer scoreViewer) {
+        this.scoreViewer = scoreViewer;
+    }
+
     private static final int[] colorBonusTable = new int[6];
     static {
         colorBonusTable[1] = 0;
@@ -36,9 +54,7 @@ public class ScoreController {
         groupBonusTable[11] = 10;
     }
 
-
     // Methods
-
     public int computeGroupBonus(int group) {
         return groupBonusTable[group];
     }

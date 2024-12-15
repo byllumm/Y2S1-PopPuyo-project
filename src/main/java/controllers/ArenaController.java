@@ -6,10 +6,7 @@ import model.Arena;
 import model.Grid;
 import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
-import viewer.ArenaViewer;
-import viewer.GridViewer;
-import viewer.NextPuyoViewer;
-import viewer.ScoreViewer;
+import viewer.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +21,7 @@ public class ArenaController {
     private NextPuyoViewer nextPuyoViewer;
     private GridController gridController;
     private ScoreController scoreController;
+    private StageController stageController;
     private int autoDropCounter = 0;
 
 
@@ -33,6 +31,7 @@ public class ArenaController {
         this.arenaViewer = arenaViewer;
         this.gridController = new GridController(arena.getGrid(), new GridViewer());
         this.scoreController = new ScoreController(arena.getScore(), new ScoreViewer());
+        this.stageController = new StageController(arena.getStage(), new StageViewer());
         this.nextPuyoViewer = new NextPuyoViewer(arenaModel.getNextPuyo().getFirstPuyo().getPuyoViewer(),
                                                     arenaModel.getNextPuyo().getSecondPuyo().getPuyoViewer());
     }
@@ -179,8 +178,15 @@ public class ArenaController {
                 }
 
                 scoreController.updateScore(puyo_in_chain, color_bonus, group_bonus);
+                int currentStage = stageController.getStageModel().getStage();
+                stageController.updateStage(scoreController.getScoreModel().getScore());
+                int afterStage = stageController.getStageModel().getStage();
+                if(currentStage != afterStage){
+                    dropInterval -= 1;
+                }
 
                 System.out.println("Score: " + arenaModel.getScore().getScore());
+                System.out.println("Stage: " + arenaModel.getStage().getStage());
                 System.out.println("Puyos in chain: " + puyo_in_chain);
 
                 // Check if the puyo pair can even spawn

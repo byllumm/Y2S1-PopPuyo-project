@@ -1,6 +1,9 @@
 package game;
 
 import controllers.ArenaController;
+import gamestates.GameState;
+import gamestates.MenuStateController;
+import gamestates.PlayingStateController;
 import model.Arena;
 
 import com.googlecode.lanterna.input.KeyStroke;
@@ -26,6 +29,9 @@ public class Game implements Runnable {
 
     private GameScreen gameScreen;
 
+    private PlayingStateController playingStateController;
+    private MenuStateController menuStateController;
+
 
     // Constructor
     public Game() throws IOException, FontFormatException, URISyntaxException {
@@ -33,6 +39,8 @@ public class Game implements Runnable {
         arenaViewer = new ArenaViewer();
         gameScreen = new GameScreen();
         arenaController = new ArenaController(arena, arenaViewer);
+        playingStateController = new PlayingStateController(arenaController, gameScreen);
+        menuStateController = new MenuStateController();
         gameThread = new Thread(this);
     }
 
@@ -59,69 +67,101 @@ public class Game implements Runnable {
 
     // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
-        arenaController.processKey(key);
-        if (Arena.gameOver(arena.getGrid()) || !isRunning) {
-            gameScreen.getScreen().close();
-            gameThread.join();
-            isRunning = false;
-            System.exit(0);
+        switch(GameState.state){
+            case MENU:
+                menuStateController.processKey(key);
+                break;
+
+            case PLAYING:
+                playingStateController.processKey(key);
+                if(gameOver(arena.getGrid()) || !isRunning){
+                    /* GameState.state = GameState.MENU; */
+                    gameScreen.getScreen().close();
+                    gameThread.join();
+                    isRunning = false;
+                    System.exit(0);
+                    break;
+
+                }
+                break;
+
+            case EXIT:
+                gameScreen.getScreen().close();
+                gameThread.join();
+                isRunning = false;
+                System.exit(0);
+                break;
         }
     }
 
     // game.Game loop, if the drawInterval has been passed, we update, process new input and redraw
     @Override
     public void run() {
-        double drawInterval = 1000000000.0 / FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-        KeyStroke key = null;
-
-        // Rendering the background only once significantly improves performance!
-        arenaController.draw(gameScreen.getGraphics(), null);
-
-        while (isRunning) {
-            currentTime = System.nanoTime();
-
-            delta += (currentTime - lastTime) / drawInterval;
-            lastTime = currentTime;
-
-            if (delta >= 1) {
-                try {
-                    arenaController.update();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+        switch(GameState.state) {
+            case MENU:
+                while(GameState.state == GameState.MENU){
+                    gameScreen.getScreen().clear();
+                    menuStateController.draw();
+                    try {
+                        gameScreen.getScreen().refresh();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                // I had to use a try catch block because since I am using run from runnable it doesn't allow me to implement IOException
-                try {
-                    draw();
-                    key = gameScreen.getScreen().pollInput();
-                    if (key != null) processKey(key);
-                } catch (IOException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                break;
 
-                delta--;
-            }
+
+            case PLAYING:
+                double drawInterval = 1000000000.0 / FPS;
+                double delta = 0;
+                long lastTime = System.nanoTime();
+                long currentTime;
+                KeyStroke key = null;
+
+                // Rendering the background only once significantly improves performance!
+                arenaController.draw(gameScreen.getGraphics(), null);
+
+                while (isRunning) {
+                    currentTime = System.nanoTime();
+
+                    delta += (currentTime - lastTime) / drawInterval;
+                    lastTime = currentTime;
+
+                    if (delta >= 1) {
+                        try {
+                            arenaController.update();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        // I had to use a try catch block because since I am using run from runnable it doesn't allow me to implement IOException
+                        try {
+                            playingStateController.draw();
+                            key = gameScreen.getScreen().pollInput();
+                            if (key != null) processKey(key);
+                        } catch (IOException | InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        delta--;
+
+                    }
+                }
+                break;
         }
+
     }
 
     public void draw() throws IOException{
-        arenaController.getGridController().draw(gameScreen.getGraphics());
 
-        for (int col = 0; col < COLUMNS; col++) {
-            for (int row = ROWS - 1; row >= 0; row--) {
-                if(!isEmpty(row,col)) {
-                    arenaController.getGridController().getGrid().getPuyo(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
-                }
-            }
+        switch(GameState.state){
+            case PLAYING:
+                playingStateController.draw();
+                break;
+
+            case MENU:
+                menuStateController.draw();
+                break;
         }
 
-        arena.getActivePuyo().getFirstPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
-        arena.getActivePuyo().getSecondPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
-
-        arenaController.getNextPuyoViewer().draw(gameScreen.getGraphics(), new Position(212, 8));
-
-        gameScreen.getScreen().refresh();
     }
 }

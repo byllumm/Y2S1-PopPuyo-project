@@ -122,7 +122,7 @@ public class ArenaController {
 
     public void update() throws IOException {
 
-        //Process input function (need to make a function)
+        //Process input function
         //Also a rotate function to help the input function
         autoDropCounter++;
 
@@ -174,7 +174,7 @@ public class ArenaController {
                 System.out.println("Score: " + arenaModel.getScore().getScore());
                 System.out.println("Puyos in chain: " + puyo_in_chain);
 
-                // Check if the puyo.Puyo pair can even spawn
+                // Check if the puyo pair can even spawn
                 if (Grid.isEmpty(0,2) && Grid.isEmpty(0,3)) {
                     arenaModel.setActivePuyo(arenaModel.getNextPuyo());
                     arenaModel.setNextPuyo(PuyoPair.spawnPuyoPair());

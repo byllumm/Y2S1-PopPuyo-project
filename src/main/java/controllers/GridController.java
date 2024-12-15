@@ -115,10 +115,22 @@ public class GridController {
                     grid.getPuyo(neighbor.getX(), neighbor.getY()).getColor().equals(p.getColor())) {
                 // If the neighbor is of the same color, set the adjacency bit to 1, then DFS
                 switch (i) {
-                    case 0: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b1000); break;
-                    case 1: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0100); break;
-                    case 2: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0010); break;
-                    case 3: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0001); break;
+                    case 0: // Right, neighbor is on the left
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b1000);
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0010);
+                        break;
+                    case 1:
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0100);
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0001);
+                        break;
+                    case 2:
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0010);
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b1000);
+                        break;
+                    case 3:
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0001);
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0100);
+                        break;
                 }
                 dfs(neighbor, p, visited, chain);
             } else {
@@ -134,20 +146,23 @@ public class GridController {
 
         // If the adjacency mode changed, update the sprite
         if (adjacencyMode != p.getAdjacent()) {
-            grid.getPuyo(row, col).setPuyoViewer(new PuyoViewer(p.getColor(), p.getAdjacent()));
-            System.out.println("Puyo sprite in position " + row + " " + col + " updated");
-            System.out.println("Adjacency before: " + adjacencyMode + "; adjacency after: " + p.getAdjacent());
-        }
+            updatePuyoSprite(row, col, p);
 
-        for (int[] direction : adjacent_positions) {
-            Position neighbor = new Position(row + direction[0], col + direction[1]);
-
-            if (isValidPositionWithNulls(neighbor) && !visited[neighbor.getX()][neighbor.getY()] &&
-                    grid.getPuyo(neighbor.getX(), neighbor.getY()) != null &&
-                    grid.getPuyo(neighbor.getX(), neighbor.getY()).getColor().equals(p.getColor())) {
-                dfs(neighbor, p, visited, chain);
+            for (int i = 0; i < 4; i++) {
+                Position neighbor = new Position(row + adjacent_positions[i][0], col + adjacent_positions[i][1]);
+                if (isValidPositionWithNulls(neighbor) &&
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()) != null &&
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).getColor().equals(p.getColor())) {
+                    updatePuyoSprite(neighbor.getX(), neighbor.getY(), grid.getPuyo(neighbor.getX(), neighbor.getY()));
+                }
             }
         }
+    }
+
+    public void updatePuyoSprite(int row, int col, Puyo p) throws IOException{
+        PuyoViewer viewer = new PuyoViewer(p.getColor(), p.getAdjacent());
+        p.setPuyoViewer(viewer); // Assign the new viewer to the Puyo
+        System.out.println("Puyo sprite updated at (" + row + ", " + col + ") with adjacency: " + Integer.toBinaryString(p.getAdjacent()));
     }
 
     // Takes a position in the game grid array and turns it into a position in the UI

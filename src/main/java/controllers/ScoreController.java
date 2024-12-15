@@ -3,19 +3,19 @@ package controllers;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Score;
 import utils.puyoutils.Position;
-import viewer.digitDisplayViewer;
+import viewer.DigitDisplayViewer;
 
 public class ScoreController {
     // Attributes
     private Score scoreModel;
-    private digitDisplayViewer digitDisplayViewer;
+    private DigitDisplayViewer scoreViewer;
     private Position[] positions = new Position[8];
 
 
     // Constructor
-    public ScoreController(Score scoreModel, digitDisplayViewer digitDisplayViewer) {
+    public ScoreController(Score scoreModel, DigitDisplayViewer scoreViewer) {
         this.scoreModel = scoreModel;
-        this.digitDisplayViewer = digitDisplayViewer;
+        this.scoreViewer = scoreViewer;
         positions[0] = new Position(257, 31);
         positions[1] = new Position(273, 31);
         positions[2] = new Position(289, 31);
@@ -31,8 +31,8 @@ public class ScoreController {
         return scoreModel;
     }
 
-    public digitDisplayViewer getScoreViewer() {
-        return digitDisplayViewer;
+    public DigitDisplayViewer getScoreViewer() {
+        return scoreViewer;
     }
 
     // Getters
@@ -40,8 +40,8 @@ public class ScoreController {
         this.scoreModel = scoreModel;
     }
 
-    public void setScoreViewer(digitDisplayViewer digitDisplayViewer) {
-        this.digitDisplayViewer = digitDisplayViewer;
+    public void setScoreViewer(DigitDisplayViewer digitDisplayViewer) {
+        this.scoreViewer = digitDisplayViewer;
     }
 
     private static final int[] colorBonusTable = new int[6];
@@ -90,8 +90,8 @@ public class ScoreController {
         String formattedScore = String.format("%08d", score);
         int i = 0;
         for (char c : formattedScore.toCharArray()) {
-            digitDisplayViewer.setCurrentDigit(c - '0');
-            digitDisplayViewer.draw(graphics, positions[i]);
+            scoreViewer.setCurrentDigit(c - '0');
+            scoreViewer.draw(graphics, positions[i]);
             i++;
         }
     }

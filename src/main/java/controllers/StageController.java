@@ -1,17 +1,22 @@
 package controllers;
 
+import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Stage;
-import viewer.StageViewer;
+import utils.puyoutils.Position;
+import viewer.DigitDisplayViewer;
 
 public class StageController {
     // Attributes
     private Stage stageModel;
-    private StageViewer stageViewer;
+    private DigitDisplayViewer stageViewer;
+    private Position[] positions = new Position[2];
 
     // Constructor
-    public StageController(Stage stageModel, StageViewer stageViewer){
+    public StageController(Stage stageModel, DigitDisplayViewer stageViewer){
         this.stageModel = stageModel;
         this.stageViewer = stageViewer;
+        positions[0] = new Position(351,60);
+        positions[1] = new Position(365, 60);
     }
 
     // Getters
@@ -19,7 +24,7 @@ public class StageController {
         return stageModel;
     }
 
-    public StageViewer getStageViewer(){
+    public DigitDisplayViewer getStageViewer(){
         return stageViewer;
     }
 
@@ -28,7 +33,7 @@ public class StageController {
         this.stageModel = stageModel;
     }
 
-    public void setStageViewer(StageViewer stageViewer) {
+    public void setStageViewer(DigitDisplayViewer stageViewer) {
         this.stageViewer = stageViewer;
     }
 
@@ -40,5 +45,14 @@ public class StageController {
         }
     }
 
-
+    public void draw(TextGraphics graphics, Position position) {
+        int score = stageModel.getStage();
+        String formattedStage = String.format("%02d", score);
+        int i = 0;
+        for (char c : formattedStage.toCharArray()) {
+            stageViewer.setCurrentDigit(c - '0');
+            stageViewer.draw(graphics, positions[i]);
+            i++;
+        }
+    }
 }

@@ -30,8 +30,8 @@ public class ArenaController {
         this.arenaModel = arena;
         this.arenaViewer = arenaViewer;
         this.gridController = new GridController(arena.getGrid(), new GridViewer());
-        this.scoreController = new ScoreController(arena.getScore(), new digitDisplayViewer());
-        this.stageController = new StageController(arena.getStage(), new StageViewer());
+        this.scoreController = new ScoreController(arena.getScore(), new DigitDisplayViewer());
+        this.stageController = new StageController(arena.getStage(), new DigitDisplayViewer());
         this.nextPuyoViewer = new NextPuyoViewer(arenaModel.getNextPuyo().getFirstPuyo().getPuyoViewer(),
                                                     arenaModel.getNextPuyo().getSecondPuyo().getPuyoViewer());
     }

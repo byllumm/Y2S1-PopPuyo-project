@@ -11,13 +11,14 @@ public class Puyo {
     private Position position;
     private PuyoViewer puyoViewer;
     private String color;
+    private int adjacent = 0b0000; // RIGHT BELOW LEFT ABOVE (left to right binary)
 
 
     // Constructor
     public Puyo(Position position) throws IOException {
         this.position = position;
         this.color = Color.getRandomColor();
-        this.puyoViewer = new PuyoViewer(color);
+        this.puyoViewer = new PuyoViewer(color, adjacent);
     }
 
 
@@ -32,6 +33,10 @@ public class Puyo {
 
     public String getColor() {
         return color;
+    }
+
+    public int getAdjacent() {
+        return adjacent;
     }
 
 
@@ -50,5 +55,9 @@ public class Puyo {
 
     public void setColor(Color ColorHex) {
         this.color = color;
+    }
+
+    public void setAdjacent(int adjacent) {
+        this.adjacent = adjacent;
     }
 }

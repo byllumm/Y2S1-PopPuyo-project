@@ -109,7 +109,7 @@ public class Game implements Runnable {
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {
                 if(!isEmpty(row,col)) {
-                    arena.getGrid().getGrid()[row][col].getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
+                    arenaController.getGridController().getGrid().getPuyo(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
                 }
             }
         }

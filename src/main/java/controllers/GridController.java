@@ -6,7 +6,9 @@ import model.Puyo;
 import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 import viewer.GridViewer;
+import viewer.PuyoViewer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,14 @@ public class GridController {
     public GridController(Grid grid, GridViewer gridViewer) {
         this.grid = grid;
         this.gridViewer = gridViewer;
+    }
+
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public void setGrid(Grid grid) {
+        this.grid = grid;
     }
 
     public boolean applyGravity() {
@@ -64,7 +74,7 @@ public class GridController {
     }
 
     // Uses a depth-first search to find chains of puyos
-    public List<List<Position>> detectChain() {
+    public List<List<Position>> detectChain() throws IOException {
         boolean[][] visited = new boolean[ROWS][COLUMNS];
         List<List<Position>> chains = new ArrayList<>();
 
@@ -86,7 +96,7 @@ public class GridController {
         return chains;
     }
 
-    private void dfs(Position pos, Puyo p, boolean[][] visited, List<Position> chain) {
+    private void dfs(Position pos, Puyo p, boolean[][] visited, List<Position> chain) throws IOException {
         int row = pos.getX();
         int col = pos.getY();
 
@@ -94,7 +104,41 @@ public class GridController {
         visited[row][col] = true;
         chain.add(pos);
 
+        // Save original adjacency mode
+        int adjacencyMode = p.getAdjacent();
+
         // Explore all neighbours of current puyo
+        for (int i = 0; i < 4; i++) {
+            Position neighbor = new Position(row + adjacent_positions[i][0], col + adjacent_positions[i][1]);
+            if (isValidPositionWithNulls(neighbor) && !visited[neighbor.getX()][neighbor.getY()] &&
+                    grid.getPuyo(neighbor.getX(), neighbor.getY()) != null &&
+                    grid.getPuyo(neighbor.getX(), neighbor.getY()).getColor().equals(p.getColor())) {
+                // If the neighbor is of the same color, set the adjacency bit to 1, then DFS
+                switch (i) {
+                    case 0: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b1000); break;
+                    case 1: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0100); break;
+                    case 2: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0010); break;
+                    case 3: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0001); break;
+                }
+                dfs(neighbor, p, visited, chain);
+            } else {
+                //  Else, set the adjacency bit to 0
+                switch (i) {
+                    case 0: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b0111); break;
+                    case 1: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b1011); break;
+                    case 2: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b1101); break;
+                    case 3: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b1110); break;
+                }
+            }
+        }
+
+        // If the adjacency mode changed, update the sprite
+        if (adjacencyMode != p.getAdjacent()) {
+            grid.getPuyo(row, col).setPuyoViewer(new PuyoViewer(p.getColor(), p.getAdjacent()));
+            System.out.println("Puyo sprite in position " + row + " " + col + " updated");
+            System.out.println("Adjacency before: " + adjacencyMode + "; adjacency after: " + p.getAdjacent());
+        }
+
         for (int[] direction : adjacent_positions) {
             Position neighbor = new Position(row + direction[0], col + direction[1]);
 

@@ -21,6 +21,15 @@ public class ArenaController {
     private NextPuyoViewer nextPuyoViewer;
     private GridController gridController;
     private ScoreController scoreController;
+
+    public StageController getStageController() {
+        return stageController;
+    }
+
+    public void setStageController(StageController stageController) {
+        this.stageController = stageController;
+    }
+
     private StageController stageController;
     private int autoDropCounter = 0;
 
@@ -30,8 +39,8 @@ public class ArenaController {
         this.arenaModel = arena;
         this.arenaViewer = arenaViewer;
         this.gridController = new GridController(arena.getGrid(), new GridViewer());
-        this.scoreController = new ScoreController(arena.getScore(), new ScoreViewer());
-        this.stageController = new StageController(arena.getStage(), new StageViewer());
+        this.scoreController = new ScoreController(arena.getScore(), new DigitDisplayViewer());
+        this.stageController = new StageController(arena.getStage(), new DigitDisplayViewer());
         this.nextPuyoViewer = new NextPuyoViewer(arenaModel.getNextPuyo().getFirstPuyo().getPuyoViewer(),
                                                     arenaModel.getNextPuyo().getSecondPuyo().getPuyoViewer());
     }

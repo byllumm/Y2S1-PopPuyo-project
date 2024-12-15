@@ -108,6 +108,8 @@ public class Game implements Runnable {
 
     public void draw() throws IOException{
         arenaController.getGridController().draw(gameScreen.getGraphics());
+        arenaController.getScoreController().draw(gameScreen.getGraphics(), new Position(0,0));
+        arenaController.getStageController().draw(gameScreen.getGraphics(), new Position(0,0));
 
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {
@@ -119,9 +121,7 @@ public class Game implements Runnable {
 
         arena.getActivePuyo().getFirstPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
         arena.getActivePuyo().getSecondPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
-
         arenaController.getNextPuyoViewer().draw(gameScreen.getGraphics(), new Position(212, 8));
-
         gameScreen.getScreen().refresh();
     }
 }

@@ -81,7 +81,7 @@ public class GridController {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 Position pos = new Position(row, col);
-                if (!visited[row][col] && grid.getGrid()[row][col] != null) {
+                if (!visited[row][col] && grid.getPuyo(row, col) != null) {
                     List<Position> chain = new ArrayList<>();
                     dfs(pos, grid.getPuyo(row, col), visited, chain);
 

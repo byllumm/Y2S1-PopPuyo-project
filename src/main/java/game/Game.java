@@ -33,6 +33,7 @@ public class Game implements Runnable {
         arenaViewer = new ArenaViewer();
         gameScreen = new GameScreen();
         arenaController = new ArenaController(arena, arenaViewer);
+        gameThread = new Thread(this);
     }
 
 
@@ -59,10 +60,11 @@ public class Game implements Runnable {
     // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
         arenaController.processKey(key);
-
-        if (gameOver(arena.getGrid()) || !isRunning) {
+        if (Arena.gameOver(arena.getGrid()) || !isRunning) {
             gameScreen.getScreen().close();
             gameThread.join();
+            isRunning = false;
+            System.exit(0);
         }
     }
 
@@ -78,7 +80,7 @@ public class Game implements Runnable {
         // Rendering the background only once significantly improves performance!
         arenaController.draw(gameScreen.getGraphics(), null);
 
-        while (true) {
+        while (isRunning) {
             currentTime = System.nanoTime();
 
             delta += (currentTime - lastTime) / drawInterval;

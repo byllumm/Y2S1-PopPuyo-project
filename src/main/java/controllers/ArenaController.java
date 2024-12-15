@@ -86,6 +86,10 @@ public class ArenaController {
                 }
                 break;
 
+            case Escape:
+                isRunning = false;
+                break;
+
             case Character:
                 // Active puyo pair should rotate clockwise
                 if (key.getCharacter() != null && key.getCharacter() == 'x') {
@@ -111,12 +115,17 @@ public class ArenaController {
                     } else {
                         arenaModel.getActivePuyo().getController().revertRotationState(false);
                     }
+
+                    break;
                 }
 
                 // Exit game
                 if (key.getCharacter() != null && key.getCharacter() == 'q') {
                     isRunning = false;
+                    break;
                 }
+
+                break;
         }
     }
 

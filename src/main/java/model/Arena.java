@@ -17,6 +17,7 @@ public class Arena {
     private Score score;
     public static int dropInterval = 10;
     public static boolean isRunning = true;
+    public static boolean scored = false;
 
 
     // Constructor

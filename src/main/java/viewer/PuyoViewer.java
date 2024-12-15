@@ -1,17 +1,17 @@
-package graphics;
+package viewer;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import utils.puyoutils.Position;
 
 import java.io.IOException;
 
-public class PuyoGraphics implements Drawable {
+public class PuyoViewer implements Viewer {
     // Attributes
     private SpriteLoader puyoLoader;
 
 
     // Constructor
-    public PuyoGraphics(String color) throws IOException {
+    public PuyoViewer(String color) throws IOException {
         String spriteFilepath = switch (color) {
             case "blue" -> "/sprites/puyo/blue/blue_NORMAL.png";
             case "green" -> "/sprites/puyo/green/green_NORMAL.png";

@@ -1,17 +1,17 @@
-package graphics;
+package viewer;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import utils.puyoutils.Position;
 
 import java.io.IOException;
 
-public class ArenaGraphics implements Drawable {
+public class ArenaViewer implements Viewer {
     // Attributes
     private final SpriteLoader backgroundLoader;
 
 
     // Constructor
-    public ArenaGraphics() throws IOException {
+    public ArenaViewer() throws IOException {
         this.backgroundLoader = new SpriteLoader("/sprites/background/background_static_stripped.png");
     }
 
@@ -22,6 +22,7 @@ public class ArenaGraphics implements Drawable {
     }
 
 
+    // Methods
     public void draw(TextGraphics graphics, Position corner) {
         backgroundLoader.draw(graphics, corner);
     }

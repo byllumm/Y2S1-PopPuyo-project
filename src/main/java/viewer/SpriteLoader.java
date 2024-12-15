@@ -1,6 +1,6 @@
 
 
-package graphics;
+package viewer;
 
 import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalPosition;
@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public class SpriteLoader implements Drawable {
+public class SpriteLoader implements Viewer {
     // Attributes
     private BufferedImage sprite;
     private int width;

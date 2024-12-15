@@ -1,18 +1,17 @@
-package graphics;
+package viewer;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import utils.puyoutils.Position;
 
 import java.io.IOException;
 
-public class GridGraphics implements Drawable {
+public class GridViewer implements Viewer {
     // Attributes
     private SpriteLoader gridLoader;
-    //private SpriteLoader
 
 
     // Constructor
-    public GridGraphics() throws IOException {
+    public GridViewer() throws IOException {
         this.gridLoader = new SpriteLoader("/sprites/background/gamegrid_only.png");
     }
 
@@ -29,8 +28,8 @@ public class GridGraphics implements Drawable {
     }
 
 
+    // Methods
     public void draw(TextGraphics graphics, Position corner) {
         gridLoader.draw(graphics, corner);
-
     }
 }

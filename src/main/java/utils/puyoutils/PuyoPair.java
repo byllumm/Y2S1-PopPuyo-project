@@ -1,7 +1,7 @@
 package utils.puyoutils;
 
 import controllers.PuyoPairController;
-import elements.Puyo;
+import model.Puyo;
 
 import java.io.IOException;
 

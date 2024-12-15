@@ -1,34 +1,43 @@
-import elements.Arena;
-import graphics.GameScreen;
+package game;
+
+import controllers.ArenaController;
+import model.Arena;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import utils.puyoutils.Position;
+import viewer.ArenaViewer;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static elements.Arena.isRunning;
-import static elements.GameGrid.*;
+import static model.Arena.isRunning;
+import static model.Grid.*;
 
 public class Game implements Runnable {
     // Attributes
     private final static int FPS = 60; // Higher framerate decreases input latency, somehow
     private Thread gameThread;
+    // Arena
+    private ArenaController arenaController;
+    private ArenaViewer arenaViewer;
     private Arena arena;
+
     private GameScreen gameScreen;
 
 
     // Constructor
     public Game() throws IOException, FontFormatException, URISyntaxException {
-        gameScreen = new GameScreen();
         arena = new Arena();
+        arenaViewer = new ArenaViewer();
+        gameScreen = new GameScreen();
+        arenaController = new ArenaController(arena, arenaViewer);
     }
 
 
     // Getters
-    public Arena getArena() {
-        return arena;
+    public ArenaController getArenaController() {
+        return arenaController;
     }
 
     public GameScreen getGameScreen() {
@@ -37,8 +46,8 @@ public class Game implements Runnable {
 
 
     // Setters
-    public void setArena(Arena arena) {
-        this.arena = arena;
+    public void setArenaController(ArenaController arenaController) {
+        this.arenaController = arenaController;
     }
 
     public void setGameScreen(GameScreen gameScreen) {
@@ -48,15 +57,15 @@ public class Game implements Runnable {
 
     // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
-        arena.processKey(key);
+        arenaController.processKey(key);
 
-        if (arena.gameOver(arena.getGrid()) || !isRunning) {
+        if (Arena.gameOver(arena.getGrid()) || !isRunning) {
             gameScreen.getScreen().close();
             gameThread.join();
         }
     }
 
-    // Game loop, if the drawInterval has been passed, we update, process new input and redraw
+    // game.Game loop, if the drawInterval has been passed, we update, process new input and redraw
     @Override
     public void run() {
         double drawInterval = 1000000000.0 / FPS;
@@ -66,7 +75,7 @@ public class Game implements Runnable {
         KeyStroke key = null;
 
         // Rendering the background only once significantly improves performance!
-        arena.getArenaGraphics().draw(gameScreen.getGraphics(), null);
+        arenaController.draw(gameScreen.getGraphics(), null);
 
         while (true) {
             currentTime = System.nanoTime();
@@ -76,7 +85,7 @@ public class Game implements Runnable {
 
             if (delta >= 1) {
                 try {
-                    arena.update();
+                    arenaController.update();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -95,20 +104,20 @@ public class Game implements Runnable {
     }
 
     public void draw() throws IOException{
-        arena.getGrid().getGridGraphics().draw(gameScreen.getGraphics(), new Position(8,8));
+        arenaController.getGridController().draw(gameScreen.getGraphics());
 
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {
-                if(!arena.getGrid().isEmpty(row,col)) {
-                    arena.getGrid().getGrid()[row][col].getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
+                if(!isEmpty(row,col)) {
+                    arena.getGrid().getGrid()[row][col].getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
                 }
             }
         }
 
-        arena.getActivePuyo().getFirstPuyo().getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
-        arena.getActivePuyo().getSecondPuyo().getPuyoGraphics().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
+        arena.getActivePuyo().getFirstPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
+        arena.getActivePuyo().getSecondPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
 
-        arena.getNextPuyoGraphics().draw(gameScreen.getGraphics(), new Position(212, 8));
+        arenaController.getNextPuyoViewer().draw(gameScreen.getGraphics(), new Position(212, 8));
 
         gameScreen.getScreen().refresh();
     }

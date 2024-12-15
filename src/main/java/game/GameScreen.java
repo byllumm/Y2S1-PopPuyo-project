@@ -1,4 +1,4 @@
-package graphics;
+package game;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.graphics.TextGraphics;

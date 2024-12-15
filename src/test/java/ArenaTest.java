@@ -1,23 +1,10 @@
-import elements.GameGrid;
-import elements.Puyo;
-import utils.puyoutils.Position;
+import model.Grid;
 import utils.puyoutils.PuyoPair;
-import elements.Arena;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import model.Arena;
 
 public class ArenaTest {
     private Arena arena;
-    private GameGrid gridMock;
+    private Grid gridMock;
     private PuyoPair puyoPairMock;
 
     /*

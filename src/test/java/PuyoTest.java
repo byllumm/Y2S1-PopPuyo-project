@@ -1,22 +1,5 @@
-import elements.Puyo;
+import model.Puyo;
 import utils.puyoutils.Position;
-import utils.puyoutils.Color;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.SGR;
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TextColor;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class PuyoTest {
     private Puyo puyo;

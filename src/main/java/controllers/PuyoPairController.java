@@ -1,6 +1,5 @@
 package controllers;
 
-import elements.Puyo;
 import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 
@@ -31,6 +30,8 @@ public class PuyoPairController {
         this.rotationState = rotationState;
     }
 
+
+    // Methods
 
     // Rotates puyo pair up, that is, moving the second puyo to above the first puyo
     public Position rotateUp() {

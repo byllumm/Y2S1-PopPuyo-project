@@ -1,6 +1,6 @@
-package elements;
+package model;
 
-import graphics.PuyoGraphics;
+import viewer.PuyoViewer;
 import utils.puyoutils.Color;
 import utils.puyoutils.Position;
 
@@ -9,20 +9,21 @@ import java.io.IOException;
 public class    Puyo {
     // Attributes
     private Position position;
-    private PuyoGraphics puyoGraphics;
+    private PuyoViewer puyoViewer;
     private String color;
+    private int adjacent = 0b0000; // RIGHT BELOW LEFT ABOVE (left to right binary)
 
     // Constructor
     public Puyo(Position position) throws IOException {
         this.position = position;
         this.color = Color.getRandomColor();
-        this.puyoGraphics = new PuyoGraphics(color);
+        this.puyoViewer = new PuyoViewer(color, adjacent);
     }
 
 
     // Getters
-    public PuyoGraphics getPuyoGraphics() {
-        return puyoGraphics;
+    public PuyoViewer getPuyoViewer() {
+        return puyoViewer;
     }
 
     public Position getPosition() {
@@ -33,10 +34,14 @@ public class    Puyo {
         return color;
     }
 
+    public int getAdjacent() {
+        return adjacent;
+    }
+
 
     // Setters
-    public void setPuyoGraphics(PuyoGraphics puyoGraphics) {
-        this.puyoGraphics = puyoGraphics;
+    public void setPuyoViewer(PuyoViewer puyoViewer) {
+        this.puyoViewer = puyoViewer;
     }
 
     public void setColor(String color) {
@@ -49,5 +54,9 @@ public class    Puyo {
 
     public void setColor(Color ColorHex) {
         this.color = color;
+    }
+
+    public void setAdjacent(int adjacent) {
+        this.adjacent = adjacent;
     }
 }

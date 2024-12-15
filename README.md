@@ -11,7 +11,7 @@ Puyos can connect **horizontally** or **vertically** but never diagonally. Once 
 ## Core mechanics and Features
 1.  Scoring System: The game intends for the player to create larger chains and consecutive reactions. Each subsequent pop awards exponentially more points.
     
-2.  Game Ending Condition: The game ends specifically when the third column is filled. Players must maximize their score without neglecting the risk of game over.
+2.  game.Game Ending Condition: The game ends specifically when the third column is filled. Players must maximize their score without neglecting the risk of game over.
     
 3.  Controls: Players can move and rotate falling Puyos with precision, allowing control of their board.
     

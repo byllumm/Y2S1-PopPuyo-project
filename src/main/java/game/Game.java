@@ -108,6 +108,7 @@ public class Game implements Runnable {
 
     public void draw() throws IOException{
         arenaController.getGridController().draw(gameScreen.getGraphics());
+        arenaController.getScoreController().draw(gameScreen.getGraphics(), new Position(0,0));
 
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {

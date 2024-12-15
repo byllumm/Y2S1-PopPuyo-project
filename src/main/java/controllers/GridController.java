@@ -116,31 +116,23 @@ public class GridController {
                 // If the neighbor is of the same color, set the adjacency bit to 1, then DFS
                 switch (i) {
                     case 0: // Right, neighbor is on the left
-                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b1000);
-                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0010);
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b1000); // Current Puyo looks right
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0010); // Neighbor looks left
                         break;
-                    case 1:
-                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0100);
-                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0001);
+                    case 1: // Below, neighbor is above
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0100); // Current Puyo looks below
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0001); // Neighbor looks above
                         break;
-                    case 2:
-                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0010);
-                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b1000);
+                    case 2: // Left, neighbor is on the right
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0010); // Current Puyo looks left
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b1000); // Neighbor looks right
                         break;
-                    case 3:
-                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0001);
-                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0100);
+                    case 3: // Above, neighbor is below
+                        grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() | 0b0001); // Current Puyo looks above
+                        grid.getPuyo(neighbor.getX(), neighbor.getY()).setAdjacent(grid.getPuyo(neighbor.getX(), neighbor.getY()).getAdjacent() | 0b0100); // Neighbor looks below
                         break;
                 }
                 dfs(neighbor, p, visited, chain);
-            } else {
-                //  Else, set the adjacency bit to 0
-                switch (i) {
-                    case 0: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b0111); break;
-                    case 1: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b1011); break;
-                    case 2: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b1101); break;
-                    case 3: grid.getPuyo(row, col).setAdjacent(grid.getPuyo(row, col).getAdjacent() & 0b1110); break;
-                }
             }
         }
 

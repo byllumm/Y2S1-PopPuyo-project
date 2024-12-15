@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import static model.Arena.gameOver;
 import static model.Arena.isRunning;
 import static model.Grid.*;
 
@@ -59,7 +60,7 @@ public class Game implements Runnable {
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
         arenaController.processKey(key);
 
-        if (Arena.gameOver(arena.getGrid()) || !isRunning) {
+        if (gameOver(arena.getGrid()) || !isRunning) {
             gameScreen.getScreen().close();
             gameThread.join();
         }

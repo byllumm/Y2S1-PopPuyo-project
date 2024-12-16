@@ -34,9 +34,6 @@ public class MenuStateController implements StateMethods{
             case Enter:
                 menuModel.selectButton();
                 break;
-
-            default:
-                break;
         }
     }
 

@@ -88,6 +88,8 @@ public class PlayingStateController implements StateMethods{
     @Override
     public void draw(TextGraphics textGraphics, Position position) throws IOException {
         arenaController.getGridController().draw(gameScreen.getGraphics());
+        arenaController.getScoreController().draw(gameScreen.getGraphics(), new Position(0, 0));
+        arenaController.getStageController().draw(gameScreen.getGraphics(), new Position(0, 0));
 
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {

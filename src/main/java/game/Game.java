@@ -147,7 +147,7 @@ public class Game implements Runnable {
         double drawInterval = 1000000000.0 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
-
+        gameScreen.getScreen().clear();
         // Render background once for better performance
         arenaController.draw(gameScreen.getGraphics(), null);
 

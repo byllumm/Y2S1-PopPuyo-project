@@ -54,7 +54,7 @@ public class MenuStateController implements StateMethods{
         }
 
         else if(selectedButton == 2){
-            menuStateViewer.setState(0);
+            menuStateViewer.setState(2);
             menuStateViewer.draw(graphics, position);
         }
     }

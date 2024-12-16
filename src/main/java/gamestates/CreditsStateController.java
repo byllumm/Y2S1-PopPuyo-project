@@ -5,10 +5,16 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import utils.puyoutils.Position;
+import viewer.CreditsStateViewer;
+
+import java.io.IOException;
 
 public class CreditsStateController implements StateMethods{
 
-    public CreditsStateController(){
+    public CreditsStateViewer creditsStateViewer;
+
+    public CreditsStateController() throws IOException {
+        creditsStateViewer = new CreditsStateViewer();
     }
 
 
@@ -20,7 +26,7 @@ public class CreditsStateController implements StateMethods{
     }
 
     @Override
-    public void draw(TextGraphics textGraphics, Position position){
-        // Draw the credits
+    public void draw(TextGraphics graphics, Position position){
+        creditsStateViewer.draw(graphics, position);
     }
 }

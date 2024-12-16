@@ -2,17 +2,20 @@ package model;
 
 import gamestates.GameState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Menu {
     // Attributes
-    private MenuButton[] buttons;
+    private List<MenuButton> buttons;
     private int selectedButton;
 
     // Constructor
     public Menu(){
-        buttons = new MenuButton[3];
-        buttons[0] = new MenuButton(GameState.PLAYING, 0);
-        buttons[1] = new MenuButton(GameState.CREDITS, 1);
-        buttons[2] = new MenuButton(GameState.EXIT, 2);
+        buttons = new ArrayList<>();
+        buttons.add(new MenuButton(GameState.PLAYING, 0));
+        buttons.add(new MenuButton(GameState.CREDITS, 1));
+        buttons.add(new MenuButton(GameState.EXIT, 2));
         selectedButton = 0;
     }
 
@@ -21,7 +24,7 @@ public class Menu {
         return selectedButton;
     }
 
-    public MenuButton[] getButtons() {
+    public List<MenuButton> getButtons() {
         return buttons;
     }
 
@@ -30,25 +33,21 @@ public class Menu {
         this.selectedButton = selectedButton;
     }
 
-    public void setButtons(MenuButton[] buttons) {
+    public void setButtons(List<MenuButton> buttons) {
         this.buttons = buttons;
     }
 
     public void moveSelectionUp(){
-        if(selectedButton == 0){
-            return;
-        }
-        selectedButton -= 1;
+        selectedButton = (selectedButton - 1 + buttons.size()) %  buttons.size();
     }
 
     public void moveSelectionDown(){
-        if(selectedButton == 2){
-            return;
-        }
-        selectedButton += 1;
+        selectedButton = (selectedButton + 1) % buttons.size();
     }
 
     public void selectButton(){
-        GameState.state = buttons[selectedButton].getState();
+        if(selectedButton >= 0 && selectedButton < buttons.size()){
+            GameState.state = buttons.get(selectedButton).getState();
+        }
     }
 }

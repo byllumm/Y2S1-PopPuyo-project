@@ -1,8 +1,10 @@
 package gamestates;
 
 
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
+import utils.puyoutils.Position;
 
 public class CreditsStateController implements StateMethods{
 
@@ -18,7 +20,7 @@ public class CreditsStateController implements StateMethods{
     }
 
     @Override
-    public void draw(){
+    public void draw(TextGraphics textGraphics, Position position){
         // Draw the credits
     }
 }

@@ -17,7 +17,6 @@ import java.net.URISyntaxException;
 
 import static model.Arena.gameOver;
 import static model.Arena.isRunning;
-import static model.Grid.*;
 
 public class Game implements Runnable {
     // Attributes
@@ -130,7 +129,7 @@ public class Game implements Runnable {
                 gameScreen.getScreen().clear();
 
                 // Draw the menu
-                menuStateController.draw();
+                menuStateController.draw(gameScreen.getGraphics(), new Position(0,0));
 
                 // Refresh and process input
                 gameScreen.getScreen().refresh();
@@ -163,7 +162,7 @@ public class Game implements Runnable {
                     arenaController.update();
 
                     // Draw and process input
-                    playingStateController.draw();
+                    playingStateController.draw(gameScreen.getGraphics(), new Position(0,0) );
                     KeyStroke key = gameScreen.getScreen().pollInput();
                     if (key != null) {
                         processKey(key);
@@ -183,7 +182,7 @@ public class Game implements Runnable {
                 gameScreen.getScreen().clear();
 
                 // Draw the credits screen
-                creditsStateController.draw();
+                creditsStateController.draw(gameScreen.getGraphics(), new Position(0,0));
 
                 // Refresh and process input
                 gameScreen.getScreen().refresh();

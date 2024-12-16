@@ -1,5 +1,6 @@
 package gamestates;
 
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import controllers.ArenaController;
 import game.GameScreen;
@@ -85,7 +86,7 @@ public class PlayingStateController implements StateMethods{
     }
 
     @Override
-    public void draw() throws IOException {
+    public void draw(TextGraphics textGraphics, Position position) throws IOException {
         arenaController.getGridController().draw(gameScreen.getGraphics());
 
         for (int col = 0; col < COLUMNS; col++) {

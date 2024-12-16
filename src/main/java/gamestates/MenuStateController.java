@@ -1,15 +1,23 @@
 package gamestates;
 
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import model.Menu;
 import model.MenuButton;
+import utils.custom_exceptions.ResourceException;
+import utils.puyoutils.Position;
+import viewer.MenuStateViewer;
+
+import java.io.IOException;
 
 public class MenuStateController implements StateMethods{
 
     public Menu menuModel;
+    public MenuStateViewer menuStateViewer;
 
-    public MenuStateController(){
+    public MenuStateController() throws IOException {
         menuModel = new Menu();
+        menuStateViewer = new MenuStateViewer();
     }
 
     @Override
@@ -33,18 +41,21 @@ public class MenuStateController implements StateMethods{
     }
 
     @Override
-    public void draw(){
+    public void draw(TextGraphics graphics, Position position) throws ResourceException {
         int selectedButton = menuModel.getSelectedButton();
         if(selectedButton == 0){
-            // Draw first as selected, and the others as unselected
+            menuStateViewer.setState(0);
+            menuStateViewer.draw(graphics, position);
         }
 
         else if(selectedButton == 1){
-            // Draw second as selected, and the others as unselected
+            menuStateViewer.setState(1);
+            menuStateViewer.draw(graphics, position);
         }
 
         else if(selectedButton == 2){
-            // Draw third as selected and the others as unselected
+            menuStateViewer.setState(0);
+            menuStateViewer.draw(graphics, position);
         }
     }
 }

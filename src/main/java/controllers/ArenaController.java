@@ -59,6 +59,14 @@ public class ArenaController {
         return nextPuyoViewer;
     }
 
+    public Arena getArenaModel(){
+        return arenaModel;
+    }
+
+    public ArenaViewer getArenaViewer(){
+        return arenaViewer;
+    }
+
 
     // Setter
     public void setGridController(GridController gridController) {
@@ -75,68 +83,6 @@ public class ArenaController {
 
 
     // Methods
-    public void processKey(KeyStroke key) {
-        switch (key.getKeyType()) {
-            case ArrowLeft: // Active puyo pair should move to the left
-                if (canMoveLeft(arenaModel.getActivePuyo())) {
-                    arenaModel.getActivePuyo().getController().moveLeft();
-                }
-                break;
-            case ArrowRight: // Active puyo pair should move to the right
-                if (canMoveRight(arenaModel.getActivePuyo())) {
-                    arenaModel.getActivePuyo().getController().moveRight();
-                }
-                break;
-
-            case ArrowDown: // Active puyo pair should move down
-                if (canMoveDown(arenaModel.getActivePuyo())) {
-                    arenaModel.getActivePuyo().getController().moveDown();
-                }
-                break;
-
-            case Escape:
-                isRunning = false;
-                break;
-
-            case Character:
-                // Active puyo pair should rotate clockwise
-                if (key.getCharacter() != null && key.getCharacter() == 'x') {
-                    // New position of the second puyo after turning
-                    Position newPos = arenaModel.getActivePuyo().getController().rotate(true);
-                    // If position is valid can rotate, else it should not and the rotation state goes back to what it was before
-                    if (isValidPosition(newPos, arenaModel.getGrid())) {
-                        arenaModel.getActivePuyo().getSecondPuyo().setPosition(newPos);
-                    } else {
-                        arenaModel.getActivePuyo().getController().revertRotationState(true);
-                    }
-                }
-
-                // Active puyo pair should rotate counter-clockwise
-                if (key.getCharacter() != null && key.getCharacter() == 'z') {
-
-                    // New position of the second puyo after turning
-                    Position newPos = arenaModel.getActivePuyo().getController().rotate(false);
-
-                    // If position is valid can rotate, else it should not and rotation state goes back to what it was before
-                    if(isValidPosition(newPos, arenaModel.getGrid())){
-                        arenaModel.getActivePuyo().getSecondPuyo().setPosition(newPos);
-                    } else {
-                        arenaModel.getActivePuyo().getController().revertRotationState(false);
-                    }
-
-                    break;
-                }
-
-                // Exit game
-                if (key.getCharacter() != null && key.getCharacter() == 'q') {
-                    isRunning = false;
-                    break;
-                }
-
-                break;
-        }
-    }
-
     public void update() throws IOException {
 
         //Process input function

@@ -1,6 +1,10 @@
 package game;
 
 import controllers.ArenaController;
+import gamestates.CreditsStateController;
+import gamestates.GameState;
+import gamestates.MenuStateController;
+import gamestates.PlayingStateController;
 import model.Arena;
 
 import com.googlecode.lanterna.input.KeyStroke;
@@ -13,7 +17,6 @@ import java.net.URISyntaxException;
 
 import static model.Arena.gameOver;
 import static model.Arena.isRunning;
-import static model.Grid.*;
 
 public class Game implements Runnable {
     // Attributes
@@ -26,6 +29,10 @@ public class Game implements Runnable {
 
     private GameScreen gameScreen;
 
+    private PlayingStateController playingStateController;
+    private MenuStateController menuStateController;
+    private CreditsStateController creditsStateController;
+
 
     // Constructor
     public Game() throws IOException, FontFormatException, URISyntaxException {
@@ -33,6 +40,9 @@ public class Game implements Runnable {
         arenaViewer = new ArenaViewer();
         gameScreen = new GameScreen();
         arenaController = new ArenaController(arena, arenaViewer);
+        playingStateController = new PlayingStateController(arenaController, gameScreen);
+        menuStateController = new MenuStateController();
+        creditsStateController = new CreditsStateController();
         gameThread = new Thread(this);
     }
 
@@ -59,69 +69,130 @@ public class Game implements Runnable {
 
     // Processes input and checks if game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
-        arenaController.processKey(key);
-        if (Arena.gameOver(arena.getGrid()) || !isRunning) {
-            gameScreen.getScreen().close();
-            gameThread.join();
-            isRunning = false;
-            System.exit(0);
+        switch (GameState.state) {
+            case MENU -> menuStateController.processKey(key);
+            case CREDITS -> creditsStateController.processKey(key);
+            case PLAYING -> {
+                playingStateController.processKey(key);
+                handleGameOver();
+            }
+            case EXIT -> exitGame();
         }
     }
+
+    private void handleGameOver() throws IOException, InterruptedException {
+        if (gameOver(arena.getGrid()) || !isRunning) {
+            /* GameState.state = GameState.MENU; */
+            exitGame();
+        }
+    }
+
+    private void exitGame() throws IOException, InterruptedException {
+        gameScreen.getScreen().close();
+        gameThread.join();
+        isRunning = false;
+        System.exit(0);
+    }
+
 
     // game.Game loop, if the drawInterval has been passed, we update, process new input and redraw
     @Override
     public void run() {
-        double drawInterval = 1000000000.0 / FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-        KeyStroke key = null;
-
-        // Rendering the background only once significantly improves performance!
-        arenaController.draw(gameScreen.getGraphics(), null);
-
         while (isRunning) {
-            currentTime = System.nanoTime();
+            switch (GameState.state) {
+                case MENU:
+                    runMenuState();
+                    break;
 
-            delta += (currentTime - lastTime) / drawInterval;
-            lastTime = currentTime;
+                case PLAYING:
+                    runPlayingState();
+                    break;
 
-            if (delta >= 1) {
-                try {
-                    arenaController.update();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                // I had to use a try catch block because since I am using run from runnable it doesn't allow me to implement IOException
-                try {
-                    draw();
-                    key = gameScreen.getScreen().pollInput();
-                    if (key != null) processKey(key);
-                } catch (IOException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                case CREDITS:
+                    runCreditsState();
+                    break;
 
-                delta--;
+                case EXIT:
+                    try {
+                        exitGame();
+                    } catch (InterruptedException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return; // Exit the loop when the game is shutting down
             }
         }
     }
 
-    public void draw() throws IOException{
-        arenaController.getGridController().draw(gameScreen.getGraphics());
-        arenaController.getScoreController().draw(gameScreen.getGraphics(), new Position(0,0));
-        arenaController.getStageController().draw(gameScreen.getGraphics(), new Position(0,0));
+    private void runMenuState() {
+        try {
+            while (GameState.state == GameState.MENU) {
+                gameScreen.getScreen().clear();
 
-        for (int col = 0; col < COLUMNS; col++) {
-            for (int row = ROWS - 1; row >= 0; row--) {
-                if(!isEmpty(row,col)) {
-                    arenaController.getGridController().getGrid().getPuyo(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
+                // Draw the menu
+                menuStateController.draw(gameScreen.getGraphics(), new Position(0,0));
+
+                // Refresh and process input
+                gameScreen.getScreen().refresh();
+                KeyStroke key = gameScreen.getScreen().pollInput();
+                if (key != null) {
+                    menuStateController.processKey(key);
                 }
             }
+        } catch (IOException e) {
+            throw new RuntimeException("Error in Menu State", e);
         }
+    }
 
-        arena.getActivePuyo().getFirstPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getFirstPos()));
-        arena.getActivePuyo().getSecondPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arena.getActivePuyo().getSecondPos()));
-        arenaController.getNextPuyoViewer().draw(gameScreen.getGraphics(), new Position(212, 8));
-        gameScreen.getScreen().refresh();
+    private void runPlayingState() {
+        double drawInterval = 1000000000.0 / FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+
+        // Render background once for better performance
+        arenaController.draw(gameScreen.getGraphics(), null);
+
+        try {
+            while (isRunning && GameState.state == GameState.PLAYING) {
+                long currentTime = System.nanoTime();
+                delta += (currentTime - lastTime) / drawInterval;
+                lastTime = currentTime;
+
+                if (delta >= 1) {
+                    // Update game logic
+                    arenaController.update();
+
+                    // Draw and process input
+                    playingStateController.draw(gameScreen.getGraphics(), new Position(0,0) );
+                    KeyStroke key = gameScreen.getScreen().pollInput();
+                    if (key != null) {
+                        processKey(key);
+                    }
+
+                    delta--;
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Error in Playing State", e);
+        }
+    }
+
+    private void runCreditsState() {
+        try {
+            while (GameState.state == GameState.CREDITS) {
+                gameScreen.getScreen().clear();
+
+                // Draw the credits screen
+                creditsStateController.draw(gameScreen.getGraphics(), new Position(0,0));
+
+                // Refresh and process input
+                gameScreen.getScreen().refresh();
+                KeyStroke key = gameScreen.getScreen().pollInput();
+                if (key != null) {
+                    creditsStateController.processKey(key);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error in Credits State", e);
+        }
     }
 }

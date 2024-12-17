@@ -74,17 +74,11 @@ public class Game implements Runnable {
             case CREDITS -> creditsStateController.processKey(key);
             case PLAYING -> {
                 playingStateController.processKey(key);
-                handleGameOver();
             }
             case EXIT -> exitGame();
         }
     }
 
-    private void handleGameOver() throws IOException, InterruptedException {
-        if (gameOver(arena.getGrid()) || !isRunning) {
-            GameState.state = GameState.MENU;
-        }
-    }
 
     private void exitGame() throws IOException, InterruptedException {
         gameScreen.getScreen().close();

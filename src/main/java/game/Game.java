@@ -82,8 +82,7 @@ public class Game implements Runnable {
 
     private void handleGameOver() throws IOException, InterruptedException {
         if (gameOver(arena.getGrid()) || !isRunning) {
-            /* GameState.state = GameState.MENU; */
-            exitGame();
+            GameState.state = GameState.MENU;
         }
     }
 
@@ -152,7 +151,10 @@ public class Game implements Runnable {
         arenaController.draw(gameScreen.getGraphics(), null);
 
         try {
-            while (isRunning && GameState.state == GameState.PLAYING) {
+            while (isRunning) {
+                if(GameState.state != GameState.PLAYING){
+                    break;
+                }
                 long currentTime = System.nanoTime();
                 delta += (currentTime - lastTime) / drawInterval;
                 lastTime = currentTime;

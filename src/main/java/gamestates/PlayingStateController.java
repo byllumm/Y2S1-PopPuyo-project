@@ -43,7 +43,7 @@ public class PlayingStateController implements StateMethods{
                 break;
 
             case Escape:
-                isRunning = false;
+                GameState.state = GameState.MENU;
                 break;
 
             case Character:
@@ -77,7 +77,7 @@ public class PlayingStateController implements StateMethods{
 
                 // Exit game
                 if (key.getCharacter() != null && key.getCharacter() == 'q') {
-                    isRunning = false;
+                    GameState.state = GameState.MENU;
                     break;
                 }
 

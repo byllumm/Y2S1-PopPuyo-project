@@ -74,8 +74,15 @@ public class Game implements Runnable {
             case CREDITS -> creditsStateController.processKey(key);
             case PLAYING -> {
                 playingStateController.processKey(key);
+                handleGameOver();
             }
             case EXIT -> exitGame();
+        }
+    }
+
+    private void handleGameOver(){
+        if(gameOver(arena.getGrid())){
+            GameState.state = GameState.MENU;
         }
     }
 

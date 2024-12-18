@@ -73,17 +73,24 @@ public class Game implements Runnable {
             case MENU -> menuStateController.processKey(key);
             case CREDITS -> creditsStateController.processKey(key);
             case PLAYING -> {
-                playingStateController.processKey(key);
                 handleGameOver();
+                playingStateController.processKey(key);
             }
             case EXIT -> exitGame();
         }
     }
 
-    private void handleGameOver(){
+    private void handleGameOver() throws IOException{
         if(gameOver(arena.getGrid())){
+            resetGame();
             GameState.state = GameState.MENU;
         }
+    }
+
+    private void resetGame() throws IOException {
+        arena = new Arena();
+        arenaController = new ArenaController(arena, arenaViewer);
+        playingStateController = new PlayingStateController(arenaController, gameScreen);
     }
 
 
@@ -163,6 +170,7 @@ public class Game implements Runnable {
                 if (delta >= 1) {
                     // Update game logic
                     arenaController.update();
+                    handleGameOver();
 
                     // Draw and process input
                     playingStateController.draw(gameScreen.getGraphics(), new Position(0,0) );

@@ -8,14 +8,16 @@ import java.io.IOException;
 
 public class MenuStateViewer implements Viewer {
     private static SpriteLoader menuStates[];
+    private static SpriteLoader background;
     private int currentState;
 
     public MenuStateViewer() throws IOException {
         currentState = 0;
         menuStates = new SpriteLoader[3];
-        menuStates[0] = new SpriteLoader("/sprites/menu_states/menu_play.png");
-        menuStates[1] = new SpriteLoader("/sprites/menu_states/menu_credits.png");
-        menuStates[2] = new SpriteLoader("/sprites/menu_states/menu_exit.png");
+        menuStates[0] = new SpriteLoader("/sprites/menu_states/play_button.png");
+        menuStates[1] = new SpriteLoader("/sprites/menu_states/credits_button.png");
+        menuStates[2] = new SpriteLoader("/sprites/menu_states/exit_button.png");
+        background = new SpriteLoader("/sprites/menu_states/menu_stripped.png");
     }
 
     public void setState(int state) throws ResourceException {
@@ -24,6 +26,10 @@ public class MenuStateViewer implements Viewer {
         } else {
             currentState = state;
         }
+    }
+
+    public void drawBackground(TextGraphics graphics, Position position) {
+        background.draw(graphics, position);
     }
 
     public void draw(TextGraphics graphics, Position position) {

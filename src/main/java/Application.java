@@ -8,10 +8,11 @@ public class Application{
 
     public static void main(String[] args) {
         try {
-            Game game = new Game();
+            Game game = Game.getInstance();
             game.run();
         } catch (IOException | FontFormatException | URISyntaxException e) {
             System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

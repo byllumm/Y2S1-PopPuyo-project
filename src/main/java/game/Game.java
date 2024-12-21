@@ -20,9 +20,9 @@ import static model.Arena.isRunning;
 
 public class Game implements Runnable {
     // Attributes
-    private final static int FPS = 60; // Higher framerate decreases input latency, somehow
+    private static Game instance;
     private Thread gameThread;
-    // Arena
+
     private ArenaController arenaController;
     private ArenaViewer arenaViewer;
     private Arena arena;
@@ -33,16 +33,27 @@ public class Game implements Runnable {
     private MenuStateController menuStateController;
     private CreditsStateController creditsStateController;
 
+    private Game() throws IOException, FontFormatException, URISyntaxException {
+        initialize();
+    }
 
-    // Constructor
-    public Game() throws IOException, FontFormatException, URISyntaxException {
+    public static Game getInstance() throws IOException, FontFormatException, URISyntaxException{
+        if(instance == null){
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    private void initialize() throws IOException, FontFormatException, URISyntaxException{
         arena = new Arena();
         arenaViewer = new ArenaViewer();
-        gameScreen = new GameScreen();
+        gameScreen = GameScreen.getInstance();
         arenaController = new ArenaController(arena, arenaViewer);
-        playingStateController = new PlayingStateController(arenaController, gameScreen);
+
         menuStateController = new MenuStateController();
         creditsStateController = new CreditsStateController();
+        playingStateController = new PlayingStateController(arenaController, gameScreen);
+
         gameThread = new Thread(this);
     }
 
@@ -56,6 +67,21 @@ public class Game implements Runnable {
         return gameScreen;
     }
 
+    public MenuStateController getMenuStateController(){
+        return menuStateController;
+    }
+
+    public PlayingStateController getPlayingStateController(){
+        return playingStateController;
+    }
+
+    public CreditsStateController getCreditsStateController(){
+        return creditsStateController;
+    }
+
+    public Arena getArena(){
+        return arena;
+    }
 
     // Setters
     public void setArenaController(ArenaController arenaController) {
@@ -64,6 +90,27 @@ public class Game implements Runnable {
 
     public void setGameScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+    }
+
+    private void handleGameOver() throws IOException{
+        if(gameOver(arena.getGrid())){
+            resetGame();
+            GameState.state = GameState.MENU;
+        }
+    }
+
+    public void resetGame() throws IOException {
+        arena = new Arena();
+        arenaController = new ArenaController(arena, arenaViewer);
+        playingStateController = new PlayingStateController(arenaController, gameScreen);
+    }
+
+
+    private void exitGame() throws IOException, InterruptedException {
+        gameScreen.getScreen().close();
+        gameThread.join();
+        isRunning = false;
+        System.exit(0);
     }
 
 
@@ -80,130 +127,33 @@ public class Game implements Runnable {
         }
     }
 
-    private void handleGameOver() throws IOException{
-        if(gameOver(arena.getGrid())){
-            resetGame();
-            GameState.state = GameState.MENU;
+    private void runState(StateRunner stateRunner) {
+        try {
+            stateRunner.run(this, gameScreen);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Error in State", e);
         }
     }
-
-    private void resetGame() throws IOException {
-        this.arena = new Arena();
-        this.arenaController = new ArenaController(arena, arenaViewer);
-        this.playingStateController = new PlayingStateController(arenaController, gameScreen);
-    }
-
-
-    private void exitGame() throws IOException, InterruptedException {
-        gameScreen.getScreen().close();
-        gameThread.join();
-        isRunning = false;
-        System.exit(0);
-    }
-
 
     // game.Game loop, if the drawInterval has been passed, we update, process new input and redraw
     @Override
     public void run() {
         while (isRunning) {
             switch (GameState.state) {
-                case MENU:
-                    runMenuState();
-                    break;
 
-                case PLAYING:
-                    runPlayingState();
-                    break;
+                case MENU -> runState(new MenuStateRunner());
+                case PLAYING -> runState(new PlayingStateRunner());
+                case CREDITS -> runState(new CreditsStateRunner());
 
-                case CREDITS:
-                    runCreditsState();
-                    break;
-
-                case EXIT:
+                case EXIT -> {
                     try {
                         exitGame();
                     } catch (InterruptedException | IOException e) {
                         throw new RuntimeException(e);
                     }
                     return; // Exit the loop when the game is shutting down
-            }
-        }
-    }
-
-    private void runMenuState() {
-        try {
-            // Draw only once to reduce workload
-            menuStateController.menuStateViewer.drawBackground(gameScreen.getGraphics(), new Position(0,0));
-            while (GameState.state == GameState.MENU) {
-                // Draw the menu buttons on top of the stripped menu
-                menuStateController.draw(gameScreen.getGraphics(), new Position(134,147));
-
-                // Refresh and process input
-                gameScreen.getScreen().refresh();
-                KeyStroke key = gameScreen.getScreen().pollInput();
-                if (key != null) {
-                    menuStateController.processKey(key);
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error in Menu State", e);
-        }
-    }
-
-    private void runPlayingState() {
-        double drawInterval = 1000000000.0 / FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        gameScreen.getScreen().clear();
-        // Render background once for better performance
-        arenaController.draw(gameScreen.getGraphics(), null);
-
-        try {
-            while (isRunning) {
-                if(GameState.state != GameState.PLAYING){
-                    break;
-                }
-                long currentTime = System.nanoTime();
-                delta += (currentTime - lastTime) / drawInterval;
-                lastTime = currentTime;
-
-                if (delta >= 1) {
-                    // Update game logic
-                    arenaController.update();
-                    handleGameOver();
-
-                    // Draw and process input
-                    playingStateController.draw(gameScreen.getGraphics(), new Position(0,0) );
-                    KeyStroke key = gameScreen.getScreen().pollInput();
-                    if (key != null) {
-                        processKey(key);
-                    }
-
-                    delta--;
-                }
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Error in Playing State", e);
-        }
-    }
-
-    private void runCreditsState() {
-        try {
-            while (GameState.state == GameState.CREDITS) {
-                gameScreen.getScreen().clear();
-
-                // Draw the credits screen
-                creditsStateController.draw(gameScreen.getGraphics(), new Position(0,0));
-
-                // Refresh and process input
-                gameScreen.getScreen().refresh();
-                KeyStroke key = gameScreen.getScreen().pollInput();
-                if (key != null) {
-                    creditsStateController.processKey(key);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error in Credits State", e);
         }
     }
 }

@@ -16,6 +16,7 @@ import java.net.URL;
 
 public class GameScreen {
     // Attributes
+    private static GameScreen instance;
     private Screen screen;
     private TextGraphics graphics;
     private final static int width = 390;
@@ -23,7 +24,7 @@ public class GameScreen {
 
 
     // Constructor
-    public GameScreen() throws IOException, FontFormatException, URISyntaxException {
+    private GameScreen() throws IOException, FontFormatException, URISyntaxException {
 
         ////////////////////////////////////////////////////////////////////////////////////////
         //This block is used to load the square font
@@ -54,6 +55,12 @@ public class GameScreen {
         graphics = screen.newTextGraphics();
     }
 
+    public static GameScreen getInstance() throws IOException, FontFormatException, URISyntaxException{
+        if(instance == null){
+            instance = new GameScreen();
+        }
+        return instance;
+    }
 
     // Getters
     public TextGraphics getGraphics() {
@@ -63,7 +70,6 @@ public class GameScreen {
     public Screen getScreen() {
         return screen;
     }
-
 
     // Setters
     public void setGraphics(TextGraphics graphics) {

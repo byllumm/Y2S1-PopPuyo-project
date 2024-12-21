@@ -132,11 +132,11 @@ public class Game implements Runnable {
 
     private void runMenuState() {
         try {
+            // Draw only once to reduce workload
+            menuStateController.menuStateViewer.drawBackground(gameScreen.getGraphics(), new Position(0,0));
             while (GameState.state == GameState.MENU) {
-                gameScreen.getScreen().clear();
-
-                // Draw the menu
-                menuStateController.draw(gameScreen.getGraphics(), new Position(0,0));
+                // Draw the menu buttons on top of the stripped menu
+                menuStateController.draw(gameScreen.getGraphics(), new Position(134,147));
 
                 // Refresh and process input
                 gameScreen.getScreen().refresh();

@@ -40,7 +40,7 @@ public class StageController {
     public void updateStage(int score){
         int stage = stageModel.getStage();
         double[] scoreForEachStage = stageModel.getScoreForEachStage();
-        if(score >= scoreForEachStage[stage]){
+        if(score >= scoreForEachStage[stage - 1]){
             stageModel.setStage(stage + 1);
         }
     }

@@ -2,7 +2,7 @@ package model;
 
 public class Stage {
     // Attributes
-    int stage = 0;
+    int stage = 1;
     private static final int scoreForFirstStage = 500;
     private static final double multiplier = 2;
     private final double[] scoreForEachStage = computeScoreForEachStage();

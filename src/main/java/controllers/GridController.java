@@ -157,11 +157,6 @@ public class GridController {
         System.out.println("Puyo sprite updated at (" + row + ", " + col + ") with adjacency: " + Integer.toBinaryString(p.getAdjacent()));
     }
 
-    // Takes a position in the game grid array and turns it into a position in the UI
-    public static Position translatePosition(Position pos) {
-        return new Position(8 + pos.getX() * 32, 8 + pos.getY() * 32);
-    }
-
     public void draw(TextGraphics graphics) {
         gridViewer.draw(graphics, gridCorner);
     }

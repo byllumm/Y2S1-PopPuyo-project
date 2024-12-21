@@ -88,9 +88,9 @@ public class Game implements Runnable {
     }
 
     private void resetGame() throws IOException {
-        arena = new Arena();
-        arenaController = new ArenaController(arena, arenaViewer);
-        playingStateController = new PlayingStateController(arenaController, gameScreen);
+        this.arena = new Arena();
+        this.arenaController = new ArenaController(arena, arenaViewer);
+        this.playingStateController = new PlayingStateController(arenaController, gameScreen);
     }
 
 

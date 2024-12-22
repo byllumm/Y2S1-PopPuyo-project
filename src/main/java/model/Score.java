@@ -30,7 +30,7 @@ public class Score {
         return score;
     }
 
-    public int[] getColorBonusTable(){
+    public static int[] getColorBonusTable(){
         return colorBonusTable;
     }
     public static int[] getGroupBonusTable() {

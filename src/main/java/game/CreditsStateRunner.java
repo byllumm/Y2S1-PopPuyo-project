@@ -7,7 +7,7 @@ import utils.puyoutils.Position;
 import java.io.IOException;
 
 public class CreditsStateRunner implements StateRunner {
-
+    // Class Methods
     @Override
     public void run(Game game, GameScreen gameScreen) throws IOException {
         while (GameState.state == GameState.CREDITS) {

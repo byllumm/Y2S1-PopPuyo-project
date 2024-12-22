@@ -15,23 +15,38 @@ import java.util.List;
 import static model.Grid.*;
 
 public class GridController {
+    // Attributes
     private Grid grid;
     private GridViewer gridViewer;
     private final Position gridCorner = new Position(8, 8);
+    private static final int[][] adjacent_positions = {
+            {0, 1},  // Right
+            {1, 0},  // Below
+            {0, -1}, // Left
+            {-1, 0}, // Above
+    };
 
+
+    // Constructor
     public GridController(Grid grid, GridViewer gridViewer) {
         this.grid = grid;
         this.gridViewer = gridViewer;
     }
 
+
+    // Getters
     public Grid getGrid() {
         return grid;
     }
 
+
+    // Setters
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
+
+    // Class Methods
     public boolean applyGravity() {
         boolean fell = false;
 
@@ -58,15 +73,7 @@ public class GridController {
         grid.setPuyo(secondPos.getY(), secondPos.getX(), activePuyo.getSecondPuyo());
     }
 
-    private static final int[][] adjacent_positions = {
-            {0, 1},  // Right
-            {1, 0},  // Below
-            {0, -1}, // Left
-            {-1, 0}, // Above
-    };
-
-    // Mostly a hack, it's a version of isValidPosition that doesn't exclude nulls.
-    // Ideally this would work more elegantly...
+    // isValidPosition but with nulls, necessary for detectChain
     public static boolean isValidPositionWithNulls(Position pos) {
         int row = pos.getX();
         int col = pos.getY();
@@ -154,10 +161,8 @@ public class GridController {
     public void updatePuyoSprite(int row, int col, Puyo p) throws IOException{
         PuyoViewer viewer = new PuyoViewer(p.getColor(), p.getAdjacent());
         p.setPuyoViewer(viewer); // Assign the new viewer to the Puyo
-        System.out.println("Puyo sprite updated at (" + row + ", " + col + ") with adjacency: " + Integer.toBinaryString(p.getAdjacent()));
+        //System.out.println("Puyo sprite updated at (" + row + ", " + col + ") with adjacency: " + Integer.toBinaryString(p.getAdjacent()));
     }
 
-    public void draw(TextGraphics graphics) {
-        gridViewer.draw(graphics, gridCorner);
-    }
+    public void draw(TextGraphics graphics) { gridViewer.draw(graphics, gridCorner); }
 }

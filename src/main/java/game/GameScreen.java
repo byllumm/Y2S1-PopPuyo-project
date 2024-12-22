@@ -34,8 +34,7 @@ public class GameScreen {
         Font font =  Font.createFont(Font.TRUETYPE_FONT, fontFile);
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
-        Font newfont = font.deriveFont(Font.BOLD, 2); // To make things bigger, just increase font size...
-        // Not sure if this method would work with sprites though.
+        Font newfont = font.deriveFont(Font.BOLD, 2);
         ////////////////////////////////////////////////////////////////////////////////////////
 
         AWTTerminalFontConfiguration cfg = AWTTerminalFontConfiguration.newInstance(newfont);
@@ -62,21 +61,12 @@ public class GameScreen {
         return instance;
     }
 
-    // Getters
-    public TextGraphics getGraphics() {
-        return graphics;
-    }
 
-    public Screen getScreen() {
-        return screen;
-    }
+    // Getters
+    public TextGraphics getGraphics() { return graphics; }
+    public Screen getScreen() { return screen; }
 
     // Setters
-    public void setGraphics(TextGraphics graphics) {
-        this.graphics = graphics;
-    }
-
-    public void setScreen(Screen screen) {
-        this.screen = screen;
-    }
+    public void setGraphics(TextGraphics graphics) { this.graphics = graphics; }
+    public void setScreen(Screen screen) { this.screen = screen; }
 }

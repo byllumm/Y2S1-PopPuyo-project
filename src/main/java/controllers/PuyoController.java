@@ -19,27 +19,15 @@ public class PuyoController {
 
 
     // Getters
-    public Puyo getPuyoModel() {
-        return puyoModel;
-    }
-
-    public PuyoViewer getPuyoViewer() {
-        return puyoViewer;
-    }
+    public Puyo getPuyoModel() { return puyoModel; }
+    public PuyoViewer getPuyoViewer() { return puyoViewer; }
 
 
     // Setters
-    public void setPuyoModel(Puyo puyoModel) {
-        this.puyoModel = puyoModel;
-    }
-
-    public void setPuyoViewer(PuyoViewer puyoViewer) {
-        this.puyoViewer = puyoViewer;
-    }
+    public void setPuyoModel(Puyo puyoModel) { this.puyoModel = puyoModel; }
+    public void setPuyoViewer(PuyoViewer puyoViewer) { this.puyoViewer = puyoViewer; }
 
 
-    // Methods
-    public void draw(TextGraphics graphics, Position corner) {
-        puyoViewer.draw(graphics, corner);
-    }
+    // Class Methods
+    public void draw(TextGraphics graphics, Position corner) { puyoViewer.draw(graphics, corner); }
 }

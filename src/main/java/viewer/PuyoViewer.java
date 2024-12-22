@@ -9,34 +9,29 @@ import java.util.HashMap;
 public class PuyoViewer implements Viewer {
     // Attributes
     private SpriteLoader puyoLoader;
-    // Closest thing I could find to the C++ <utility> Pair...
-    private record Pair<String, Integer>(String first, Integer second) {}
+    private record Pair<String, Integer>(String first, Integer second) {} // Closest thing I could find to the C++ std::pair
     private static HashMap<Pair<String, Integer>, String> spriteMap = new HashMap<>();
+
 
     // Constructor
     public PuyoViewer(String color, int mode) throws IOException {
         Pair<String, Integer> pair = new Pair<>(color, mode);
         System.out.println("updated to: " + spriteMap.get(pair));
         String spriteFilepath = spriteMap.get(pair);
-        // Puyos are 16x16, must be rendered as 32x32
+        // Puyos are 16x16, must be upscaled to 32x32
         puyoLoader = new SpriteLoader(spriteFilepath, 2);
     }
 
-    // Getter
-    public SpriteLoader getPuyoLoader() {
-        return puyoLoader;
-    }
+    // Getters
+    public SpriteLoader getPuyoLoader() { return puyoLoader; }
 
 
-    // Setter
-    public void setPuyoLoader(SpriteLoader puyoLoader) {
-        this.puyoLoader = puyoLoader;
-    }
+    // Setters
+    public void setPuyoLoader(SpriteLoader puyoLoader) { this.puyoLoader = puyoLoader; }
 
 
-    public void draw(TextGraphics graphics, Position corner) {
-        puyoLoader.draw(graphics, corner);
-    }
+    // Class Methods
+    public void draw(TextGraphics graphics, Position corner) { puyoLoader.draw(graphics, corner); }
 
     // Setup of the spriteMap
     static {

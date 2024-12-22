@@ -7,19 +7,17 @@ public class Stage {
     private static final double multiplier = 2;
     private final double[] scoreForEachStage = computeScoreForEachStage();
 
-    // Getter
-    public int getStage(){
-        return stage;
-    }
 
-    public double[] getScoreForEachStage(){
-        return scoreForEachStage;
-    }
+    // Getter
+    public int getStage(){ return stage; }
+    public double[] getScoreForEachStage(){ return scoreForEachStage; }
+
 
     // Setter
-    public void setStage(int stage) {
-        this.stage = stage;
-    }
+    public void setStage(int stage) { this.stage = stage; }
+
+
+    // Class Methods
 
     // Score for stage n = Score required to reach Stage 1 * Multiplier^(n-1)
     private double[] computeScoreForEachStage(){

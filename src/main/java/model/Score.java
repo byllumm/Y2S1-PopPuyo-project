@@ -6,13 +6,9 @@ public class Score {
 
 
     // Getter
-    public int getScore() {
-        return score;
-    }
+    public int getScore() { return score; }
 
 
     // Setter
-    public void setScore(int score) {
-        this.score = score;
-    }
+    public void setScore(int score) { this.score = score; }
 }

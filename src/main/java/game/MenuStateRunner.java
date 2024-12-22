@@ -8,7 +8,7 @@ import utils.puyoutils.Position;
 import java.io.IOException;
 
 public class MenuStateRunner implements StateRunner {
-
+    // Class Methods
     @Override
     public void run(Game game, GameScreen gameScreen) throws IOException {
         MenuStateController menuStateController = game.getMenuStateController();

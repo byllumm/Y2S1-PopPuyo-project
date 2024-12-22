@@ -21,40 +21,20 @@ public class PuyoPair {
 
 
     // Getters
-    public Puyo getFirstPuyo() {
-        return firstPuyo;
-    }
-
-    public Puyo getSecondPuyo() {
-        return secondPuyo;
-    }
-
-    public Position getFirstPos() {
-        return firstPuyo.getPosition();
-    }
-
-    public Position getSecondPos() {
-        return secondPuyo.getPosition();
-    }
-
-    public PuyoPairController getController() {
-        return controller;
-    }
-
-    public void setController(PuyoPairController controller) {
-        this.controller = controller;
-    }
+    public Puyo getFirstPuyo() { return firstPuyo; }
+    public Puyo getSecondPuyo() { return secondPuyo; }
+    public Position getFirstPos() { return firstPuyo.getPosition(); }
+    public Position getSecondPos() { return secondPuyo.getPosition(); }
+    public PuyoPairController getController() { return controller; }
+    public void setController(PuyoPairController controller) { this.controller = controller; }
 
 
     // Setters
-    public void setFirstPuyo(Puyo firstPuyo) {
-        this.firstPuyo = firstPuyo;
-    }
+    public void setFirstPuyo(Puyo firstPuyo) { this.firstPuyo = firstPuyo; }
+    public void setSecondPuyo(Puyo secondPuyo) { this.secondPuyo = secondPuyo; }
 
-    public void setSecondPuyo(Puyo secondPuyo) {
-        this.secondPuyo = secondPuyo;
-    }
 
+    // Class Methods
 
     // Creates a new puyo pair in the middle of the first row on the screen
     public static PuyoPair spawnPuyoPair() throws IOException {

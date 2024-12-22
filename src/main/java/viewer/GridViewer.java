@@ -14,25 +14,17 @@ public class GridViewer implements Viewer {
     // Constructor
     public GridViewer() throws IOException {
         this.gridLoader = new SpriteLoader("/sprites/background/gamegrid_only.png");
-        // ADD THE ALTERNATIVE BEATRICE DRAWING FOR WHEN A CHAIN IS MADE!
-        //this.beatoLoader = new SpriteLoader("/sprites/background/beato.png");
     }
 
 
     // Getters
-    public SpriteLoader getGridLoader() {
-        return gridLoader;
-    }
+    public SpriteLoader getGridLoader() { return gridLoader; }
 
 
     // Setters
-    public void setGridLoader(SpriteLoader gridLoader) {
-        this.gridLoader = gridLoader;
-    }
+    public void setGridLoader(SpriteLoader gridLoader) { this.gridLoader = gridLoader; }
 
 
-    // Methods
-    public void draw(TextGraphics graphics, Position corner) {
-        gridLoader.draw(graphics, corner);
-    }
+    // Class Methods
+    public void draw(TextGraphics graphics, Position corner) { gridLoader.draw(graphics, corner); }
 }

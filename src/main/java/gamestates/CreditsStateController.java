@@ -10,23 +10,24 @@ import viewer.CreditsStateViewer;
 import java.io.IOException;
 
 public class CreditsStateController implements StateMethods{
-
+    // Attributes
     public CreditsStateViewer creditsStateViewer;
 
+
+    // Constructor
     public CreditsStateController() throws IOException {
         creditsStateViewer = new CreditsStateViewer();
     }
 
 
+    // Class Methods
     @Override
-    public void processKey(KeyStroke key){
+    public void processKey(KeyStroke key) {
         if(key.getKeyType() == KeyType.Character && key.getCharacter() != null && key.getCharacter() == 'm'){
             GameState.state = GameState.MENU;
         }
     }
 
     @Override
-    public void draw(TextGraphics graphics, Position position){
-        creditsStateViewer.draw(graphics, position);
-    }
+    public void draw(TextGraphics graphics, Position position) { creditsStateViewer.draw(graphics, position); }
 }

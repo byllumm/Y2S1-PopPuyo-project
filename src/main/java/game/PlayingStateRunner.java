@@ -8,8 +8,11 @@ import utils.puyoutils.Position;
 import java.io.IOException;
 
 public class PlayingStateRunner implements StateRunner {
+    // Attributes
     private final static int FPS = 60;
 
+
+    // Class Methods
     @Override
     public void run(Game game, GameScreen gameScreen) throws IOException, InterruptedException {
         double drawInterval = 1000000000.0 / FPS;

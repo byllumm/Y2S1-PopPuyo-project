@@ -7,10 +7,13 @@ import utils.puyoutils.Position;
 import java.io.IOException;
 
 public class MenuStateViewer implements Viewer {
+    // Attributes
     private static SpriteLoader menuStates[];
     private static SpriteLoader background;
     private int currentState;
 
+
+    // Constructor
     public MenuStateViewer() throws IOException {
         currentState = 0;
         menuStates = new SpriteLoader[3];
@@ -20,6 +23,8 @@ public class MenuStateViewer implements Viewer {
         background = new SpriteLoader("/sprites/menu_states/menu_stripped.png");
     }
 
+
+    // Setters
     public void setState(int state) throws ResourceException {
         if (state > 2) {
             throw new ResourceException("There are only " + menuStates.length + "menus.");
@@ -28,6 +33,8 @@ public class MenuStateViewer implements Viewer {
         }
     }
 
+
+    // Class Methods
     public void drawBackground(TextGraphics graphics, Position position) {
         background.draw(graphics, position);
     }

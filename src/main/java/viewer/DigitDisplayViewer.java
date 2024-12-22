@@ -12,12 +12,7 @@ public class DigitDisplayViewer implements Viewer {
     private static final SpriteLoader[] digitLoaders = new SpriteLoader[10];
     private int currentDigit;
 
-    // Constructor
-    public DigitDisplayViewer() throws IOException {
-        currentDigit = 0;
-    }
-
-    // initialise static digit spriteLoaders
+    // Initialise static digit spriteLoaders
     static {
         try {
             digitLoaders[0] = new SpriteLoader("/sprites/digits/digit_0.png");
@@ -36,14 +31,16 @@ public class DigitDisplayViewer implements Viewer {
     }
 
 
-    // Setter
-    public void setCurrentDigit(int digit) {
-        currentDigit = digit;
+    // Constructor
+    public DigitDisplayViewer() throws IOException {
+        currentDigit = 0;
     }
+
+
+    // Setter
+    public void setCurrentDigit(int digit) { currentDigit = digit; }
 
 
     // Methods
-    public void draw(TextGraphics graphics, Position corner) {
-        digitLoaders[currentDigit].draw(graphics, corner);
-    }
+    public void draw(TextGraphics graphics, Position corner) { digitLoaders[currentDigit].draw(graphics, corner); }
 }

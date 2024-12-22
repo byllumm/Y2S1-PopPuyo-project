@@ -20,7 +20,7 @@ public class SpriteLoader implements Viewer {
     private int width;
     private int height;
     private int scalingFactor = 1;      // By default, scaling is set to 1
-    private String[][] pixelMatrix;     // Each element of the matrix will have the hex code of the pixel. null if transparent.
+    private String[][] pixelMatrix;     // Each element of the matrix will have the hex code of the pixel, null if transparent.
 
 
     // Constructors
@@ -36,6 +36,7 @@ public class SpriteLoader implements Viewer {
     }
 
 
+    // Class Methods
     public void loadImage(URL resourceURL) throws IOException {
         sprite = ImageIO.read(resourceURL);
         width = sprite.getWidth();

@@ -11,15 +11,19 @@ import viewer.MenuStateViewer;
 import java.io.IOException;
 
 public class MenuStateController implements StateMethods{
-
+    // Attributes
     public Menu menuModel;
     public MenuStateViewer menuStateViewer;
 
+
+    // Constructor
     public MenuStateController() throws IOException {
         menuModel = new Menu();
         menuStateViewer = new MenuStateViewer();
     }
 
+
+    // Class Methods
     @Override
     public void processKey(KeyStroke key){
         switch (key.getKeyType()){

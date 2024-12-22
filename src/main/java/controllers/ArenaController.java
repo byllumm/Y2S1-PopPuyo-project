@@ -21,15 +21,6 @@ public class ArenaController {
     private NextPuyoViewer nextPuyoViewer;
     private GridController gridController;
     private ScoreController scoreController;
-
-    public StageController getStageController() {
-        return stageController;
-    }
-
-    public void setStageController(StageController stageController) {
-        this.stageController = stageController;
-    }
-
     private StageController stageController;
     private int autoDropCounter = 0;
 
@@ -47,42 +38,22 @@ public class ArenaController {
 
 
     // Getter
-    public GridController getGridController() {
-        return gridController;
-    }
-
-    public ScoreController getScoreController() {
-        return scoreController;
-    }
-
-    public NextPuyoViewer getNextPuyoViewer() {
-        return nextPuyoViewer;
-    }
-
-    public Arena getArenaModel(){
-        return arenaModel;
-    }
-
-    public ArenaViewer getArenaViewer(){
-        return arenaViewer;
-    }
+    public GridController getGridController() { return this.gridController; }
+    public ScoreController getScoreController() { return this.scoreController; }
+    public NextPuyoViewer getNextPuyoViewer() { return this.nextPuyoViewer; }
+    public Arena getArenaModel() { return this.arenaModel; }
+    public ArenaViewer getArenaViewer() { return this.arenaViewer; }
+    public StageController getStageController() { return this.stageController; }
+    public void setStageController(StageController stageController) { this.stageController = stageController; }
 
 
     // Setter
-    public void setGridController(GridController gridController) {
-        this.gridController = gridController;
-    }
-
-    public void setScoreController(ScoreController scoreController) {
-        this.scoreController = scoreController;
-    }
-
-    public void setNextPuyoViewer(NextPuyoViewer nextPuyoViewer) {
-        this.nextPuyoViewer = nextPuyoViewer;
-    }
+    public void setGridController(GridController gridController) { this.gridController = gridController; }
+    public void setScoreController(ScoreController scoreController) { this.scoreController = scoreController; }
+    public void setNextPuyoViewer(NextPuyoViewer nextPuyoViewer) { this.nextPuyoViewer = nextPuyoViewer;}
 
 
-    // Methods
+    // Class Methods
     public void update() throws IOException {
 
         //Process input function
@@ -140,10 +111,6 @@ public class ArenaController {
                     dropInterval -= 1;
                 }
 
-                System.out.println("Score: " + arenaModel.getScore().getScore());
-                System.out.println("Stage: " + arenaModel.getStage().getStage());
-                System.out.println("Puyos in chain: " + puyo_in_chain);
-
                 // Check if the puyo pair can even spawn
                 if (Grid.isEmpty(0,2) && Grid.isEmpty(0,3)) {
                     arenaModel.setActivePuyo(arenaModel.getNextPuyo());
@@ -157,11 +124,7 @@ public class ArenaController {
         }
     }
 
-    public void draw(TextGraphics graphics, Position position) {
-        arenaViewer.draw(graphics, position);
-    }
+    public void draw(TextGraphics graphics, Position position) { arenaViewer.draw(graphics, position); }
 
-    public void drawNext(TextGraphics graphics, Position position) {
-        nextPuyoViewer.draw(graphics, new Position(212, 8));
-    }
+    public void drawNext(TextGraphics graphics, Position position) { nextPuyoViewer.draw(graphics, new Position(212, 8)); }
 }

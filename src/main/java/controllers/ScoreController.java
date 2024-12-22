@@ -53,10 +53,10 @@ public class ScoreController {
     public void updateScore(int pc, int cb, int gb) {
         int newScore = 0;
 
-        if (scoreModel.getColorBonusTable()[cb] + gb == 0) {
+        if (Score.getColorBonusTable()[cb] + gb == 0) {
             newScore = 10 * pc;
         } else {
-            newScore = (10 * pc) * (gb + scoreModel.getColorBonusTable()[cb]);
+            newScore = (10 * pc) * (gb + Score.getColorBonusTable()[cb]);
         }
 
         newScore += 2;

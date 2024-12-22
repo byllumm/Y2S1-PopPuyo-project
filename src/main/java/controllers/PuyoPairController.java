@@ -83,15 +83,15 @@ public class PuyoPairController {
     }
 
     // Find the index in the ROTATION_ORDER
-    private int findIndex(RotationState state) {
-        for(int i = 0; i < ROTATION_ORDER.length; i++) {
-            if(ROTATION_ORDER[i] == state) return i;
+    int findIndex(RotationState state) {
+        for (int i = 0; i < ROTATION_ORDER.length; i++) {
+            if (ROTATION_ORDER[i] == state) return i;
         }
         return -1; // Shouldn't happen
     }
 
     // Helper method to find the next state
-    private RotationState getNextState(RotationState current, boolean clockwise) {
+    RotationState getNextState(RotationState current, boolean clockwise) {
         int index = (clockwise ? 1: -1) + findIndex(current);
         index = (index + ROTATION_ORDER.length) % ROTATION_ORDER.length;
         return ROTATION_ORDER[index];

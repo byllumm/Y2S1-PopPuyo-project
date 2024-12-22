@@ -1,14 +1,17 @@
 package game;
 
 import controllers.ArenaController;
-import gamestates.CreditsStateController;
+import gamestates.controllers.CreditsStateController;
 import gamestates.GameState;
-import gamestates.MenuStateController;
-import gamestates.PlayingStateController;
+import gamestates.controllers.MenuStateController;
+import gamestates.controllers.PlayingStateController;
+import gamestates.runners.CreditsStateRunner;
+import gamestates.runners.MenuStateRunner;
+import gamestates.runners.PlayingStateRunner;
+import gamestates.runners.StateRunner;
 import model.Arena;
 
 import com.googlecode.lanterna.input.KeyStroke;
-import utils.puyoutils.Position;
 import viewer.ArenaViewer;
 
 import java.awt.*;

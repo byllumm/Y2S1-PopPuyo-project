@@ -1,7 +1,6 @@
 package controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyStroke;
 import model.Arena;
 import model.Grid;
 import utils.puyoutils.Position;
@@ -140,9 +139,6 @@ public class ArenaController {
                     dropInterval -= 1;
                 }
 
-                System.out.println("Score: " + arenaModel.getScore().getScore());
-                System.out.println("Stage: " + arenaModel.getStage().getStage());
-                System.out.println("Puyos in chain: " + puyo_in_chain);
 
                 // Check if the puyo pair can even spawn
                 if (Grid.isEmpty(0,2) && Grid.isEmpty(0,3)) {
@@ -159,9 +155,5 @@ public class ArenaController {
 
     public void draw(TextGraphics graphics, Position position) {
         arenaViewer.draw(graphics, position);
-    }
-
-    public void drawNext(TextGraphics graphics, Position position) {
-        nextPuyoViewer.draw(graphics, new Position(212, 8));
     }
 }

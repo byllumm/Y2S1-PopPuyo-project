@@ -1,9 +1,10 @@
-package gamestates;
+package gamestates.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import controllers.ArenaController;
 import game.GameScreen;
+import gamestates.GameState;
 import utils.puyoutils.Position;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import static model.Arena.*;
 import static model.Grid.*;
 import static model.Grid.translatePosition;
 
-public class PlayingStateController implements StateMethods{
+public class PlayingStateController implements StateController {
     // Attributes
     private ArenaController arenaController;
     private GameScreen gameScreen;

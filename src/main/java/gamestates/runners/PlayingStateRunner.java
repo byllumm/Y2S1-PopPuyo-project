@@ -1,6 +1,8 @@
-package game;
+package gamestates.runners;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import game.Game;
+import game.GameScreen;
 import gamestates.GameState;
 import model.Arena;
 import utils.puyoutils.Position;

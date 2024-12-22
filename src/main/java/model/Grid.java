@@ -1,8 +1,5 @@
 package model;
-
-import viewer.GridViewer;
 import utils.puyoutils.Position;
-import utils.puyoutils.PuyoPair;
 
 import java.io.IOException;
 

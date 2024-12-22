@@ -154,7 +154,6 @@ public class GridController {
     public void updatePuyoSprite(int row, int col, Puyo p) throws IOException{
         PuyoViewer viewer = new PuyoViewer(p.getColor(), p.getAdjacent());
         p.setPuyoViewer(viewer); // Assign the new viewer to the Puyo
-        System.out.println("Puyo sprite updated at (" + row + ", " + col + ") with adjacency: " + Integer.toBinaryString(p.getAdjacent()));
     }
 
     public void draw(TextGraphics graphics) {

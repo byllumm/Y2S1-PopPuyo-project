@@ -1,4 +1,7 @@
-package game;
+package gamestates.runners;
+
+import game.Game;
+import game.GameScreen;
 
 import java.io.IOException;
 

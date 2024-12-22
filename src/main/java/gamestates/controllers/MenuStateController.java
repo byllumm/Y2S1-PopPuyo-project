@@ -1,16 +1,15 @@
-package gamestates;
+package gamestates.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import model.Menu;
-import model.MenuButton;
 import utils.custom_exceptions.ResourceException;
 import utils.puyoutils.Position;
 import viewer.MenuStateViewer;
 
 import java.io.IOException;
 
-public class MenuStateController implements StateMethods{
+public class MenuStateController implements StateController {
 
     public Menu menuModel;
     public MenuStateViewer menuStateViewer;

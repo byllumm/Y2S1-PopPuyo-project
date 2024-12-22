@@ -1,7 +1,5 @@
 package model;
 
-import viewer.ArenaViewer;
-import viewer.NextPuyoViewer;
 import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 

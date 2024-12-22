@@ -1,15 +1,16 @@
-package gamestates;
+package gamestates.controllers;
 
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
+import gamestates.GameState;
 import utils.puyoutils.Position;
 import viewer.CreditsStateViewer;
 
 import java.io.IOException;
 
-public class CreditsStateController implements StateMethods{
+public class CreditsStateController implements StateController {
 
     public CreditsStateViewer creditsStateViewer;
 

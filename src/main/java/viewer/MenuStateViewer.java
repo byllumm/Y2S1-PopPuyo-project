@@ -3,6 +3,7 @@ package viewer;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import utils.custom_exceptions.ResourceException;
 import utils.puyoutils.Position;
+import viewer.loader.SpriteLoader;
 
 import java.io.IOException;
 
@@ -21,7 +22,7 @@ public class MenuStateViewer implements Viewer {
     }
 
     public void setState(int state) throws ResourceException {
-        if (state > 2) {
+        if (state > menuStates.length) {
             throw new ResourceException("There are only " + menuStates.length + "menus.");
         } else {
             currentState = state;

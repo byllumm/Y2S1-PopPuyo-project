@@ -2,6 +2,7 @@ package viewer;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import utils.puyoutils.Position;
+import viewer.loader.SpriteLoader;
 
 import java.io.IOException;
 

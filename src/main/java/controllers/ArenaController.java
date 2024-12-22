@@ -2,33 +2,23 @@ package controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import model.Arena;
-import model.Grid;
+import model.grid.Grid;
 import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 import viewer.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static model.Arena.*;
 
 public class ArenaController {
     // Attributes
+    private GameLogicController gameLogicController;
     private Arena arenaModel;
     private ArenaViewer arenaViewer;
     private NextPuyoViewer nextPuyoViewer;
     private GridController gridController;
     private ScoreController scoreController;
-
-    public StageController getStageController() {
-        return stageController;
-    }
-
-    public void setStageController(StageController stageController) {
-        this.stageController = stageController;
-    }
-
     private StageController stageController;
     private int autoDropCounter = 0;
 
@@ -42,12 +32,17 @@ public class ArenaController {
         this.stageController = new StageController(arena.getStage(), new DigitDisplayViewer());
         this.nextPuyoViewer = new NextPuyoViewer(arenaModel.getNextPuyo().getFirstPuyo().getPuyoViewer(),
                                                     arenaModel.getNextPuyo().getSecondPuyo().getPuyoViewer());
+        this.gameLogicController = new GameLogicController(gridController, scoreController, stageController);
     }
 
 
     // Getter
     public GridController getGridController() {
         return gridController;
+    }
+
+    public StageController getStageController() {
+        return stageController;
     }
 
     public ScoreController getScoreController() {
@@ -62,25 +57,6 @@ public class ArenaController {
         return arenaModel;
     }
 
-    public ArenaViewer getArenaViewer(){
-        return arenaViewer;
-    }
-
-
-    // Setter
-    public void setGridController(GridController gridController) {
-        this.gridController = gridController;
-    }
-
-    public void setScoreController(ScoreController scoreController) {
-        this.scoreController = scoreController;
-    }
-
-    public void setNextPuyoViewer(NextPuyoViewer nextPuyoViewer) {
-        this.nextPuyoViewer = nextPuyoViewer;
-    }
-
-
     // Methods
     public void update() throws IOException {
 
@@ -93,52 +69,9 @@ public class ArenaController {
                 arenaModel.getActivePuyo().getController().moveDown();
             }
             else {
-                gridController.integrateGrid(arenaModel.getActivePuyo());
-                while (gridController.applyGravity()) {/* do nothing */ }
 
-                // Handle chain/score logic here
-                List<List<Position>> chains = gridController.detectChain();
-
-                int puyo_in_chain = 0;
-                int color_bonus = 0;
-                int group_bonus = 0;
-                List<String> differentColors = new ArrayList<>();
-
-                while (!chains.isEmpty()) {
-                    for (List<Position> chain : chains) {
-
-                        // Section for organizing scoring data
-                        puyo_in_chain += chain.size();
-                        int chain_size = chain.size();
-                        if (chain_size > 11) chain_size = 11;
-                        group_bonus += scoreController.computeGroupBonus(chain_size);
-                        Position pos = chain.get(0);
-                        String color = arenaModel.getGrid().getPuyo(pos.getX(),pos.getY()).getColor();
-                        if (!differentColors.contains(color)) {
-                            differentColors.add(color);
-                        }
-                        //////////////////////////////////////
-
-                        for (Position position : chain) {
-                            arenaModel.getGrid().setPuyo(position.getX(), position.getY(), null); // Remove Puyos in the chain
-                        }
-                    }
-
-                    // Apply gravity after removing chains
-                    while (gridController.applyGravity()) { /* do nothing */ }
-
-                    // Detect new chains after gravity settles
-                    chains = gridController.detectChain();
-                }
-
-                scoreController.updateScore(puyo_in_chain, color_bonus, group_bonus);
-                int currentStage = stageController.getStageModel().getStage();
-                stageController.updateStage(scoreController.getScoreModel().getScore());
-                int afterStage = stageController.getStageModel().getStage();
-                if(currentStage != afterStage){
-                    dropInterval -= 1;
-                }
-
+                gameLogicController.processGravityAndChains(arenaModel);
+                gameLogicController.updateStageIfNeeded();
 
                 // Check if the puyo pair can even spawn
                 if (Grid.isEmpty(0,2) && Grid.isEmpty(0,3)) {

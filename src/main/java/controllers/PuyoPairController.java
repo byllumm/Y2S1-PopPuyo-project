@@ -11,6 +11,9 @@ public class PuyoPairController {
         RIGHT, UP, LEFT, DOWN;
     }
 
+    private static final RotationState[] ROTATION_ORDER = {
+            RotationState.UP, RotationState.RIGHT, RotationState.DOWN, RotationState.LEFT
+    };
 
     // Constructor
     public PuyoPairController(PuyoPair pair) {
@@ -63,46 +66,50 @@ public class PuyoPairController {
 
     // Makes current puyo pair fall down
     public void moveDown() {
-        Position firstPos = puyoPair.getFirstPos();
-        Position secondPos = puyoPair.getSecondPos();
-        puyoPair.getFirstPuyo().getPosition().setY(firstPos.getY() + 1);
-        puyoPair.getSecondPuyo().getPosition().setY(secondPos.getY() + 1);
+        puyoPair.setFirstPos(new Position(puyoPair.getFirstPos().getX(), puyoPair.getFirstPos().getY() + 1));
+        puyoPair.setSecondPos(new Position(puyoPair.getSecondPos().getX(), puyoPair.getSecondPos().getY() + 1));
     }
 
     // Moves current puyo pair 1 pixel to the left
     public void moveLeft() {
-        Position firstPos = puyoPair.getFirstPos();
-        Position secondPos = puyoPair.getSecondPos();
-        puyoPair.getFirstPuyo().getPosition().setX(firstPos.getX() - 1);
-        puyoPair.getSecondPuyo().getPosition().setX(secondPos.getX() - 1);
+        puyoPair.setFirstPos(new Position(puyoPair.getFirstPos().getX() - 1, puyoPair.getFirstPos().getY()));
+        puyoPair.setSecondPos(new Position(puyoPair.getSecondPos().getX() - 1, puyoPair.getSecondPos().getY()));
     }
 
     // Moves current puyo pair 1 pixel to the right
     public void moveRight() {
-        Position firstPos = puyoPair.getFirstPos();
-        Position secondPos = puyoPair.getSecondPos();
-        puyoPair.getFirstPuyo().getPosition().setX(firstPos.getX() + 1);
-        puyoPair.getSecondPuyo().getPosition().setX(secondPos.getX() + 1);
+        puyoPair.setFirstPos(new Position(puyoPair.getFirstPos().getX() + 1, puyoPair.getFirstPos().getY()));
+        puyoPair.setSecondPos(new Position(puyoPair.getSecondPos().getX() + 1, puyoPair.getSecondPos().getY()));
+    }
+
+    // Find the index in the ROTATION_ORDER
+    private int findIndex(RotationState state) {
+        for(int i = 0; i < ROTATION_ORDER.length; i++) {
+            if(ROTATION_ORDER[i] == state) return i;
+        }
+        return -1; // Shouldn't happen
+    }
+
+    // Helper method to find the next state
+    private RotationState getNextState(RotationState current, boolean clockwise) {
+        int index = (clockwise ? 1: -1) + findIndex(current);
+        index = (index + ROTATION_ORDER.length) % ROTATION_ORDER.length;
+        return ROTATION_ORDER[index];
     }
 
     // Returns the position of the second puyo after rotating
     public Position rotate(boolean clockwise) {
+        RotationState newState = getNextState(rotationState, clockwise);
         Position newSecondPos = new Position(0, 0);
-        if (clockwise) {
-            switch (rotationState) {
-                case UP:    newSecondPos = rotateRight();   this.rotationState = RotationState.RIGHT; break;
-                case RIGHT: newSecondPos = rotateDown();    this.rotationState = RotationState.DOWN; break;
-                case DOWN:  newSecondPos = rotateLeft();    this.rotationState = RotationState.LEFT; break;
-                case LEFT:  newSecondPos = rotateUp();      this.rotationState = RotationState.UP; break;
-            }
-        } else {
-            switch (rotationState) {
-                case UP:    newSecondPos = rotateLeft();    this.rotationState = RotationState.LEFT; break;
-                case LEFT:  newSecondPos = rotateDown();    this.rotationState = RotationState.DOWN; break;
-                case DOWN:  newSecondPos = rotateRight();   this.rotationState = RotationState.RIGHT; break;
-                case RIGHT: newSecondPos = rotateUp();      this.rotationState = RotationState.UP; break;
-            }
+
+        switch(newState) {
+            case UP: newSecondPos = rotateUp(); break;
+            case RIGHT: newSecondPos = rotateRight(); break;
+            case DOWN: newSecondPos = rotateDown(); break;
+            case LEFT: newSecondPos = rotateLeft(); break;
         }
+
+        this.rotationState = newState;
         return newSecondPos;
     }
 

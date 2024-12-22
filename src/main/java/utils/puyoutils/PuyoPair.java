@@ -32,6 +32,8 @@ public class PuyoPair {
     // Setters
     public void setFirstPuyo(Puyo firstPuyo) { this.firstPuyo = firstPuyo; }
     public void setSecondPuyo(Puyo secondPuyo) { this.secondPuyo = secondPuyo; }
+    public void setFirstPos(Position pos) { firstPuyo.setPosition(pos); }
+    public void setSecondPos(Position pos) { secondPuyo.setPosition(pos); }
 
 
     // Class Methods

@@ -1,11 +1,12 @@
 package model;
 
+import model.grid.Grid;
 import utils.puyoutils.Position;
 import utils.puyoutils.PuyoPair;
 
 import java.io.IOException;
 
-import static model.Grid.*;
+import static model.grid.Grid.*;
 
 public class Arena {
     // Attributes

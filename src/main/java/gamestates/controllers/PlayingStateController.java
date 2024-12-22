@@ -10,8 +10,8 @@ import utils.puyoutils.Position;
 import java.io.IOException;
 
 import static model.Arena.*;
-import static model.Grid.*;
-import static model.Grid.translatePosition;
+import static model.grid.Grid.*;
+import static model.grid.Grid.translatePosition;
 
 public class PlayingStateController implements StateController {
     // Attributes
@@ -99,7 +99,7 @@ public class PlayingStateController implements StateController {
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {
                 if(!isEmpty(row,col)) {
-                    arenaController.getGridController().getGrid().getPuyo(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
+                    arenaController.getGridController().getPuyoAt(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
                 }
             }
         }

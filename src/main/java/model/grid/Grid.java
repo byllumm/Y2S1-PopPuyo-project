@@ -1,7 +1,6 @@
-package model;
+package model.grid;
+import model.Puyo;
 import utils.puyoutils.Position;
-
-import java.io.IOException;
 
 public class Grid {
     // Attributes

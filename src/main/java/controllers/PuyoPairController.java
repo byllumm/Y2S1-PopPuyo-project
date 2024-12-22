@@ -19,19 +19,19 @@ public class PuyoPairController {
     }
 
 
-    // Getter
+    // Getters
     public RotationState getRotationState() {
         return rotationState;
     }
 
 
-    // Setter
+    // Setters
     public void setRotationState(RotationState rotationState) {
         this.rotationState = rotationState;
     }
 
 
-    // Methods
+    // Class Methods
 
     // Rotates puyo pair up, that is, moving the second puyo to above the first puyo
     public Position rotateUp() {

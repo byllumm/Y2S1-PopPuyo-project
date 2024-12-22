@@ -12,6 +12,7 @@ public class NextPuyoViewer implements Viewer {
     private final PuyoViewer firstPuyoViewer;
     private final PuyoViewer secondPuyoViewer;
 
+
     // Constructor
     public NextPuyoViewer(PuyoViewer firstPuyo, PuyoViewer secondPuyo) throws IOException {
         this.nextPuyoLoader = new SpriteLoader("/sprites/background/next_grid.png");
@@ -21,9 +22,7 @@ public class NextPuyoViewer implements Viewer {
 
 
     // Getter
-    public SpriteLoader getNextPuyodLoader() {
-        return nextPuyoLoader;
-    }
+    public SpriteLoader getNextPuyodLoader() { return nextPuyoLoader; }
 
 
     public void draw(TextGraphics graphics, Position corner) {

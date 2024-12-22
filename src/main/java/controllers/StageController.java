@@ -11,32 +11,27 @@ public class StageController {
     private DigitDisplayViewer stageViewer;
     private Position[] positions = new Position[2];
 
+
     // Constructor
-    public StageController(Stage stageModel, DigitDisplayViewer stageViewer){
+    public StageController(Stage stageModel, DigitDisplayViewer stageViewer) {
         this.stageModel = stageModel;
         this.stageViewer = stageViewer;
         positions[0] = new Position(351,60);
         positions[1] = new Position(365, 60);
     }
 
-    // Getters
-    public Stage getStageModel(){
-        return stageModel;
-    }
 
-    public DigitDisplayViewer getStageViewer(){
-        return stageViewer;
-    }
+    // Getters
+    public Stage getStageModel() { return stageModel; }
+    public DigitDisplayViewer getStageViewer() { return stageViewer; }
+
 
     // Setters
-    public void setStageModel(Stage stageModel) {
-        this.stageModel = stageModel;
-    }
+    public void setStageModel(Stage stageModel) { this.stageModel = stageModel; }
+    public void setStageViewer(DigitDisplayViewer stageViewer) { this.stageViewer = stageViewer; }
 
-    public void setStageViewer(DigitDisplayViewer stageViewer) {
-        this.stageViewer = stageViewer;
-    }
 
+    // Class Methods
     public void updateStage(int score){
         int stage = stageModel.getStage();
         double[] scoreForEachStage = stageModel.getScoreForEachStage();

@@ -25,17 +25,16 @@ public class Game implements Runnable {
     // Attributes
     private static Game instance;
     private Thread gameThread;
-
     private ArenaController arenaController;
     private ArenaViewer arenaViewer;
     private Arena arena;
-
     private GameScreen gameScreen;
-
     private PlayingStateController playingStateController;
     private MenuStateController menuStateController;
     private CreditsStateController creditsStateController;
 
+
+    // Constructor
     private Game() throws IOException, FontFormatException, URISyntaxException {
         initialize();
     }
@@ -62,39 +61,20 @@ public class Game implements Runnable {
 
 
     // Getters
-    public ArenaController getArenaController() {
-        return arenaController;
-    }
+    public ArenaController getArenaController() { return arenaController; }
+    public GameScreen getGameScreen() { return gameScreen; }
+    public MenuStateController getMenuStateController(){ return menuStateController; }
+    public PlayingStateController getPlayingStateController(){ return playingStateController; }
+    public CreditsStateController getCreditsStateController(){ return creditsStateController; }
+    public Arena getArena(){ return arena; }
 
-    public GameScreen getGameScreen() {
-        return gameScreen;
-    }
-
-    public MenuStateController getMenuStateController(){
-        return menuStateController;
-    }
-
-    public PlayingStateController getPlayingStateController(){
-        return playingStateController;
-    }
-
-    public CreditsStateController getCreditsStateController(){
-        return creditsStateController;
-    }
-
-    public Arena getArena(){
-        return arena;
-    }
 
     // Setters
-    public void setArenaController(ArenaController arenaController) {
-        this.arenaController = arenaController;
-    }
+    public void setArenaController(ArenaController arenaController) { this.arenaController = arenaController; }
+    public void setGameScreen(GameScreen gameScreen) { this.gameScreen = gameScreen; }
 
-    public void setGameScreen(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
-    }
 
+    // Class Methods
     private void handleGameOver() throws IOException{
         if(gameOver(arena.getGrid())){
             resetGame();

@@ -30,44 +30,21 @@ public class Arena {
 
 
     // Getters
-    public Grid getGrid() {
-        return grid;
-    }
-
-    public PuyoPair getActivePuyo() {
-        return activePuyo;
-    }
-
-    public PuyoPair getNextPuyo() {
-        return nextPuyo;
-    }
-
-    public Score getScore() {
-        return score;
-    }
-
-    public Stage getStage(){ return stage; }
+    public Grid getGrid() { return grid; }
+    public PuyoPair getActivePuyo() { return activePuyo; }
+    public PuyoPair getNextPuyo() { return nextPuyo; }
+    public Score getScore() { return score; }
+    public Stage getStage() { return stage; }
 
 
     // Setters
-    public void setActivePuyo(PuyoPair activePuyo) {
-        this.activePuyo = activePuyo;
-    }
-
-    public void setGrid(Grid grid) {
-        Arena.grid = grid;
-    }
-
-    public void setNextPuyo(PuyoPair nextPuyo) {
-        this.nextPuyo = nextPuyo;
-    }
-
-    public void setScore(Score score) {
-        this.score = score;
-    }
+    public void setActivePuyo(PuyoPair activePuyo) { this.activePuyo = activePuyo; }
+    public void setGrid(Grid grid) { Arena.grid = grid; }
+    public void setNextPuyo(PuyoPair nextPuyo) { this.nextPuyo = nextPuyo; }
+    public void setScore(Score score) { this.score = score; }
 
 
-    // Methods
+    // Class Methods
 
     // Checks if active puyo pair can go down next row
     public static boolean canMoveDown(PuyoPair activePuyo){

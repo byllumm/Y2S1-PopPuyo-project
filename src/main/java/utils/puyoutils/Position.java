@@ -18,24 +18,16 @@ public class Position {
 
 
     // Getters
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
+    public int getX() { return this.x; }
+    public int getY() { return this.y; }
 
 
     // Setters
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
 
-    public void setY(int y) {
-        this.y = y;
-    }
 
+    // Class Methods
 
     // This override makes it easier to check position overlap
     @Override

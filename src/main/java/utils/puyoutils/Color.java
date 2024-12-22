@@ -8,6 +8,7 @@ public class Color {
     private static final List<String> colors = List.of("blue", "red", "yellow", "purple", "green"); // Puyos come in 5 colors: green, yellow, red, blue, purple.
 
 
+    // Class Methods
     public static String getRandomColor() {
         Random rand = new Random();
         int index = rand.nextInt(colors.size());

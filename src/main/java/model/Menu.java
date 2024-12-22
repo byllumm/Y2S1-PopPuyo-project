@@ -10,6 +10,7 @@ public class Menu {
     private List<MenuButton> buttons;
     private int selectedButton;
 
+
     // Constructor
     public Menu(){
         buttons = new ArrayList<>();
@@ -19,33 +20,26 @@ public class Menu {
         selectedButton = 0;
     }
 
-    // Getters
-    public int getSelectedButton() {
-        return selectedButton;
-    }
 
-    public List<MenuButton> getButtons() {
-        return buttons;
-    }
+    // Getters
+    public int getSelectedButton() { return selectedButton; }
+    public List<MenuButton> getButtons() { return buttons; }
+
 
     // Setters
-    public void setSelectedButton(int selectedButton) {
-        this.selectedButton = selectedButton;
-    }
+    public void setSelectedButton(int selectedButton) { this.selectedButton = selectedButton; }
+    public void setButtons(List<MenuButton> buttons) { this.buttons = buttons; }
 
-    public void setButtons(List<MenuButton> buttons) {
-        this.buttons = buttons;
-    }
 
-    public void moveSelectionUp(){
+    // Class Methods
+    public void moveSelectionUp() {
         selectedButton = (selectedButton - 1 + buttons.size()) %  buttons.size();
     }
-
-    public void moveSelectionDown(){
+    public void moveSelectionDown() {
         selectedButton = (selectedButton + 1) % buttons.size();
     }
 
-    public void selectButton(){
+    public void selectButton() {
         if(selectedButton >= 0 && selectedButton < buttons.size()){
             GameState.state = buttons.get(selectedButton).getState();
         }

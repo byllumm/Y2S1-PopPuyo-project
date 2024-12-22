@@ -18,13 +18,9 @@ public class ArenaViewer implements Viewer {
 
 
     // Getter
-    public SpriteLoader getBackgroundLoader() {
-        return backgroundLoader;
-    }
+    public SpriteLoader getBackgroundLoader() { return backgroundLoader; }
 
 
-    // Methods
-    public void draw(TextGraphics graphics, Position corner) {
-        backgroundLoader.draw(graphics, corner);
-    }
+    // Class Methods
+    public void draw(TextGraphics graphics, Position corner) { backgroundLoader.draw(graphics, corner); }
 }

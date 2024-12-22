@@ -18,11 +18,15 @@ public class PlayingStateController implements StateController {
     private ArenaController arenaController;
     private GameScreen gameScreen;
 
+
+    // Constructor
     public PlayingStateController(ArenaController arenaController, GameScreen gameScreen){
         this.arenaController= arenaController;
         this.gameScreen = gameScreen;
     }
 
+
+    // Class Methods
     @Override
     public void processKey(KeyStroke key) {
         switch (key.getKeyType()) {

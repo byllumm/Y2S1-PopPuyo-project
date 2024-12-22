@@ -12,6 +12,7 @@ import utils.puyoutils.Position;
 import viewer.PuyoViewer;
 
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 public class PuyoControllerTest {
     @Mock private Puyo mockPuyoModel;
@@ -62,7 +63,7 @@ public class PuyoControllerTest {
         PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Position stubPosition = Mockito.mock(Position.class);
         puyoController.draw(mockTextGraphics, stubPosition);
-        Mockito.verify(mockTextGraphics, Mockito.times(1));
+        verify(mockPuyoViewer, Mockito.times(1)).draw(mockTextGraphics, stubPosition);
     }
 
     @Test

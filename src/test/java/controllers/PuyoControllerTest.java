@@ -25,7 +25,7 @@ public class PuyoControllerTest {
     }
 
     @Test
-    public void testConstructor() {
+    public void constructor() {
         PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Assertions.assertNotNull(puyoController);
     }

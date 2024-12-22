@@ -30,6 +30,7 @@ public class PuyoPairControllerTest {
     @Test
     public void constructor() {
         PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
+        Assertions.assertNotNull(puyoPairController);
         Assertions.assertEquals(PuyoPairController.RotationState.RIGHT, puyoPairController.getRotationState());
     }
 

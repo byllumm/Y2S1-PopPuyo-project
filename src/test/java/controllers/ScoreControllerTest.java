@@ -24,6 +24,7 @@ public class ScoreControllerTest {
     @Test
     public void constructor() {
         ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
+        Assertions.assertNotNull(scoreController);
         Assertions.assertEquals(mockScoreModel, scoreController.getScoreModel());
         Assertions.assertEquals(mockDigitDisplayViewer, scoreController.getScoreViewer());
     }

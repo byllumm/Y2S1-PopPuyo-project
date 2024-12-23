@@ -16,7 +16,7 @@ public class MenuStateRunner implements StateRunner {
         MenuStateController menuStateController = game.getMenuStateController();
 
         // Draw only once to reduce workload
-        menuStateController.menuStateViewer.drawBackground(gameScreen.getGraphics(), new Position(0,0));
+        menuStateController.getMenuStateViewer().drawBackground(gameScreen.getGraphics(), new Position(0,0));
         while (GameState.state == GameState.MENU) {
             // Draw the menu buttons on top of the stripped menu
             menuStateController.draw(gameScreen.getGraphics(), new Position(134,147));

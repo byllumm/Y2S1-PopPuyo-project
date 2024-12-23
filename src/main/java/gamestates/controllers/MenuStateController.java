@@ -19,6 +19,10 @@ public class MenuStateController implements StateController {
         menuStateViewer = new MenuStateViewer();
     }
 
+    public MenuStateViewer getMenuStateViewer() {
+        return menuStateViewer;
+    }
+
     @Override
     public void processKey(KeyStroke key){
         switch (key.getKeyType()){

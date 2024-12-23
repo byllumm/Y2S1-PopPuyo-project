@@ -1,4 +1,4 @@
-import game.Game;
+import poppuyo.game.Game;
 
 import java.awt.*;
 import java.io.IOException;

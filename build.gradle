@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
-group = 'com.t09g07.puyo'
-version = '1.0-SNAPSHOT'
+group = 'poppuyo'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -12,6 +13,11 @@ repositories {
 
 application {
     mainClass.set("Application")
+}
+
+pitest {
+    pitestVersion = '1.15.0'
+    junit5PluginVersion = '1.0.0'
 }
 
 dependencies {

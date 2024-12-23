@@ -1,4 +1,4 @@
-package gamestates.runners;
+package poppuyo.gamestates.runners;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;

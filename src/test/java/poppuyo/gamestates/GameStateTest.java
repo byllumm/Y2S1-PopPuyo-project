@@ -1,4 +1,4 @@
-package gamestates;
+package poppuyo.gamestates;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

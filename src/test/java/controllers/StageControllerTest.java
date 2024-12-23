@@ -1,0 +1,95 @@
+package controllers;
+
+import com.googlecode.lanterna.graphics.TextGraphics;
+import model.Stage;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import utils.puyoutils.Position;
+import viewer.DigitDisplayViewer;
+
+public class StageControllerTest {
+    @Mock private Stage mockStageModel;
+    @Mock private DigitDisplayViewer mockStageViewer;
+    @Mock private TextGraphics mockTextGraphics;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void constructor() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        Assertions.assertNotNull(stageController);
+        Assertions.assertEquals(mockStageModel, stageController.getStageModel());
+    }
+
+    @Test
+    void getStageModel() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        Assertions.assertEquals(mockStageModel, stageController.getStageModel());
+    }
+
+    @Test
+    void getStageViewer() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        Assertions.assertEquals(mockStageViewer, stageController.getStageViewer());
+    }
+
+
+    @Test
+    void setStageModel() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        Stage newMockStageModel = Mockito.mock(Stage.class);
+        stageController.setStageModel(newMockStageModel);
+        Assertions.assertEquals(newMockStageModel, stageController.getStageModel());
+    }
+
+    @Test
+    void setStageViewer() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        DigitDisplayViewer newMockViewer = Mockito.mock(DigitDisplayViewer.class);
+        stageController.setStageViewer(newMockViewer);
+        Assertions.assertEquals(newMockViewer, stageController.getStageViewer());
+    }
+
+    @Test
+    void updateStage() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        Mockito.when(mockStageModel.getStage()).thenReturn(1);
+
+        // Score below threshold
+        stageController.updateStage(499);
+        Mockito.verify(mockStageModel, Mockito.never()).setStage(Mockito.anyInt());
+
+        // Score above threshold
+        stageController.updateStage(500);
+        Mockito.verify(mockStageModel, Mockito.times(1)).setStage(Mockito.anyInt());
+    }
+
+    @Test
+    void draw() {
+        StageController stageController = new StageController(mockStageModel, mockStageViewer);
+        Mockito.when(mockStageModel.getStage()).thenReturn(5);
+        Position[] expectedPositions = {
+                new Position(351, 60), // First digit position
+                new Position(365, 60)  // Second digit position
+        };
+
+        stageController.draw(mockTextGraphics, new Position(0, 0));
+
+        // Expected display: 05
+        Mockito.verify(mockStageViewer).setCurrentDigit(0);
+        Mockito.verify(mockStageViewer).draw(mockTextGraphics, expectedPositions[0]);
+        Mockito.verify(mockStageViewer).setCurrentDigit(5);
+        Mockito.verify(mockStageViewer).draw(mockTextGraphics, expectedPositions[1]);
+
+        // Verify the order of interactions
+        Mockito.verify(mockStageViewer, Mockito.times(2)).setCurrentDigit(Mockito.anyInt());
+        Mockito.verify(mockStageViewer, Mockito.times(2)).draw(Mockito.eq(mockTextGraphics), Mockito.any(Position.class));
+    }
+}

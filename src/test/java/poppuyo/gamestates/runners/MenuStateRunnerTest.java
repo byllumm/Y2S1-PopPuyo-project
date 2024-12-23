@@ -4,16 +4,16 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
-import game.Game;
-import game.GameScreen;
-import gamestates.GameState;
-import gamestates.controllers.MenuStateController;
+import poppuyo.game.Game;
+import poppuyo.game.GameScreen;
+import poppuyo.gamestates.GameState;
+import poppuyo.gamestates.controllers.MenuStateController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import utils.puyoutils.Position;
-import viewer.MenuStateViewer;
+import poppuyo.utils.puyoutils.Position;
+import poppuyo.viewer.MenuStateViewer;
 
 import java.io.IOException;
 

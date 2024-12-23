@@ -4,18 +4,18 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
-import game.Game;
-import game.GameScreen;
-import gamestates.GameState;
-import gamestates.controllers.PlayingStateController;
-import model.Arena;
-import controllers.ArenaController;
-import model.Puyo;
-import model.grid.Grid;
+import poppuyo.game.Game;
+import poppuyo.game.GameScreen;
+import poppuyo.gamestates.GameState;
+import poppuyo.gamestates.controllers.PlayingStateController;
+import poppuyo.model.Arena;
+import poppuyo.controllers.ArenaController;
+import poppuyo.model.Puyo;
+import poppuyo.model.grid.Grid;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import utils.puyoutils.Position;
+import poppuyo.utils.puyoutils.Position;
 
 import java.io.IOException;
 

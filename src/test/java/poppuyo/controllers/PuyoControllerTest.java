@@ -25,7 +25,7 @@ public class PuyoControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
+        puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
     }
 
     @Test

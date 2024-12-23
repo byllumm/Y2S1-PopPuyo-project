@@ -1,6 +1,7 @@
 package poppuyo.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
+import org.junit.jupiter.api.AfterEach;
 import poppuyo.controllers.PuyoController;
 import poppuyo.model.Puyo;
 import org.junit.jupiter.api.Assertions;
@@ -19,33 +20,31 @@ public class PuyoControllerTest {
     @Mock private Puyo mockPuyoModel;
     @Mock private PuyoViewer mockPuyoViewer;
     @Mock private TextGraphics mockTextGraphics;
+    private PuyoController puyoController;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
     }
 
     @Test
     public void constructor() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Assertions.assertNotNull(puyoController);
     }
 
     @Test
     public void getPuyoModel() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Assertions.assertEquals(mockPuyoModel, puyoController.getPuyoModel());
     }
 
     @Test
     public void getPuyoViewer() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Assertions.assertEquals(mockPuyoViewer, puyoController.getPuyoViewer());
     }
 
     @Test
     public void setPuyoModel() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Puyo newMockPuyo = Mockito.mock(Puyo.class);
         puyoController.setPuyoModel(newMockPuyo);
         Assertions.assertEquals(newMockPuyo, puyoController.getPuyoModel());
@@ -53,7 +52,6 @@ public class PuyoControllerTest {
 
     @Test
     public void setPuyoViewer() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         PuyoViewer newMockPuyoViewer = Mockito.mock(PuyoViewer.class);
         puyoController.setPuyoViewer(newMockPuyoViewer);
         Assertions.assertEquals(newMockPuyoViewer, puyoController.getPuyoViewer());
@@ -61,7 +59,6 @@ public class PuyoControllerTest {
 
     @Test
     public void draw() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Position stubPosition = Mockito.mock(Position.class);
         puyoController.draw(mockTextGraphics, stubPosition);
         verify(mockPuyoViewer, Mockito.times(1)).draw(mockTextGraphics, stubPosition);
@@ -69,7 +66,6 @@ public class PuyoControllerTest {
 
     @Test
     public void nullGraphicsDraw() {
-        PuyoController puyoController = new PuyoController(mockPuyoModel, mockPuyoViewer);
         Position stubPosition = Mockito.mock(Position.class);
 
         doThrow(new NullPointerException()).when(mockPuyoViewer).draw(null, stubPosition);

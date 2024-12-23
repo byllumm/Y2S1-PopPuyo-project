@@ -16,35 +16,32 @@ public class StageControllerTest {
     @Mock private Stage mockStageModel;
     @Mock private DigitDisplayViewer mockStageViewer;
     @Mock private TextGraphics mockTextGraphics;
+    private StageController stageController;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        stageController = new StageController(mockStageModel, mockStageViewer);
     }
 
     @Test
     public void constructor() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         Assertions.assertNotNull(stageController);
         Assertions.assertEquals(mockStageModel, stageController.getStageModel());
     }
 
     @Test
     void getStageModel() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         Assertions.assertEquals(mockStageModel, stageController.getStageModel());
     }
 
     @Test
     void getStageViewer() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         Assertions.assertEquals(mockStageViewer, stageController.getStageViewer());
     }
 
-
     @Test
     void setStageModel() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         Stage newMockStageModel = Mockito.mock(Stage.class);
         stageController.setStageModel(newMockStageModel);
         Assertions.assertEquals(newMockStageModel, stageController.getStageModel());
@@ -52,7 +49,6 @@ public class StageControllerTest {
 
     @Test
     void setStageViewer() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         DigitDisplayViewer newMockViewer = Mockito.mock(DigitDisplayViewer.class);
         stageController.setStageViewer(newMockViewer);
         Assertions.assertEquals(newMockViewer, stageController.getStageViewer());
@@ -60,7 +56,6 @@ public class StageControllerTest {
 
     @Test
     void updateStage() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         Mockito.when(mockStageModel.getStage()).thenReturn(1);
 
         // Score below threshold
@@ -74,7 +69,6 @@ public class StageControllerTest {
 
     @Test
     void draw() {
-        StageController stageController = new StageController(mockStageModel, mockStageViewer);
         Mockito.when(mockStageModel.getStage()).thenReturn(5);
         Position[] expectedPositions = {
                 new Position(351, 60), // First digit position

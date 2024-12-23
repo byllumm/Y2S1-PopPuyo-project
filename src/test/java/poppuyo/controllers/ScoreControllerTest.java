@@ -16,15 +16,16 @@ public class ScoreControllerTest {
     @Mock private Score mockScoreModel;
     @Mock private DigitDisplayViewer mockDigitDisplayViewer;
     @Mock private TextGraphics mockTextGraphics;
+    private ScoreController scoreController;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
     }
 
     @Test
     public void constructor() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Assertions.assertNotNull(scoreController);
         Assertions.assertEquals(mockScoreModel, scoreController.getScoreModel());
         Assertions.assertEquals(mockDigitDisplayViewer, scoreController.getScoreViewer());
@@ -32,19 +33,16 @@ public class ScoreControllerTest {
 
     @Test
     public void getScoreModel() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Assertions.assertEquals(mockScoreModel, scoreController.getScoreModel());
     }
 
     @Test
     public void getScoreViewer() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Assertions.assertEquals(mockDigitDisplayViewer, scoreController.getScoreViewer());
     }
 
     @Test
     public void setScoreModel() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Score newMockScoreModel = Mockito.mock(Score.class);
         scoreController.setScoreModel(newMockScoreModel);
         Assertions.assertEquals(newMockScoreModel, scoreController.getScoreModel());
@@ -52,7 +50,6 @@ public class ScoreControllerTest {
 
     @Test
     public void setScoreViewer() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         DigitDisplayViewer newMockScoreViewer = Mockito.mock(DigitDisplayViewer.class);
         scoreController.setScoreViewer(newMockScoreViewer);
         Assertions.assertEquals(newMockScoreViewer, scoreController.getScoreViewer());
@@ -60,7 +57,6 @@ public class ScoreControllerTest {
 
     @Test
     public void computeGroupBonus() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Assertions.assertEquals(0, Score.getGroupBonusTable()[4]);
         Assertions.assertEquals(2, Score.getGroupBonusTable()[5]);
         Assertions.assertEquals(3, Score.getGroupBonusTable()[6]);
@@ -73,7 +69,6 @@ public class ScoreControllerTest {
 
     @Test
     public void updateScore() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Mockito.when(mockScoreModel.getScore()).thenReturn(1000);
 
         // Expected score: (10 * 5) * (4 + 4) + 2 = 402
@@ -83,7 +78,6 @@ public class ScoreControllerTest {
 
     @Test
     public void updateScoreNoBonus() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Mockito.when(mockScoreModel.getScore()).thenReturn(1000);
 
         // Expected score: 10 * 5 + 2 = 52
@@ -93,7 +87,6 @@ public class ScoreControllerTest {
 
     @Test
     public void draw() {
-        ScoreController scoreController = new ScoreController(mockScoreModel, mockDigitDisplayViewer);
         Mockito.when(mockScoreModel.getScore()).thenReturn(123456);
 
         scoreController.draw(mockTextGraphics, new Position(0, 0));

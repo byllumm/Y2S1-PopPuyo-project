@@ -17,10 +17,12 @@ public class PuyoPairControllerTest {
     @Mock private PuyoPair mockPuyoPair;
     @Mock private Position mockFirstPosition;
     @Mock private Position mockSecondPosition;
+    private PuyoPairController puyoPairController;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        puyoPairController = new PuyoPairController(mockPuyoPair);
 
         Mockito.when(mockPuyoPair.getFirstPos()).thenReturn(mockFirstPosition);
         Mockito.when(mockPuyoPair.getSecondPos()).thenReturn(mockSecondPosition);
@@ -30,56 +32,48 @@ public class PuyoPairControllerTest {
 
     @Test
     public void constructor() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Assertions.assertNotNull(puyoPairController);
         Assertions.assertEquals(PuyoPairController.RotationState.RIGHT, puyoPairController.getRotationState());
     }
 
     @Test
     public void getRotationState() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         // This test does pretty much the same thing as the constructor test... May be redundant
         Assertions.assertEquals(PuyoPairController.RotationState.RIGHT, puyoPairController.getRotationState());
     }
 
     @Test
     public void setRotationState() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         puyoPairController.setRotationState(PuyoPairController.RotationState.LEFT);
         Assertions.assertEquals(PuyoPairController.RotationState.LEFT, puyoPairController.getRotationState());
     }
 
     @Test
     public void rotateUp() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Position newPosition = puyoPairController.rotateUp();
         Assertions.assertEquals(new Position(5, 4), newPosition);
     }
 
     @Test
     public void rotateDown() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Position newPosition = puyoPairController.rotateDown();
         Assertions.assertEquals(new Position(5, 6), newPosition);
     }
 
     @Test
     public void rotateLeft() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Position newPosition = puyoPairController.rotateLeft();
         Assertions.assertEquals(new Position(4, 5), newPosition);
     }
 
     @Test
     public void rotateRight() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Position newPosition = puyoPairController.rotateRight();
         Assertions.assertEquals(new Position(6, 5), newPosition);
     }
 
     @Test
     public void moveDown() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         puyoPairController.moveDown();
         verify(mockPuyoPair).setFirstPos(argThat(pos -> pos.getX() == mockFirstPosition.getX()
                                                     && pos.getY() == mockFirstPosition.getY() + 1));
@@ -89,7 +83,6 @@ public class PuyoPairControllerTest {
 
     @Test
     public void moveLeft() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         puyoPairController.moveLeft();
         verify(mockPuyoPair).setFirstPos(argThat(pos -> pos.getX() == mockFirstPosition.getX() - 1
                                                     && pos.getY() == mockFirstPosition.getY()));
@@ -99,7 +92,6 @@ public class PuyoPairControllerTest {
 
     @Test
     public void moveRight() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         puyoPairController.moveRight();
         verify(mockPuyoPair).setFirstPos(argThat(pos -> pos.getX() == mockFirstPosition.getX() + 1
                                                     && pos.getY() == mockFirstPosition.getY()));
@@ -109,7 +101,6 @@ public class PuyoPairControllerTest {
 
     @Test
     public void findIndex() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Assertions.assertEquals(0, puyoPairController.findIndex(PuyoPairController.RotationState.UP));
         Assertions.assertEquals(1, puyoPairController.findIndex(PuyoPairController.RotationState.RIGHT));
         Assertions.assertEquals(2, puyoPairController.findIndex(PuyoPairController.RotationState.DOWN));
@@ -119,8 +110,6 @@ public class PuyoPairControllerTest {
 
     @Test
     public void getNextState() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
-
         // Clockwise Rotations
         Assertions.assertEquals(PuyoPairController.RotationState.RIGHT, puyoPairController.getNextState(PuyoPairController.RotationState.UP, true));
         Assertions.assertEquals(PuyoPairController.RotationState.DOWN, puyoPairController.getNextState(PuyoPairController.RotationState.RIGHT, true));
@@ -137,7 +126,6 @@ public class PuyoPairControllerTest {
     @Test
     public void rotate() {
         // Starts at RIGHT
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
         Position newPosition;
 
         // Clockwise Rotations
@@ -188,8 +176,6 @@ public class PuyoPairControllerTest {
 
     @Test
     public void revertRotationState() {
-        PuyoPairController puyoPairController = new PuyoPairController(mockPuyoPair);
-
         // Revert clockwise rotation
 
         // Revert clockwise to LEFT

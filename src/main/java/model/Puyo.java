@@ -6,7 +6,7 @@ import utils.puyoutils.Position;
 
 import java.io.IOException;
 
-public class    Puyo {
+public class Puyo {
     // Attributes
     private Position position;
     private PuyoViewer puyoViewer;

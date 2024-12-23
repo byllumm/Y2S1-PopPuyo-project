@@ -5,7 +5,9 @@ import com.googlecode.lanterna.input.KeyStroke;
 import poppuyo.controllers.ArenaController;
 import poppuyo.game.GameScreen;
 import poppuyo.gamestates.GameState;
+import poppuyo.model.Puyo;
 import poppuyo.utils.puyoutils.Position;
+import poppuyo.viewer.PuyoViewer;
 
 import java.io.IOException;
 
@@ -98,17 +100,19 @@ public class PlayingStateController implements StateController {
 
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {
-                if(!isEmpty(row,col)) {
-                    arenaController.getGridController().getPuyoAt(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
+                if (!isEmpty(row, col)) {
+                    Puyo currentPuyo = arenaController.getGridController().getPuyoAt(row, col);
+                    if (currentPuyo != null) {
+                        PuyoViewer viewer = currentPuyo.getPuyoViewer();
+                        if (viewer != null) {
+                            viewer.draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
+                        }
+                    }
                 }
             }
         }
 
-        arenaController.getArenaModel().getActivePuyo().getFirstPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arenaController.getArenaModel().getActivePuyo().getFirstPos()));
-        arenaController.getArenaModel().getActivePuyo().getSecondPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arenaController.getArenaModel().getActivePuyo().getSecondPos()));
-
         arenaController.getNextPuyoViewer().draw(gameScreen.getGraphics(), new Position(212, 8));
-
         gameScreen.getScreen().refresh();
     }
 

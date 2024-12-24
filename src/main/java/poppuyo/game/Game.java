@@ -26,6 +26,8 @@ public class Game implements Runnable {
     private static Game instance;
     private Thread gameThread;
     private ArenaController arenaController;
+
+    private GameState currentState;
     private ArenaViewer arenaViewer;
     private Arena arena;
     private GameScreen gameScreen;
@@ -100,13 +102,20 @@ public class Game implements Runnable {
     // Processes input and checks if com.t09g07.poppuyo.game is over. In the latter case, the screen closes
     public void processKey(KeyStroke key) throws IOException, InterruptedException {
         switch (GameState.state) {
-            case MENU -> menuStateController.processKey(key);
-            case CREDITS -> creditsStateController.processKey(key);
-            case PLAYING -> {
+            case MENU:
+                menuStateController.processKey(key);
+                break;
+            case CREDITS:
+                creditsStateController.processKey(key);
+                break;
+            case PLAYING:
                 handleGameOver();
                 playingStateController.processKey(key);
-            }
-            case EXIT -> exitGame();
+                break;
+            case EXIT:
+                exitGame();
+                break;
+
         }
     }
 
@@ -124,18 +133,25 @@ public class Game implements Runnable {
         while (isRunning) {
             switch (GameState.state) {
 
-                case MENU -> runState(new MenuStateRunner());
-                case PLAYING -> runState(new PlayingStateRunner());
-                case CREDITS -> runState(new CreditsStateRunner());
+                case MENU:
+                    runState(new MenuStateRunner());
+                    break;
 
-                case EXIT -> {
+                case PLAYING:
+                    runState(new PlayingStateRunner());
+                    break;
+
+                case CREDITS:
+                    runState(new CreditsStateRunner());
+                    break;
+                case EXIT:
                     try {
                         exitGame();
                     } catch (InterruptedException | IOException e) {
                         throw new RuntimeException(e);
                     }
                     return; // Exit the loop when the com.t09g07.poppuyo.game is shutting down
-                }
+
             }
         }
     }

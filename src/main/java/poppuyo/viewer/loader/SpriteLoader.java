@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public class SpriteLoader implements Viewer {
     // Attributes
-    private BufferedImage sprite;
-    private int scalingFactor = 1;      // By default, scaling is set to 1
-    private String[][] pixelMatrix;     // Each element of the matrix will have the hex code of the pixel. null if transparent.
+    BufferedImage sprite;
+    int scalingFactor = 1;      // By default, scaling is set to 1
+    String[][] pixelMatrix;     // Each element of the matrix will have the hex code of the pixel. null if transparent.
 
 
     // Constructors

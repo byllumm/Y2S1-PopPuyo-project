@@ -74,10 +74,12 @@ public class Game implements Runnable {
     // Setters
     public void setArenaController(ArenaController arenaController) { this.arenaController = arenaController; }
     public void setGameScreen(GameScreen gameScreen) { this.gameScreen = gameScreen; }
+    public void setMenuStateController(MenuStateController menuStateController) { this.menuStateController = menuStateController; }
+    public void setPlayingStateController(PlayingStateController playingStateController) { this.playingStateController = playingStateController; }
 
 
     // Class Methods
-    private void handleGameOver() throws IOException{
+    void handleGameOver() throws IOException{
         if(gameOver(arena.getGrid())){
             resetGame();
             GameState.state = GameState.MENU;
@@ -91,7 +93,7 @@ public class Game implements Runnable {
     }
 
 
-    private void exitGame() throws IOException, InterruptedException {
+    void exitGame() throws IOException, InterruptedException {
         gameScreen.getScreen().close();
         gameThread.join();
         isRunning = false;
@@ -119,7 +121,7 @@ public class Game implements Runnable {
         }
     }
 
-    private void runState(StateRunner stateRunner) {
+    void runState(StateRunner stateRunner) {
         try {
             stateRunner.run(this, gameScreen);
         } catch (IOException | InterruptedException e) {

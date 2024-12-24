@@ -1,6 +1,6 @@
 <h1 align="center">PopPuyo! - LDTS24/25</h1>
 <p align="center">
-  <img src="https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/new_logo.png" alt="Logo">
+  <img src="https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/new_logo.png" alt="Logo">
 </p>
 
 <h2 align="center">Introduction</h2>
@@ -8,13 +8,17 @@
 <p align="center">
   <strong>PopPuyo</strong> is a strategic tile-matching puzzle game. It challenges the player to score as many points as possible by clearing the board populated by colorful <strong>Puyos</strong>, while avoiding filling the third column, counting from left to right. Once this column is completely filled, the game ends.
 </p>
+
+><p align="center">
+>This project was developed by <a href="https://github.com/quadruplesec">Gonçalo Santana</a> (up202306919) and <a href="https://github.com/up202306990">Matilde Fonseca</a> (up202306990), with special thanks to Matilde Martins (up202306445) for donating artwork.
+></p>
+
 <p align="center">
-  <img src="https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/game_demo.gif" alt="Gameplay Demo">
+  <img src="https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/game_demo.gif" alt="Gameplay Demo">
 </p>
 <p align="center">
   <em>Gameplay demo!</em>
 </p>
-
 
 
 ## Gameplay Overview
@@ -67,25 +71,25 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 ## UML Diagrams
 
-![Main Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/maindiagram.png)
+![Main Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/maindiagram.png)
 
 *Main UML diagram of the project structure.*
 
 
 
-![State Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/statediagram.png)
+![State Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/statediagram.png)
 
 *UML Diagram focused on the State classes.*
 
 
 
-![Runners Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/runnersdiagram.png)
+![Runners Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/runnersdiagram.png)
 
 *UML Diagram focused on the Runner classes.*
 
 
 
-![Viewers Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/viewerdiagram.png)
+![Viewers Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/viewerdiagram.png)
 
 *UML Diagram focused on the Viewer classes.*
 
@@ -93,13 +97,13 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 ## Test Results
 
-![Mutation Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/mutation.png)
+![Mutation Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/mutation.png)
 
 *Mutation Test Results, obtained with PITest.*
 
-![Coverage Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/coverage.png)
+![Coverage Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/coverage.png)
 
 *Code Coverage Results, obtained with JaCoCo.*
 
-**Credits:** Gonçalo Santana (up202306919), Matilde Fonseca (up202306990) (Developers)
+
 **Special Thanks** to Matilde Martins (up202306445) for contributing the drawing of the Golden Witch!

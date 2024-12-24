@@ -3,7 +3,6 @@ package poppuyo.gamestates.controllers;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import poppuyo.gamestates.GameState;
-import poppuyo.gamestates.controllers.CreditsStateController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

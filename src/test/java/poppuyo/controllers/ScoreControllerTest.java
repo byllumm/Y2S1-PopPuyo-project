@@ -1,14 +1,13 @@
 package poppuyo.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import poppuyo.controllers.ScoreController;
-import poppuyo.model.Score;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import poppuyo.model.Score;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.viewer.DigitDisplayViewer;
 
@@ -27,32 +26,32 @@ public class ScoreControllerTest {
     @Test
     public void constructor() {
         Assertions.assertNotNull(scoreController);
-        Assertions.assertEquals(mockScoreModel, scoreController.getScoreModel());
-        Assertions.assertEquals(mockDigitDisplayViewer, scoreController.getScoreViewer());
+        Assertions.assertSame(mockScoreModel, scoreController.getScoreModel());
+        Assertions.assertSame(mockDigitDisplayViewer, scoreController.getScoreViewer());
     }
 
     @Test
     public void getScoreModel() {
-        Assertions.assertEquals(mockScoreModel, scoreController.getScoreModel());
+        Assertions.assertSame(mockScoreModel, scoreController.getScoreModel());
     }
 
     @Test
     public void getScoreViewer() {
-        Assertions.assertEquals(mockDigitDisplayViewer, scoreController.getScoreViewer());
+        Assertions.assertSame(mockDigitDisplayViewer, scoreController.getScoreViewer());
     }
 
     @Test
     public void setScoreModel() {
         Score newMockScoreModel = Mockito.mock(Score.class);
         scoreController.setScoreModel(newMockScoreModel);
-        Assertions.assertEquals(newMockScoreModel, scoreController.getScoreModel());
+        Assertions.assertSame(newMockScoreModel, scoreController.getScoreModel());
     }
 
     @Test
     public void setScoreViewer() {
         DigitDisplayViewer newMockScoreViewer = Mockito.mock(DigitDisplayViewer.class);
         scoreController.setScoreViewer(newMockScoreViewer);
-        Assertions.assertEquals(newMockScoreViewer, scoreController.getScoreViewer());
+        Assertions.assertSame(newMockScoreViewer, scoreController.getScoreViewer());
     }
 
     @Test

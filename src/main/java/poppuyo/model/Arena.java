@@ -43,6 +43,7 @@ public class Arena {
     public void setGrid(Grid grid) { Arena.grid = grid; }
     public void setNextPuyo(PuyoPair nextPuyo) { this.nextPuyo = nextPuyo; }
     public void setScore(Score score) { this.score = score; }
+    public void setStage(Stage stage) { this.stage = stage; }
 
 
     // Class Methods

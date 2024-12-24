@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import poppuyo.controllers.PuyoPairController;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.utils.puyoutils.PuyoPair;
 

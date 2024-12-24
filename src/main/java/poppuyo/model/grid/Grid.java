@@ -22,7 +22,7 @@ public class Grid {
 
 
     // Setters
-    public void setGrid(Puyo[][] grid) { Grid.grid = grid; }
+    public static void setGrid(Puyo[][] grid) { Grid.grid = grid; }
 
     public void setPuyo(int row, int col, Puyo p) { grid[row][col] = p; }
 

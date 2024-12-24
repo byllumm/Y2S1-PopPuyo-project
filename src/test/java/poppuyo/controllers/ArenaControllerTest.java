@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import poppuyo.model.Arena;
-import poppuyo.model.Puyo;
-import poppuyo.model.Score;
-import poppuyo.model.Stage;
+import poppuyo.model.*;
 import poppuyo.model.grid.Grid;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.utils.puyoutils.PuyoPair;
@@ -101,7 +98,7 @@ class ArenaControllerTest {
 
     @Test
     public void getArenaModel() {
-        Assertions.assertEquals(mockArenaModel, arenaController.getArenaModel());
+        Assertions.assertSame(mockArenaModel, arenaController.getArenaModel());
     }
 
     @Test

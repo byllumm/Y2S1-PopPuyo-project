@@ -18,6 +18,7 @@ application {
 
 pitest {
     junit5PluginVersion = '1.2.0'
+    excludedTestClasses = ['poppuyo.game.*Test'] // Pitest does not like tests that open terminals
 }
 
 jacoco {

@@ -7,15 +7,20 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import poppuyo.model.*;
+import poppuyo.model.Arena;
+import poppuyo.model.Puyo;
+import poppuyo.model.Score;
+import poppuyo.model.Stage;
 import poppuyo.model.grid.Grid;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.utils.puyoutils.PuyoPair;
-import poppuyo.viewer.*;
+import poppuyo.viewer.ArenaViewer;
+import poppuyo.viewer.PuyoViewer;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 class ArenaControllerTest {

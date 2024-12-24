@@ -28,7 +28,7 @@ class GridManagerTest {
     }
 
     @Test
-    void applyGravityWhenNoPuyosFall() {
+    public void applyGravityWhenNoPuyosFall() {
         Puyo[][] gridArray = new Puyo[Grid.ROWS][Grid.COLUMNS];
         Grid.setGrid(gridArray);
 
@@ -40,7 +40,7 @@ class GridManagerTest {
     }
 
     @Test
-    void applyGravityWhenPuyosFall() {
+    public void applyGravityWhenPuyosFall() {
         Grid gridInstance = new Grid();
         Puyo[][] gridArray = new Puyo[Grid.ROWS][Grid.COLUMNS];
 
@@ -61,7 +61,7 @@ class GridManagerTest {
     }
 
     @Test
-    void integrateGrid() {
+    public void integrateGrid() {
         Mockito.when(mockPuyoPair.getFirstPos()).thenReturn(mockFirstPos);
         Mockito.when(mockPuyoPair.getSecondPos()).thenReturn(mockSecondPos);
         Mockito.when(mockFirstPos.getY()).thenReturn(0);
@@ -76,7 +76,7 @@ class GridManagerTest {
     }
 
     @Test
-    void setGrid() {
+    public void setGrid() {
         Grid newGrid = Mockito.mock(Grid.class);
         gridManager.setGrid(newGrid);
 

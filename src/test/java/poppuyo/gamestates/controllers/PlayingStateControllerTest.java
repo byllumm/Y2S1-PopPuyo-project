@@ -203,6 +203,8 @@ public class PlayingStateControllerTest {
 
         when(mockArenaController.getScoreController()).thenReturn(mockScoreController);
         when(mockArenaController.getStageController()).thenReturn(mockStageController);
+        when(mockActivePuyo.getFirstPuyo().getPuyoViewer()).thenReturn(mock(PuyoViewer.class));
+        when(mockActivePuyo.getSecondPuyo().getPuyoViewer()).thenReturn(mock(PuyoViewer.class));
         when(mockArenaController.getNextPuyoViewer()).thenReturn(mockNextPuyoViewer);
 
         Screen mockScreen = mock(Screen.class);
@@ -233,6 +235,8 @@ public class PlayingStateControllerTest {
         when(mockArenaController.getScoreController()).thenReturn(mockScoreController);
         when(mockArenaController.getStageController()).thenReturn(mockStageController);
         when(mockArenaController.getNextPuyoViewer()).thenReturn(mockNextPuyoViewer);
+        when(mockActivePuyo.getFirstPuyo().getPuyoViewer()).thenReturn(mock(PuyoViewer.class));
+        when(mockActivePuyo.getSecondPuyo().getPuyoViewer()).thenReturn(mock(PuyoViewer.class));
 
         Puyo testPuyo = mock(Puyo.class);
         PuyoViewer mockPuyoViewer = mock(PuyoViewer.class);

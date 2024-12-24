@@ -73,7 +73,7 @@ public class PlayingStateController implements StateController {
                     Position newPos = arenaController.getArenaModel().getActivePuyo().getController().rotate(false);
 
                     // If position is valid can rotate, else it should not and rotation state goes back to what it was before
-                    if(isValidPosition(newPos, arenaController.getArenaModel().getGrid())){
+                    if (isValidPosition(newPos, arenaController.getArenaModel().getGrid())) {
                         arenaController.getArenaModel().getActivePuyo().getSecondPuyo().setPosition(newPos);
                     } else {
                         arenaController.getArenaModel().getActivePuyo().getController().revertRotationState(false);
@@ -92,6 +92,7 @@ public class PlayingStateController implements StateController {
         }
     }
 
+
     @Override
     public void draw(TextGraphics textGraphics, Position position) throws IOException {
         arenaController.getGridController().draw(gameScreen.getGraphics());
@@ -100,19 +101,17 @@ public class PlayingStateController implements StateController {
 
         for (int col = 0; col < COLUMNS; col++) {
             for (int row = ROWS - 1; row >= 0; row--) {
-                if (!isEmpty(row, col)) {
-                    Puyo currentPuyo = arenaController.getGridController().getPuyoAt(row, col);
-                    if (currentPuyo != null) {
-                        PuyoViewer viewer = currentPuyo.getPuyoViewer();
-                        if (viewer != null) {
-                            viewer.draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
-                        }
-                    }
+                if(!isEmpty(row,col)) {
+                    arenaController.getGridController().getPuyoAt(row, col).getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(new Position(col, row)));
                 }
             }
         }
 
+        arenaController.getArenaModel().getActivePuyo().getFirstPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arenaController.getArenaModel().getActivePuyo().getFirstPos()));
+        arenaController.getArenaModel().getActivePuyo().getSecondPuyo().getPuyoViewer().draw(gameScreen.getGraphics(), translatePosition(arenaController.getArenaModel().getActivePuyo().getSecondPos()));
+
         arenaController.getNextPuyoViewer().draw(gameScreen.getGraphics(), new Position(212, 8));
+
         gameScreen.getScreen().refresh();
     }
 

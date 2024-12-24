@@ -4,16 +4,17 @@ import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import poppuyo.controllers.*;
 import poppuyo.game.GameScreen;
 import poppuyo.gamestates.GameState;
 import poppuyo.model.Arena;
 import poppuyo.model.Puyo;
 import poppuyo.model.grid.Grid;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import poppuyo.model.grid.GridTest;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.utils.puyoutils.PuyoPair;
 import poppuyo.viewer.GridViewer;
@@ -22,8 +23,8 @@ import poppuyo.viewer.PuyoViewer;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayingStateControllerTest {
     @Mock private ArenaController mockArenaController;
@@ -193,7 +194,7 @@ public class PlayingStateControllerTest {
 
     @Test
     public void testDrawWithEmptyGrid() throws IOException {
-        Grid realEmptyGrid = new Grid();
+        GridTest realEmptyGrid = new GridTest();
         when(mockArenaController.getGridController()).thenReturn(mock(GridController.class));
 
         // Mock other components

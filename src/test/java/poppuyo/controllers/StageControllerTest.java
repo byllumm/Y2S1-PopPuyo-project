@@ -1,14 +1,13 @@
 package poppuyo.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import poppuyo.controllers.StageController;
-import poppuyo.model.Stage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import poppuyo.model.Stage;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.viewer.DigitDisplayViewer;
 
@@ -31,31 +30,31 @@ public class StageControllerTest {
     }
 
     @Test
-    void getStageModel() {
+    public void getStageModel() {
         Assertions.assertEquals(mockStageModel, stageController.getStageModel());
     }
 
     @Test
-    void getStageViewer() {
+    public void getStageViewer() {
         Assertions.assertEquals(mockStageViewer, stageController.getStageViewer());
     }
 
     @Test
-    void setStageModel() {
+    public void setStageModel() {
         Stage newMockStageModel = Mockito.mock(Stage.class);
         stageController.setStageModel(newMockStageModel);
         Assertions.assertEquals(newMockStageModel, stageController.getStageModel());
     }
 
     @Test
-    void setStageViewer() {
+    public void setStageViewer() {
         DigitDisplayViewer newMockViewer = Mockito.mock(DigitDisplayViewer.class);
         stageController.setStageViewer(newMockViewer);
         Assertions.assertEquals(newMockViewer, stageController.getStageViewer());
     }
 
     @Test
-    void updateStage() {
+    public void updateStage() {
         Mockito.when(mockStageModel.getStage()).thenReturn(1);
 
         // Score below threshold
@@ -68,7 +67,7 @@ public class StageControllerTest {
     }
 
     @Test
-    void draw() {
+    public void draw() {
         Mockito.when(mockStageModel.getStage()).thenReturn(5);
         Position[] expectedPositions = {
                 new Position(351, 60), // First digit position

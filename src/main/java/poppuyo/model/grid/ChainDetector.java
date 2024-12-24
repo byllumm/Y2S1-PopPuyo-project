@@ -52,7 +52,7 @@ public class ChainDetector {
         return chains;
     }
 
-    private void dfs(Position pos, Puyo p, boolean[][] visited, List<Position> chain) throws IOException {
+    void dfs(Position pos, Puyo p, boolean[][] visited, List<Position> chain) throws IOException {
         int row = pos.getX();
         int col = pos.getY();
 

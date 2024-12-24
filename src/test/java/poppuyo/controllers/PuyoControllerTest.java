@@ -1,8 +1,6 @@
 package poppuyo.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import org.junit.jupiter.api.AfterEach;
-import poppuyo.controllers.PuyoController;
 import poppuyo.model.Puyo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,12 +33,12 @@ public class PuyoControllerTest {
 
     @Test
     public void getPuyoModel() {
-        Assertions.assertEquals(mockPuyoModel, puyoController.getPuyoModel());
+        Assertions.assertSame(mockPuyoModel, puyoController.getPuyoModel());
     }
 
     @Test
     public void getPuyoViewer() {
-        Assertions.assertEquals(mockPuyoViewer, puyoController.getPuyoViewer());
+        Assertions.assertSame(mockPuyoViewer, puyoController.getPuyoViewer());
     }
 
     @Test

@@ -2,6 +2,11 @@ package poppuyo.controllers;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import poppuyo.model.Puyo;
 import poppuyo.model.grid.ChainDetector;
 import poppuyo.model.grid.Grid;
@@ -9,16 +14,13 @@ import poppuyo.model.grid.GridManager;
 import poppuyo.utils.puyoutils.Position;
 import poppuyo.utils.puyoutils.PuyoPair;
 import poppuyo.viewer.GridViewer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.*;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 public class GridControllerTest {
 
@@ -51,7 +53,7 @@ public class GridControllerTest {
 
 
     @Test
-    void getPuyoAt() {
+    public void getPuyoAt() {
         int row = 0;
         int col = 1;
         Mockito.when(mockGrid.getPuyo(0, 1)).thenReturn(mockPuyo);
@@ -63,7 +65,7 @@ public class GridControllerTest {
     }
 
     @Test
-    void applyGravity() {
+    public void applyGravity() {
         Mockito.when(mockGridManager.applyGravity()).thenReturn(true).thenReturn(false);
 
         Assertions.assertTrue(gridController.applyGravity());
@@ -74,14 +76,14 @@ public class GridControllerTest {
     }
 
     @Test
-    void integrateGrid() {
+    public void integrateGrid() {
         gridController.integrateGrid(mockActivePuyo);
 
         Mockito.verify(mockGridManager).integrateGrid(mockActivePuyo);
     }
 
     @Test
-    void detectChain() throws IOException {
+    public void detectChain() throws IOException {
         List<List<Position>> mockChains = Collections.singletonList(Collections.singletonList(new Position(0, 0)));
         Mockito.when(mockChainDetector.detectChain()).thenReturn(mockChains);
 
@@ -92,7 +94,7 @@ public class GridControllerTest {
     }
 
     @Test
-    void updatePuyoSprite() throws IOException {
+    public void updatePuyoSprite() throws IOException {
         int row = 0;
         int col = 1;
         Mockito.when(mockGrid.getPuyo(row, col)).thenReturn(mockPuyo);
@@ -102,7 +104,7 @@ public class GridControllerTest {
     }
 
     @Test
-    void draw() {
+    public void draw() {
         gridController.draw(mockTextGraphics);
         Mockito.verify(mockGridViewer).draw(mockTextGraphics, new Position(8, 8));
     }

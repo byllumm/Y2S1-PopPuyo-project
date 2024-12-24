@@ -10,7 +10,7 @@ import java.io.IOException;
 // May turn this into an abstract class later on?
 public class DigitDisplayViewer implements Viewer {
     // Attributes
-    private static final SpriteLoader[] digitLoaders = new SpriteLoader[10];
+    private static SpriteLoader[] digitLoaders = new SpriteLoader[10];
     private int currentDigit;
 
     // Initialise static digit spriteLoaders

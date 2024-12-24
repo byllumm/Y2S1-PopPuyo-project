@@ -27,7 +27,7 @@
 
 Puyos can connect horizontally or vertically but never diagonally. Once a group of Puyos pops, any Puyos above them fall, potentially creating new groups and causing chain reactions. With each pop, the amount of points added to the score multiplies.
 
-
+&nbsp;
 
 ## Core Mechanics and Features
 
@@ -57,7 +57,7 @@ Puyos can connect horizontally or vertically but never diagonally. Once a group 
     
 -   **Error Handling:** The game is designed to handle potential errors ensuring that it doesn't crash or freeze if something goes wrong.
 
-
+&nbsp;
     
 ## Design Patterns
 
@@ -67,43 +67,60 @@ We also employed the **State** pattern when implementing the game menu, ensuring
 
 Additionally, our code contains remnants of the **Strategy** and **Factory Method** patterns, providing flexibility in handling different game behaviors and object creation processes. These design patterns collectively contribute to a robust codebase, making it easier to maintain, test, and extend.
 
-
+&nbsp;
 
 ## UML Diagrams
 
 ![Main Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/maindiagram.png)
 
-*Main UML diagram of the project structure.*
+<p align="center">
+  <em>Main UML diagram of the project structure.</em>
+</p>
 
-
+&nbsp;
 
 ![State Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/statediagram.png)
 
-*UML Diagram focused on the State classes.*
+<p align="center">
+  <em>UML Diagram focused on the State classes.</em>
+</p>
 
-
+&nbsp;
 
 ![Runners Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/runnersdiagram.png)
 
-*UML Diagram focused on the Runner classes.*
+<p align="center">
+  <em>UML Diagram focused on the Runner classes.</em>
+</p>
 
-
+&nbsp;
 
 ![Viewers Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/viewerdiagram.png)
 
-*UML Diagram focused on the Viewer classes.*
+<p align="center">
+  <em>UML Diagram focused on the Viewer classes.</em>
+</p>
 
-
+&nbsp;
 
 ## Test Results
 
 ![Mutation Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/mutation.png)
 
-*Mutation Test Results, obtained with PITest.*
+<p align="center">
+  <em>Mutation Test Results, obtained with PITest.</em>
+</p>
+
+&nbsp;
 
 ![Coverage Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/coverage.png)
 
-*Code Coverage Results, obtained with JaCoCo.*
+<p align="center">
+  <em>Code Coverage Results, obtained with JaCoCo.</em>
+</p>
 
+&nbsp;
 
-**Special Thanks** to Matilde Martins (up202306445) for contributing the drawing of the Golden Witch!
+<p align="center">
+  <em>Special Thanks to Matilde Martins (up202306445) for contributing the drawing of the Golden Witch!</em>
+</p>

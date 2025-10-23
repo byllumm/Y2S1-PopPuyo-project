@@ -1,6 +1,6 @@
 <h1 align="center">PopPuyo! - LDTS24/25</h1>
 <p align="center">
-  <img src="https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/new_logo.png" alt="Logo">
+  <img src="https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/new_logo.png" alt="Logo">
 </p>
 
 <h2 align="center">Introduction</h2>
@@ -14,7 +14,7 @@
 ></p>
 
 <p align="center">
-  <img src="https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/game_demo.gif" alt="Gameplay Demo">
+  <img src="https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/game_demo.gif" alt="Gameplay Demo">
 </p>
 <p align="center">
   <em>Gameplay demo!</em>
@@ -71,7 +71,7 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 ## UML Diagrams
 
-![Main Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/maindiagram.png)
+![Main Diagram](https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/maindiagram.png)
 
 <p align="center">
   <em>Main UML diagram of the project structure.</em>
@@ -79,7 +79,7 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 &nbsp;
 
-![State Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/statediagram.png)
+![State Diagram](https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/statediagram.png)
 
 <p align="center">
   <em>UML Diagram focused on the State classes.</em>
@@ -87,7 +87,7 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 &nbsp;
 
-![Runners Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/runnersdiagram.png)
+![Runners Diagram](https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/runnersdiagram.png)
 
 <p align="center">
   <em>UML Diagram focused on the Runner classes.</em>
@@ -95,7 +95,7 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 &nbsp;
 
-![Viewers Diagram](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/viewerdiagram.png)
+![Viewers Diagram](https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/viewerdiagram.png)
 
 <p align="center">
   <em>UML Diagram focused on the Viewer classes.</em>
@@ -105,7 +105,7 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 ## Test Results
 
-![Mutation Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/mutation.png)
+![Mutation Results](https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/mutation.png)
 
 <p align="center">
   <em>Mutation Test Results, obtained with PITest.</em>
@@ -113,7 +113,7 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 &nbsp;
 
-![Coverage Results](https://github.com/FEUP-LDTS-2024/project-t09g07/blob/main/docs/images/coverage.png)
+![Coverage Results](https://github.com/byllumm/Y2S1-PopPuyo-project/blob/main/docs/images/coverage.png)
 
 <p align="center">
   <em>Code Coverage Results, obtained with JaCoCo.</em>
@@ -121,6 +121,4 @@ Additionally, our code contains remnants of the **Strategy** and **Factory Metho
 
 &nbsp;
 
-<p align="center">
-  <em>Special Thanks to Matilde Martins (up202306445) for contributing the drawing of the Golden Witch!</em>
-</p>
+
